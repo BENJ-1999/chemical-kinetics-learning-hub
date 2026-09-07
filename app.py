@@ -120,10 +120,8 @@ elif topic == "Reaction Rate":
     )
 
     st.latex(
-        r"\text{Average rate} =
-        -\frac{[\text{Reactant}]_2-[\text{Reactant}]_1}
-        {t_2-t_1}"
-    )
+    r"\text{Average rate} = -\frac{[\text{Reactant}]_2-[\text{Reactant}]_1}{t_2-t_1}"
+)
 
     st.write("### Example")
 
