@@ -79,113 +79,204 @@ elif topic == "Reaction Rate":
     # SECTION 1
     # -----------------------------------------------------
 
-    st.header("1. What is reaction rate?")
+    st.header("1. What is Reaction Rate?")
 
     st.write(
-        "For a reactant, the concentration decreases as the reaction "
-        "proceeds. For a product, the concentration increases."
-    )
-
-    st.latex(
-        r"\text{Rate} = -\frac{\Delta[\text{Reactant}]}{\Delta t}"
+        "Reaction rate tells us how quickly the concentration of a "
+        "reactant or product changes as a reaction proceeds."
     )
 
     st.write(
-        "The negative sign is used for a reactant because its "
-        "concentration decreases with time."
-    )
-
-    st.latex(
-        r"\text{Rate} = \frac{\Delta[\text{Product}]}{\Delta t}"
-    )
-
-    st.write(
-        "For a product, the concentration increases, so no negative "
-        "sign is required."
+        "For a reactant, the concentration generally decreases as "
+        "the reaction proceeds. For a product, the concentration "
+        "generally increases."
     )
 
     st.info(
-        "Typical units for reaction rate are mol L⁻¹ s⁻¹."
+        "Reaction rate is commonly expressed in units of "
+        "mol L⁻¹ s⁻¹."
     )
 
     # -----------------------------------------------------
     # SECTION 2
     # -----------------------------------------------------
 
-    st.header("2. Average Reaction Rate")
+    st.header("2. Change in Concentration and Time")
 
     st.write(
-        "Average reaction rate measures the change in concentration "
-        "over a particular time interval."
+        "To calculate a reaction rate, we need to consider how much "
+        "the concentration changes over a period of time."
+    )
+
+    st.subheader("The Δ symbol")
+
+    st.write(
+        "The Greek letter delta, Δ, is used to represent a "
+        "**change in a quantity**."
+    )
+
+    st.latex(r"\Delta = \text{change in}")
+
+    st.write(
+        "Therefore:"
+    )
+
+    st.latex(r"\Delta[\text{Reactant}] = \text{change in reactant concentration}")
+
+    st.latex(r"\Delta t = \text{change in time}")
+
+    st.write(
+        "A change is calculated by subtracting the initial value "
+        "from the final value:"
+    )
+
+    st.latex(r"\Delta X = X_2 - X_1")
+
+    st.write(
+        "For concentration and time, this becomes:"
     )
 
     st.latex(
-    r"\text{Average rate} = -\frac{[\text{Reactant}]_2-[\text{Reactant}]_1}{t_2-t_1}"
-)
+        r"\Delta[\text{Reactant}] "
+        r"= [\text{Reactant}]_{t_2} - [\text{Reactant}]_{t_1}"
+    )
 
-    st.write("### Example")
+    st.latex(
+        r"\Delta t = t_2 - t_1"
+    )
 
     st.write(
-        "Suppose the concentration of a reactant decreases from "
-        "0.80 mol L⁻¹ to 0.50 mol L⁻¹ over 30 seconds."
+        "Here, the subscripts indicate the values at the two "
+        "different times:"
     )
 
-    initial_conc = 0.80
-    final_conc = 0.50
-    time = 30
-
-    rate = -(final_conc - initial_conc) / time
-
-    st.success(
-        f"Average reaction rate = {rate:.3f} mol L⁻¹ s⁻¹"
-    )
+    st.markdown("""
+    - \(t_1\) = the initial time
+    - \(t_2\) = the later time
+    - \([\text{Reactant}]_{t_1}\) = reactant concentration at \(t_1\)
+    - \([\text{Reactant}]_{t_2}\) = reactant concentration at \(t_2\)
+    """)
 
     # -----------------------------------------------------
     # SECTION 3
     # -----------------------------------------------------
 
-    st.header("3. Interactive Reaction Rate")
+    st.header("3. Average Reaction Rate")
 
     st.write(
-        "Use the controls below to investigate how the concentration "
-        "of a reactant changes with time."
+        "The average reaction rate describes the average change in "
+        "concentration over a particular time interval."
     )
 
-    col1, col2 = st.columns(2)
+    st.subheader("For a reactant")
 
-    with col1:
-        initial_concentration = st.slider(
-            "Initial concentration (mol L⁻¹)",
-            min_value=0.10,
-            max_value=2.00,
-            value=1.00,
-            step=0.10
-        )
+    st.write(
+        "Because the concentration of a reactant decreases as the "
+        "reaction proceeds, the change in concentration is normally "
+        "negative. A negative sign is therefore included so that "
+        "the reaction rate is expressed as a positive quantity."
+    )
 
-    with col2:
-        rate_constant = st.slider(
-            "Reaction rate constant (s⁻¹)",
-            min_value=0.01,
-            max_value=0.20,
-            value=0.05,
-            step=0.01
-        )
+    st.latex(
+        r"\text{Average rate}"
+        r" = -\frac{\Delta[\text{Reactant}]}{\Delta t}"
+    )
 
-    # Time values
-    t = np.linspace(0, 60, 200)
+    st.write(
+        "Using the definitions of Δ concentration and Δ time, "
+        "the equation can also be written as:"
+    )
 
-    # Simple first-order concentration model
-    concentration = initial_concentration * np.exp(
-        -rate_constant * t
+    st.latex(
+        r"\text{Average rate}"
+        r" = -\frac{[\text{Reactant}]_{t_2}"
+        r" - [\text{Reactant}]_{t_1}}"
+        r"{t_2 - t_1}"
+    )
+
+    st.info(
+        "The Δ symbol means 'change in'. It does not mean a single "
+        "value; it represents the difference between two values."
     )
 
     # -----------------------------------------------------
-    # GRAPH
+    # SECTION 4
     # -----------------------------------------------------
+
+    st.header("4. Worked Example")
+
+    st.write(
+        "The concentration of a reactant changes from "
+        "0.80 mol L⁻¹ at 10 s to 0.50 mol L⁻¹ at 30 s."
+    )
+
+    st.markdown("""
+    **Given:**
+
+    \[
+    [\text{Reactant}]_{t_1} = 0.80\ \text{mol L}^{-1}
+    \]
+
+    \[
+    [\text{Reactant}]_{t_2} = 0.50\ \text{mol L}^{-1}
+    \]
+
+    \[
+    t_1 = 10\ \text{s}
+    \]
+
+    \[
+    t_2 = 30\ \text{s}
+    \]
+    """)
+
+    st.write("### Step 1: Calculate the change in concentration")
+
+    st.latex(
+        r"\Delta[\text{Reactant}]"
+        r" = 0.50 - 0.80"
+        r" = -0.30\ \text{mol L}^{-1}"
+    )
+
+    st.write("### Step 2: Calculate the change in time")
+
+    st.latex(
+        r"\Delta t = 30 - 10 = 20\ \text{s}"
+    )
+
+    st.write("### Step 3: Calculate the average rate")
+
+    st.latex(
+        r"\text{Average rate}"
+        r" = -\frac{-0.30}{20}"
+        r" = 0.015\ \text{mol L}^{-1}\text{s}^{-1}"
+    )
+
+    st.success(
+        "Average reaction rate = 0.015 mol L⁻¹ s⁻¹"
+    )
+
+    # -----------------------------------------------------
+    # SECTION 5
+    # -----------------------------------------------------
+
+    st.header("5. Concentration–Time Graph")
+
+    st.write(
+        "The change in concentration can also be represented "
+        "graphically."
+    )
+
+    time_data = np.array([0, 10, 20, 30])
+    concentration_data = np.array([1.00, 0.80, 0.65, 0.50])
 
     fig, ax = plt.subplots()
 
-    ax.plot(t, concentration)
+    ax.plot(
+        time_data,
+        concentration_data,
+        marker="o"
+    )
 
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Reactant concentration (mol L⁻¹)")
@@ -196,60 +287,223 @@ elif topic == "Reaction Rate":
     st.pyplot(fig)
 
     st.write(
-        "Notice how increasing the rate constant causes the reactant "
-        "concentration to decrease more rapidly."
+        "The concentration decreases as time increases because "
+        "the reactant is being consumed."
     )
 
     # -----------------------------------------------------
-    # SECTION 4
+    # SECTION 6
     # -----------------------------------------------------
 
-    st.header("4. What does the graph tell us?")
+    st.header("6. Interactive Average Rate")
 
-    st.markdown("""
-    As the reaction proceeds:
+    st.write(
+        "Use the controls below to investigate how changes in "
+        "concentration and time affect the calculated average rate."
+    )
 
-    - the reactant concentration decreases
-    - the reaction is initially faster
-    - the rate becomes slower as the reaction proceeds
-    - the slope of the concentration–time graph represents the rate
-    """)
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.subheader("Initial point")
+
+        t1 = st.number_input(
+            "Initial time, t₁ (s)",
+            min_value=0.0,
+            max_value=1000.0,
+            value=10.0,
+            step=1.0
+        )
+
+        concentration_t1 = st.number_input(
+            "Reactant concentration at t₁ (mol L⁻¹)",
+            min_value=0.01,
+            max_value=10.0,
+            value=0.80,
+            step=0.05
+        )
+
+    with col2:
+
+        st.subheader("Later point")
+
+        t2 = st.number_input(
+            "Later time, t₂ (s)",
+            min_value=0.1,
+            max_value=1000.0,
+            value=30.0,
+            step=1.0
+        )
+
+        concentration_t2 = st.number_input(
+            "Reactant concentration at t₂ (mol L⁻¹)",
+            min_value=0.0,
+            max_value=10.0,
+            value=0.50,
+            step=0.05
+        )
+
+    if t2 <= t1:
+
+        st.error(
+            "The later time, t₂, must be greater than the initial "
+            "time, t₁."
+        )
+
+    else:
+
+        delta_concentration = concentration_t2 - concentration_t1
+        delta_time = t2 - t1
+
+        average_rate = -delta_concentration / delta_time
+
+        st.subheader("Your calculated values")
+
+        result_col1, result_col2, result_col3 = st.columns(3)
+
+        with result_col1:
+            st.metric(
+                "Δ concentration",
+                f"{delta_concentration:.3f} mol L⁻¹"
+            )
+
+        with result_col2:
+            st.metric(
+                "Δ time",
+                f"{delta_time:.1f} s"
+            )
+
+        with result_col3:
+            st.metric(
+                "Average rate",
+                f"{average_rate:.4f} mol L⁻¹ s⁻¹"
+            )
+
+        st.latex(
+            r"\text{Average rate}"
+            r" = -\frac{[\text{Reactant}]_{t_2}"
+            r" - [\text{Reactant}]_{t_1}}"
+            r"{t_2-t_1}"
+        )
+
+        # -------------------------------------------------
+        # INTERACTIVE GRAPH
+        # -------------------------------------------------
+
+        graph_time = np.array([t1, t2])
+        graph_concentration = np.array(
+            [concentration_t1, concentration_t2]
+        )
+
+        fig2, ax2 = plt.subplots()
+
+        ax2.plot(
+            graph_time,
+            graph_concentration,
+            marker="o"
+        )
+
+        ax2.set_xlabel("Time (s)")
+        ax2.set_ylabel("Reactant concentration (mol L⁻¹)")
+        ax2.set_title("Change in Reactant Concentration")
+
+        ax2.grid(True)
+
+        st.pyplot(fig2)
+
+        st.write(
+            "The two selected points define the time interval over "
+            "which the average reaction rate is calculated."
+        )
+
+    # -----------------------------------------------------
+    # SECTION 7
+    # -----------------------------------------------------
+
+    st.header("7. Instantaneous Reaction Rate")
+
+    st.write(
+        "The average reaction rate describes the rate over a "
+        "particular time interval. However, the reaction rate may "
+        "change as the reaction proceeds."
+    )
+
+    st.write(
+        "The **instantaneous reaction rate** is the reaction rate "
+        "at a particular instant in time."
+    )
+
+    st.write(
+        "On a concentration–time graph, the instantaneous rate "
+        "is related to the slope of the tangent to the curve "
+        "at that point."
+    )
 
     st.info(
-        "The steeper the concentration–time curve, the greater the "
-        "reaction rate at that point."
+        "Average rate considers a time interval. Instantaneous "
+        "rate considers the rate at a particular moment."
     )
 
     # -----------------------------------------------------
-    # SECTION 5
+    # SECTION 8
     # -----------------------------------------------------
 
-    st.header("5. Check Your Understanding")
+    st.header("8. Check Your Understanding")
 
-    question = st.radio(
-        "A reaction consumes a reactant. Which statement is correct?",
+    question1 = st.radio(
+        "What does the symbol Δ represent?",
         [
-            "The reactant concentration increases with time.",
-            "The reactant concentration decreases with time.",
-            "The reactant concentration always remains constant.",
-            "The reactant concentration immediately becomes zero."
-        ]
+            "A final value",
+            "A change in a quantity",
+            "A reaction rate",
+            "A concentration"
+        ],
+        key="delta_question"
     )
 
-    if st.button("Check Answer"):
+    if st.button("Check Δ Answer"):
 
-        if question == "The reactant concentration decreases with time.":
+        if question1 == "A change in a quantity":
 
             st.success(
-                "Correct! As the reactant is consumed, its concentration "
-                "decreases as the reaction proceeds."
+                "Correct! Δ (delta) is used to represent a change "
+                "in a quantity."
             )
 
         else:
 
             st.error(
-                "Not quite. A reactant is consumed during a reaction, "
-                "so its concentration generally decreases with time."
+                "Not quite. Δ (delta) represents a change in a quantity."
+            )
+
+    question2 = st.radio(
+        "Which statement correctly describes average reaction rate?",
+        [
+            "It describes the change in concentration over a time interval.",
+            "It is always the same throughout a reaction.",
+            "It only applies to products.",
+            "It has no units."
+        ],
+        key="rate_question"
+    )
+
+    if st.button("Check Rate Answer"):
+
+        if question2 == (
+            "It describes the change in concentration over a time interval."
+        ):
+
+            st.success(
+                "Correct! Average reaction rate describes the change "
+                "in concentration over a particular time interval."
+            )
+
+        else:
+
+            st.error(
+                "Not quite. Average reaction rate describes the "
+                "change in concentration over a time interval."
             )
 
     # -----------------------------------------------------
@@ -263,11 +517,14 @@ elif topic == "Reaction Rate":
 
     Remember:
 
-    1. Reactants are consumed, so their concentrations decrease.
-    2. Products are formed, so their concentrations increase.
-    3. Reaction rate can be calculated from concentration changes.
-    4. The slope of a concentration–time graph represents reaction rate.
-    5. Reaction rate generally changes as a reaction proceeds.
+    1. Reaction rate describes how concentration changes with time.
+    2. **Δ means 'change in'.**
+    3. A change is calculated as final value − initial value.
+    4. \(\Delta t = t_2 - t_1\)
+    5. For a reactant, concentration generally decreases with time.
+    6. The negative sign in the reactant rate equation makes the rate positive.
+    7. Average rate describes the rate over a time interval.
+    8. Instantaneous rate describes the rate at a particular instant.
     """)
 
 
