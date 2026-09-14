@@ -2447,6 +2447,7 @@ elif topic == "Rate Laws":
     10. The exponents in a rate law cannot generally be obtained from the balanced equation.
     """) 
 
+```python
 elif topic == "Order of Reaction":
 
     st.header("Order of Reaction")
@@ -2455,6 +2456,10 @@ elif topic == "Order of Reaction":
     The **order of a reaction** describes how the reaction rate depends on the
     concentration of one or more reactants.
     """)
+
+    # ---------------------------------------------------------
+    # 1. What does reaction order mean?
+    # ---------------------------------------------------------
 
     st.subheader("1. What does reaction order mean?")
 
@@ -2472,9 +2477,9 @@ elif topic == "Order of Reaction":
     - **n** = order with respect to B
     - **m + n** = overall reaction order
 
-    Importantly, these exponents are generally determined **experimentally**.
-    They cannot usually be obtained simply by looking at the coefficients in
-    the balanced chemical equation.
+    These exponents are generally determined **experimentally**. They cannot
+    usually be obtained simply by looking at the coefficients in the balanced
+    chemical equation.
     """)
 
     st.latex(r"\boxed{\text{Overall order}=m+n}")
@@ -2489,7 +2494,6 @@ elif topic == "Order of Reaction":
 
     st.markdown("""
     Consider a rate law containing only reactant A:
-
     """)
 
     st.latex(r"\text{rate}=k[A]^m")
@@ -2591,6 +2595,8 @@ elif topic == "Order of Reaction":
     which **[A] is kept constant**.
     """)
 
+    st.divider()
+
     # ---------------------------------------------------------
     # 4. Experimental data
     # ---------------------------------------------------------
@@ -2651,9 +2657,7 @@ elif topic == "Order of Reaction":
 
     st.latex(r"2=2^m")
 
-    st.markdown("""
-    Therefore:
-    """)
+    st.markdown("Therefore:")
 
     st.latex(r"\boxed{m=1}")
 
@@ -2695,9 +2699,7 @@ elif topic == "Order of Reaction":
 
     st.latex(r"4=2^n")
 
-    st.markdown("""
-    Therefore:
-    """)
+    st.markdown("Therefore:")
 
     st.latex(r"\boxed{n=2}")
 
@@ -2751,13 +2753,9 @@ elif topic == "Order of Reaction":
     using the rate law.
     """)
 
-    st.latex(
-        r"\text{rate}=k[A][B]^2"
-    )
+    st.latex(r"\text{rate}=k[A][B]^2")
 
-    st.markdown("""
-    Rearranging:
-    """)
+    st.markdown("Rearranging:")
 
     st.latex(
         r"\boxed{k=\frac{\text{rate}}{[A][B]^2}}"
@@ -2789,7 +2787,7 @@ elif topic == "Order of Reaction":
 
     st.markdown("""
     Choose two experiments to compare. The app will determine which reactant
-    changed and calculate the corresponding reaction order when possible.
+    changed and calculate the corresponding reaction order.
     """)
 
     exp1 = st.selectbox(
@@ -2818,10 +2816,22 @@ elif topic == "Order of Reaction":
     st.markdown("### Selected data")
 
     comparison_data = {
-        "": [f"Experiment {exp1}", f"Experiment {exp2}"],
-        "[A] (mol L⁻¹)": [e1["A"], e2["A"]],
-        "[B] (mol L⁻¹)": [e1["B"], e2["B"]],
-        "Initial rate (mol L⁻¹ s⁻¹)": [e1["rate"], e2["rate"]]
+        "Experiment": [
+            f"Experiment {exp1}",
+            f"Experiment {exp2}"
+        ],
+        "[A] (mol L⁻¹)": [
+            e1["A"],
+            e2["A"]
+        ],
+        "[B] (mol L⁻¹)": [
+            e1["B"],
+            e2["B"]
+        ],
+        "Initial rate (mol L⁻¹ s⁻¹)": [
+            e1["rate"],
+            e2["rate"]
+        ]
     }
 
     st.dataframe(
@@ -2839,6 +2849,10 @@ elif topic == "Order of Reaction":
         A_changed = not np.isclose(e1["A"], e2["A"])
         B_changed = not np.isclose(e1["B"], e2["B"])
 
+        # -----------------------------------------------------
+        # A changed, B constant
+        # -----------------------------------------------------
+
         if A_changed and not B_changed:
 
             concentration_ratio = e2["A"] / e1["A"]
@@ -2847,35 +2861,54 @@ elif topic == "Order of Reaction":
             st.markdown("### A changed while B remained constant")
 
             st.latex(
-                rf"\frac{[A]_2}{[A]_1}={concentration_ratio:.2f}"
+                rf"\frac{{[A]_2}}{{[A]_1}}={concentration_ratio:.2f}"
             )
 
             st.latex(
                 rf"\frac{{\text{{rate}}_2}}{{\text{{rate}}_1}}={rate_ratio:.2f}"
             )
 
-            if concentration_ratio > 0 and concentration_ratio != 1 and rate_ratio > 0:
+            if (
+                concentration_ratio > 0
+                and concentration_ratio != 1
+                and rate_ratio > 0
+            ):
 
                 calculated_order = (
-                    np.log(rate_ratio) /
-                    np.log(concentration_ratio)
+                    np.log(rate_ratio)
+                    / np.log(concentration_ratio)
                 )
 
                 st.latex(
-                    rf"m=\frac{{\ln(\text{{rate}}_2/\text{{rate}}_1)}}"
+                    rf"m="
+                    rf"\frac{{\ln(\text{{rate}}_2/\text{{rate}}_1)}}"
                     rf"{{\ln([A]_2/[A]_1)}}"
                     rf"={calculated_order:.2f}"
                 )
 
-                if np.isclose(calculated_order, round(calculated_order), atol=0.05):
+                if np.isclose(
+                    calculated_order,
+                    round(calculated_order),
+                    atol=0.05
+                ):
+
                     order_display = int(round(calculated_order))
+
                     st.success(
-                        f"The reaction is approximately **{order_display} order with respect to A**."
+                        f"The reaction is approximately "
+                        f"**{order_display} order with respect to A**."
                     )
+
                 else:
+
                     st.info(
-                        f"The calculated order with respect to A is approximately **{calculated_order:.2f}**."
+                        f"The calculated order with respect to A is "
+                        f"approximately **{calculated_order:.2f}**."
                     )
+
+        # -----------------------------------------------------
+        # B changed, A constant
+        # -----------------------------------------------------
 
         elif B_changed and not A_changed:
 
@@ -2892,28 +2925,47 @@ elif topic == "Order of Reaction":
                 rf"\frac{{\text{{rate}}_2}}{{\text{{rate}}_1}}={rate_ratio:.2f}"
             )
 
-            if concentration_ratio > 0 and concentration_ratio != 1 and rate_ratio > 0:
+            if (
+                concentration_ratio > 0
+                and concentration_ratio != 1
+                and rate_ratio > 0
+            ):
 
                 calculated_order = (
-                    np.log(rate_ratio) /
-                    np.log(concentration_ratio)
+                    np.log(rate_ratio)
+                    / np.log(concentration_ratio)
                 )
 
                 st.latex(
-                    rf"n=\frac{{\ln(\text{{rate}}_2/\text{{rate}}_1)}}"
+                    rf"n="
+                    rf"\frac{{\ln(\text{{rate}}_2/\text{{rate}}_1)}}"
                     rf"{{\ln([B]_2/[B]_1)}}"
                     rf"={calculated_order:.2f}"
                 )
 
-                if np.isclose(calculated_order, round(calculated_order), atol=0.05):
+                if np.isclose(
+                    calculated_order,
+                    round(calculated_order),
+                    atol=0.05
+                ):
+
                     order_display = int(round(calculated_order))
+
                     st.success(
-                        f"The reaction is approximately **{order_display} order with respect to B**."
+                        f"The reaction is approximately "
+                        f"**{order_display} order with respect to B**."
                     )
+
                 else:
+
                     st.info(
-                        f"The calculated order with respect to B is approximately **{calculated_order:.2f}**."
+                        f"The calculated order with respect to B is "
+                        f"approximately **{calculated_order:.2f}**."
                     )
+
+        # -----------------------------------------------------
+        # Both concentrations changed
+        # -----------------------------------------------------
 
         else:
 
@@ -2928,7 +2980,7 @@ elif topic == "Order of Reaction":
     st.divider()
 
     # ---------------------------------------------------------
-    # 10. Worked example summary
+    # 10. Complete worked example
     # ---------------------------------------------------------
 
     st.subheader("10. Worked example: complete rate law")
@@ -2938,7 +2990,8 @@ elif topic == "Order of Reaction":
 
     **Step 1 — Determine the order with respect to A**
 
-    Experiments 1 and 2:
+    Compare Experiments 1 and 2:
+
     - [A] doubles
     - [B] remains constant
     - rate doubles
@@ -2951,7 +3004,8 @@ elif topic == "Order of Reaction":
     st.markdown("""
     **Step 2 — Determine the order with respect to B**
 
-    Experiments 1 and 3:
+    Compare Experiments 1 and 3:
+
     - [B] doubles
     - [A] remains constant
     - rate increases by a factor of four
@@ -2988,7 +3042,7 @@ elif topic == "Order of Reaction":
     st.divider()
 
     # ---------------------------------------------------------
-    # 11. Practice question
+    # 11. Check your understanding
     # ---------------------------------------------------------
 
     st.subheader("11. Check your understanding")
@@ -3025,15 +3079,20 @@ elif topic == "Order of Reaction":
     if question != "Select an answer":
 
         if question == "First order":
-            st.success(
-                "Correct. When [A] doubles while [B] remains constant, "
-                "the rate also doubles. Therefore, the reaction is first order with respect to A."
-            )
+
+            st.success("""
+            Correct. Comparing Experiments 1 and 2, [A] doubles while [B]
+            remains constant. The rate also doubles, so the reaction is
+            first order with respect to A.
+            """)
+
         else:
-            st.error(
-                "Not quite. Compare Experiments 1 and 2: [A] doubles while [B] "
-                "remains constant, and the rate also doubles. What does this tell you about the order?"
-            )
+
+            st.error("""
+            Not quite. Compare Experiments 1 and 2: [A] doubles while [B]
+            remains constant, and the rate also doubles. What does this tell
+            you about the order with respect to A?
+            """)
 
     st.divider()
 
@@ -3053,3 +3112,4 @@ elif topic == "Order of Reaction":
     - Overall order is the sum of the individual orders.
     - Once the rate law is known, the rate constant \(k\) can be calculated.
     """)
+```
