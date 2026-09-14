@@ -3873,10 +3873,6 @@ elif topic == "Arrhenius Equation":
 
     st.subheader("4. What happens when temperature increases?")
 
-    st.markdown("""
-    The Arrhenius equation contains the term:
-    """)
-
     st.latex(
         r"e^{-E_a/(RT)}"
     )
@@ -3888,6 +3884,9 @@ elif topic == "Arrhenius Equation":
     As a result, **k increases**.
     """)
 
+    st.latex(
+        r"\boxed{T\uparrow\quad\Rightarrow\quad k\uparrow\quad\Rightarrow\quad \text{reaction rate generally increases}}"
+    )
    st.latex(
     r"\boxed{T\uparrow\quad\Rightarrow\quad k\uparrow\quad\Rightarrow\quad \text{reaction rate generally increases}}"
 )
