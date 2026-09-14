@@ -4138,3 +4138,383 @@ elif topic == "Arrhenius Equation":
     - The two-temperature form allows \(E_a\) to be calculated from two values of \(k\).
     - A plot of **ln k against 1/T** has gradient \(-E_a/R\).
     """)
+    
+    elif topic == "Catalysts":
+
+    st.header("Catalysts")
+
+    st.markdown("""
+    ### What is a catalyst?
+
+    A **catalyst** is a substance that increases the rate of a chemical reaction
+    without being consumed overall in the reaction.
+
+    A catalyst works by providing an **alternative reaction pathway with a lower
+    activation energy, \(E_a\)**.
+    """)
+
+    st.latex(
+        r"\boxed{\text{Catalyst}\quad\Rightarrow\quad E_a\downarrow\quad\Rightarrow\quad k\uparrow\quad\Rightarrow\quad \text{reaction rate}\uparrow}"
+    )
+
+    st.markdown("""
+    The catalyst does **not** provide extra energy to the reactant particles.
+    Instead, it changes the pathway by which the reaction occurs.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### How does a catalyst work?")
+
+    st.markdown("""
+    For a reaction to occur, reactant particles must pass through a high-energy
+    transition state.
+
+    Without a catalyst, the reaction follows one pathway with a particular
+    activation energy.
+
+    A catalyst provides an alternative pathway with a **lower activation energy**.
+    """)
+
+    st.markdown("""
+    The diagram below compares the energy profile of a reaction with and without
+    a catalyst.
+    """)
+
+    # Energy profile
+    reaction_coordinate = np.linspace(0, 1, 400)
+
+    reactant_energy = 1.0
+    product_energy = 0.35
+
+    # Uncatalysed pathway
+    uncatalysed = (
+        reactant_energy
+        + (1.75 - reactant_energy)
+        * np.exp(-((reaction_coordinate - 0.48) / 0.18) ** 2)
+        - (reactant_energy - product_energy) * reaction_coordinate
+    )
+
+    # Catalysed pathway
+    catalysed = (
+        reactant_energy
+        + (1.38 - reactant_energy)
+        * np.exp(-((reaction_coordinate - 0.48) / 0.18) ** 2)
+        - (reactant_energy - product_energy) * reaction_coordinate
+    )
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+
+    ax.plot(
+        reaction_coordinate,
+        uncatalysed,
+        label="Uncatalysed pathway"
+    )
+
+    ax.plot(
+        reaction_coordinate,
+        catalysed,
+        label="Catalysed pathway"
+    )
+
+    ax.axhline(
+        reactant_energy,
+        linestyle="--",
+        alpha=0.5
+    )
+
+    ax.axhline(
+        product_energy,
+        linestyle="--",
+        alpha=0.5
+    )
+
+    ax.set_xlabel("Reaction coordinate")
+    ax.set_ylabel("Potential energy")
+    ax.set_title("Catalysed and Uncatalysed Reaction Pathways")
+    ax.legend()
+    ax.grid(alpha=0.25)
+
+    st.pyplot(fig)
+
+    st.markdown("""
+    Notice that the **reactant and product energy levels are the same** for both
+    pathways.
+
+    The catalyst changes the height of the energy barrier, but it does not change
+    the energy difference between reactants and products.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Activation Energy and a Catalyst")
+
+    st.markdown("""
+    Activation energy is measured from the reactant energy level to the highest
+    point of the reaction pathway.
+    """)
+
+    st.latex(
+        r"\boxed{E_a=E_{\text{transition state}}-E_{\text{reactants}}}"
+    )
+
+    st.markdown("""
+    Because the catalysed pathway has a lower maximum energy, its activation energy
+    is smaller.
+    """)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric(
+            "Uncatalysed activation energy",
+            "Higher"
+        )
+
+    with col2:
+        st.metric(
+            "Catalysed activation energy",
+            "Lower"
+        )
+
+    st.markdown("---")
+
+    st.markdown("### Connection to the Arrhenius Equation")
+
+    st.markdown("""
+    The Arrhenius equation shows why lowering the activation energy increases the
+    rate constant:
+    """)
+
+    st.latex(
+        r"\boxed{k=Ae^{-E_a/(RT)}}"
+    )
+
+    st.markdown("""
+    At the same temperature, lowering \(E_a\) makes the negative exponent less
+    negative.
+
+    Therefore, the exponential term becomes larger and the rate constant increases.
+    """)
+
+    st.latex(
+        r"\boxed{E_a\downarrow\quad\Rightarrow\quad k\uparrow}"
+    )
+
+    st.markdown("""
+    Therefore, a catalyst can increase the reaction rate by lowering the activation
+    energy of the reaction pathway.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Interactive Catalyst Explorer")
+
+    Ea_uncatalysed = st.slider(
+        "Uncatalysed activation energy (kJ mol⁻¹)",
+        min_value=20.0,
+        max_value=150.0,
+        value=80.0,
+        step=5.0
+    )
+
+    catalyst_reduction = st.slider(
+        "Reduction in activation energy provided by catalyst (kJ mol⁻¹)",
+        min_value=5.0,
+        max_value=70.0,
+        value=30.0,
+        step=5.0
+    )
+
+    Ea_catalysed = max(
+        Ea_uncatalysed - catalyst_reduction,
+        5.0
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric(
+            "Uncatalysed Ea",
+            f"{Ea_uncatalysed:.0f} kJ mol⁻¹"
+        )
+
+    with col2:
+        st.metric(
+            "Catalysed Ea",
+            f"{Ea_catalysed:.0f} kJ mol⁻¹"
+        )
+
+    st.latex(
+        rf"\boxed{{\Delta E_a={Ea_uncatalysed:.0f}-{Ea_catalysed:.0f}={Ea_uncatalysed-Ea_catalysed:.0f}\ \mathrm{{kJ\,mol^{{-1}}}}}}"
+    )
+
+    st.markdown("---")
+
+    st.markdown("### What a Catalyst Does NOT Change")
+
+    st.markdown("""
+    A catalyst changes the **reaction pathway**, but it does not change the
+    overall energy difference between reactants and products.
+    """)
+
+    comparison_data = {
+        "Property": [
+            "Activation energy, Ea",
+            "Reaction pathway",
+            "Overall ΔH",
+            "Reactant energy",
+            "Product energy",
+            "Equilibrium constant, K",
+            "Equilibrium position"
+        ],
+        "Effect of catalyst": [
+            "Decreases",
+            "Changes",
+            "No change",
+            "No change",
+            "No change",
+            "No change",
+            "No change"
+        ]
+    }
+
+    st.table(comparison_data)
+
+    st.markdown("""
+    **Important:** A catalyst speeds up both the forward and reverse reactions.
+    Therefore, it does not change the equilibrium position or the equilibrium
+    constant. It simply allows equilibrium to be reached more quickly.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Catalysts and Collision Theory")
+
+    st.markdown("""
+    Collision theory states that a successful reaction requires particles to collide
+    with sufficient energy and appropriate orientation.
+
+    A catalyst provides an alternative pathway with a lower activation energy.
+
+    Therefore, at the same temperature, a greater fraction of collisions can have
+    sufficient energy to overcome the activation-energy barrier.
+    """)
+
+    st.latex(
+        r"\boxed{\text{Catalyst}\quad\Rightarrow\quad E_a\downarrow\quad\Rightarrow\quad \text{more effective collisions}}"
+    )
+
+    st.markdown("""
+    The catalyst does not make the particles move faster and does not increase the
+    temperature. Instead, it makes it easier for collisions to lead to reaction.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Examples of Catalysts")
+
+    catalyst_examples = {
+        "Catalyst": [
+            "Iron (Fe)",
+            "Nickel (Ni)",
+            "Platinum (Pt)",
+            "Enzymes"
+        ],
+        "Example application": [
+            "Ammonia production",
+            "Hydrogenation reactions",
+            "Catalytic converters",
+            "Biological reactions"
+        ]
+    }
+
+    st.table(catalyst_examples)
+
+    st.markdown("""
+    **Enzymes** are biological catalysts. They increase the rates of biochemical
+    reactions by providing reaction pathways with lower activation energies.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Check Your Understanding")
+
+    catalyst_q1 = st.radio(
+        "1. What is the main effect of a catalyst?",
+        [
+            "It lowers the activation energy",
+            "It increases the temperature",
+            "It increases the ΔH of the reaction",
+            "It increases the energy of every reactant particle"
+        ],
+        key="catalyst_q1"
+    )
+
+    if catalyst_q1 == "It lowers the activation energy":
+        st.success("Correct. A catalyst provides an alternative pathway with a lower activation energy.")
+    else:
+        st.error("Not quite. A catalyst works by providing an alternative pathway with a lower activation energy.")
+
+    catalyst_q2 = st.radio(
+        "2. What happens to the overall ΔH of a reaction when a catalyst is added?",
+        [
+            "It increases",
+            "It decreases",
+            "It does not change",
+            "It becomes zero"
+        ],
+        key="catalyst_q2"
+    )
+
+    if catalyst_q2 == "It does not change":
+        st.success("Correct. A catalyst changes the pathway, not the overall energy difference between reactants and products.")
+    else:
+        st.error("Not quite. A catalyst does not change the overall ΔH of the reaction.")
+
+    catalyst_q3 = st.radio(
+        "3. Does a catalyst change the equilibrium constant?",
+        [
+            "Yes, it increases K",
+            "Yes, it decreases K",
+            "No, it does not change K",
+            "It makes K equal to zero"
+        ],
+        key="catalyst_q3"
+    )
+
+    if catalyst_q3 == "No, it does not change K":
+        st.success("Correct. A catalyst speeds up both the forward and reverse reactions and does not change K.")
+    else:
+        st.error("Not quite. A catalyst does not change the equilibrium constant.")
+
+    catalyst_q4 = st.radio(
+        "4. Why does a catalyst increase the reaction rate?",
+        [
+            "It provides an alternative pathway with lower Ea",
+            "It increases the concentration of reactants",
+            "It increases the temperature",
+            "It changes the products into reactants"
+        ],
+        key="catalyst_q4"
+    )
+
+    if catalyst_q4 == "It provides an alternative pathway with lower Ea":
+        st.success("Correct. The lower activation energy means a greater fraction of collisions can result in reaction.")
+    else:
+        st.error("Not quite. The catalyst provides an alternative pathway with a lower activation energy.")
+
+    st.markdown("---")
+
+    st.markdown("### Key Points")
+
+    st.markdown("""
+    - A **catalyst increases the rate of a reaction**.
+    - A catalyst provides an **alternative reaction pathway**.
+    - The alternative pathway has a **lower activation energy, Ea**.
+    - A catalyst does **not** change the overall **ΔH** of the reaction.
+    - A catalyst does **not** change the reactant or product energy levels.
+    - A catalyst does **not** change the **equilibrium constant, K**.
+    - A catalyst allows equilibrium to be reached **more quickly**.
+    - Catalysts increase reaction rate without being consumed overall.
+    """)
