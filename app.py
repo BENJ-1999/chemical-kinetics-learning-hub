@@ -4139,7 +4139,7 @@ elif topic == "Arrhenius Equation":
     - A plot of **ln k against 1/T** has gradient \(-E_a/R\).
     """)
     
-    elif topic == "Catalysts":
+ elif topic == "Catalysts":
 
     st.header("Catalysts")
 
