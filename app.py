@@ -3888,10 +3888,9 @@ elif topic == "Arrhenius Equation":
     As a result, **k increases**.
     """)
 
-    st.latex(
-        r"\boxed{T\uparrow\quad\Rightarrow\quad k\uparrow\quad\Rightarrow\quad
-        \text{reaction rate generally increases}}"
-    )
+   st.latex(
+    r"\boxed{T\uparrow\quad\Rightarrow\quad k\uparrow\quad\Rightarrow\quad \text{reaction rate generally increases}}"
+)
 
     st.divider()
 
@@ -3985,15 +3984,8 @@ elif topic == "Arrhenius Equation":
     """)
 
     st.latex(
-        r"\boxed{
-        \ln\left(\frac{k_2}{k_1}\right)
-        =
-        -\frac{E_a}{R}
-        \left(
-        \frac{1}{T_2}-\frac{1}{T_1}
-        \right)
-        }"
-    )
+    r"\boxed{\ln\left(\frac{k_2}{k_1}\right)=-\frac{E_a}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)}"
+)
 
     st.markdown("""
     This form is particularly useful when you know the rate constants at
@@ -4049,14 +4041,8 @@ elif topic == "Arrhenius Equation":
     """)
 
     st.latex(
-        r"E_a=
-        -R
-        \frac{
-        \ln(k_2/k_1)
-        }{
-        (1/T_2)-(1/T_1)
-        }"
-    )
+    r"\boxed{E_a=-R\frac{\ln(k_2/k_1)}{(1/T_2)-(1/T_1)}}"
+)
 
     example_Ea = (
         -R
