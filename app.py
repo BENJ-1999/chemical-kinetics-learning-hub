@@ -3112,3 +3112,606 @@ elif topic == "Order of Reaction":
     - Once the rate law is known, the rate constant \(k\) can be calculated.
     """)
 
+
+elif topic == "Integrated Rate Laws":
+
+    st.header("Integrated Rate Laws")
+
+    st.markdown("""
+    In the previous section, we used experimental data to determine the
+    **order of a reaction**.
+
+    We can now use the reaction order to describe how the concentration of a
+    reactant changes with time.
+    """)
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 1. From rate laws to integrated rate laws
+    # ---------------------------------------------------------
+
+    st.subheader("1. From rate laws to concentration vs time")
+
+    st.markdown("""
+    Consider a reaction involving one reactant:
+
+    """)
+
+    st.latex(r"A \rightarrow \text{products}")
+
+    st.markdown("""
+    For a reaction involving A, the rate can be written as:
+    """)
+
+    st.latex(r"\text{rate}=-\frac{d[A]}{dt}")
+
+    st.markdown("""
+    The rate law tells us how the rate depends on the concentration of A:
+
+    """)
+
+    st.latex(r"\text{rate}=k[A]^n")
+
+    st.markdown("""
+    Combining these gives:
+    """)
+
+    st.latex(r"-\frac{d[A]}{dt}=k[A]^n")
+
+    st.markdown("""
+    **Integrated rate laws** are obtained by integrating this rate equation.
+    They allow us to calculate the concentration of a reactant at a given
+    time, or determine how concentration changes with time.
+    """)
+
+    st.info("""
+    The integrated rate law that applies depends on the **order of the reaction**.
+    """)
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 2. Zero-order reactions
+    # ---------------------------------------------------------
+
+    st.subheader("2. Zero-order reactions")
+
+    st.markdown("""
+    For a zero-order reaction:
+    """)
+
+    st.latex(r"\text{rate}=k[A]^0=k")
+
+    st.markdown("""
+    Therefore:
+    """)
+
+    st.latex(r"-\frac{d[A]}{dt}=k")
+
+    st.markdown("""
+    Integrating gives the zero-order integrated rate law:
+    """)
+
+    st.latex(
+        r"\boxed{[A]_t=[A]_0-kt}"
+    )
+
+    st.markdown("""
+    where:
+
+    - \([A]_0\) = initial concentration of A
+    - \([A]_t\) = concentration of A at time \(t\)
+    - \(k\) = rate constant
+    - \(t\) = time
+    """)
+
+    st.markdown("""
+    A plot of **[A] against time** is therefore a straight line for a
+    zero-order reaction.
+    """)
+
+    # Interactive zero order graph
+    st.markdown("### Zero-order concentration–time graph")
+
+    zero_k = st.slider(
+        "Rate constant, k (mol L⁻¹ s⁻¹)",
+        min_value=0.005,
+        max_value=0.050,
+        value=0.020,
+        step=0.005,
+        key="zero_order_k"
+    )
+
+    zero_A0 = st.slider(
+        "Initial concentration, [A]₀ (mol L⁻¹)",
+        min_value=0.20,
+        max_value=1.00,
+        value=0.80,
+        step=0.10,
+        key="zero_order_A0"
+    )
+
+    zero_time = np.linspace(0, zero_A0 / zero_k, 100)
+
+    zero_concentration = zero_A0 - zero_k * zero_time
+
+    fig, ax = plt.subplots()
+
+    ax.plot(
+        zero_time,
+        zero_concentration
+    )
+
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel("[A] (mol L⁻¹)")
+    ax.set_title("Zero-order reaction")
+    ax.set_ylim(bottom=0)
+    ax.grid(True, alpha=0.3)
+
+    st.pyplot(fig)
+
+    st.latex(
+        rf"[A]_t={zero_A0:.2f}-{zero_k:.3f}t"
+    )
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 3. First-order reactions
+    # ---------------------------------------------------------
+
+    st.subheader("3. First-order reactions")
+
+    st.markdown("""
+    For a first-order reaction:
+    """)
+
+    st.latex(r"\text{rate}=k[A]")
+
+    st.markdown("""
+    Therefore:
+    """)
+
+    st.latex(r"-\frac{d[A]}{dt}=k[A]")
+
+    st.markdown("""
+    Integrating gives:
+    """)
+
+    st.latex(
+        r"\boxed{\ln[A]_t=\ln[A]_0-kt}"
+    )
+
+    st.markdown("""
+    An equivalent form is:
+    """)
+
+    st.latex(
+        r"\boxed{[A]_t=[A]_0e^{-kt}}"
+    )
+
+    st.markdown("""
+    For a first-order reaction, a plot of **ln[A] against time** is a
+    straight line.
+
+    The gradient of this line is:
+    """)
+
+    st.latex(r"\boxed{\text{gradient}=-k}")
+
+    # Interactive first order graph
+    st.markdown("### First-order concentration–time graph")
+
+    first_k = st.slider(
+        "Rate constant, k (s⁻¹)",
+        min_value=0.005,
+        max_value=0.100,
+        value=0.020,
+        step=0.005,
+        key="first_order_k"
+    )
+
+    first_A0 = st.slider(
+        "Initial concentration, [A]₀ (mol L⁻¹)",
+        min_value=0.20,
+        max_value=1.00,
+        value=0.80,
+        step=0.10,
+        key="first_order_A0"
+    )
+
+    first_time = np.linspace(
+        0,
+        5 / first_k,
+        150
+    )
+
+    first_concentration = first_A0 * np.exp(-first_k * first_time)
+
+    fig, ax = plt.subplots()
+
+    ax.plot(
+        first_time,
+        first_concentration
+    )
+
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel("[A] (mol L⁻¹)")
+    ax.set_title("First-order reaction")
+    ax.set_ylim(bottom=0)
+    ax.grid(True, alpha=0.3)
+
+    st.pyplot(fig)
+
+    st.latex(
+        rf"[A]_t={first_A0:.2f}e^{{-{first_k:.3f}t}}"
+    )
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 4. Second-order reactions
+    # ---------------------------------------------------------
+
+    st.subheader("4. Second-order reactions")
+
+    st.markdown("""
+    For a second-order reaction involving A:
+    """)
+
+    st.latex(r"\text{rate}=k[A]^2")
+
+    st.markdown("""
+    Therefore:
+    """)
+
+    st.latex(r"-\frac{d[A]}{dt}=k[A]^2")
+
+    st.markdown("""
+    Integrating gives:
+    """)
+
+    st.latex(
+        r"\boxed{\frac{1}{[A]_t}=\frac{1}{[A]_0}+kt}"
+    )
+
+    st.markdown("""
+    For a second-order reaction, a plot of **1/[A] against time** is a
+    straight line.
+
+    The gradient of this line is:
+    """)
+
+    st.latex(r"\boxed{\text{gradient}=k}")
+
+    # Interactive second order graph
+    st.markdown("### Second-order concentration–time graph")
+
+    second_k = st.slider(
+        "Rate constant, k (L mol⁻¹ s⁻¹)",
+        min_value=0.005,
+        max_value=0.100,
+        value=0.020,
+        step=0.005,
+        key="second_order_k"
+    )
+
+    second_A0 = st.slider(
+        "Initial concentration, [A]₀ (mol L⁻¹)",
+        min_value=0.20,
+        max_value=1.00,
+        value=0.80,
+        step=0.10,
+        key="second_order_A0"
+    )
+
+    second_time = np.linspace(
+        0,
+        1 / (second_k * second_A0) * 5,
+        150
+    )
+
+    second_concentration = (
+        1 /
+        (
+            1 / second_A0
+            + second_k * second_time
+        )
+    )
+
+    fig, ax = plt.subplots()
+
+    ax.plot(
+        second_time,
+        second_concentration
+    )
+
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel("[A] (mol L⁻¹)")
+    ax.set_title("Second-order reaction")
+    ax.set_ylim(bottom=0)
+    ax.grid(True, alpha=0.3)
+
+    st.pyplot(fig)
+
+    st.latex(
+        rf"\frac{{1}}{{[A]_t}}="
+        rf"\frac{{1}}{{{second_A0:.2f}}}"
+        rf"+{second_k:.3f}t"
+    )
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 5. Comparing the three integrated rate laws
+    # ---------------------------------------------------------
+
+    st.subheader("5. Comparing the integrated rate laws")
+
+    comparison_data = {
+        "Reaction order": [
+            "Zero order",
+            "First order",
+            "Second order"
+        ],
+        "Integrated rate law": [
+            "[A]ₜ = [A]₀ − kt",
+            "ln[A]ₜ = ln[A]₀ − kt",
+            "1/[A]ₜ = 1/[A]₀ + kt"
+        ],
+        "Linear plot": [
+            "[A] vs time",
+            "ln[A] vs time",
+            "1/[A] vs time"
+        ],
+        "Gradient": [
+            "−k",
+            "−k",
+            "+k"
+        ]
+    }
+
+    st.table(comparison_data)
+
+    st.markdown("""
+    This gives us a useful way to identify reaction order from concentration–
+    time data: determine which transformed concentration gives a straight line.
+    """)
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 6. Half-life
+    # ---------------------------------------------------------
+
+    st.subheader("6. Half-life")
+
+    st.markdown("""
+    The **half-life**, \(t_{1/2}\), is the time required for the concentration
+    of a reactant to decrease to half of its initial value.
+    """)
+
+    st.latex(
+        r"[A]_t=\frac{[A]_0}{2}"
+    )
+
+    st.markdown("""
+    The half-life behaves differently for different reaction orders.
+    """)
+
+    half_life_choice = st.selectbox(
+        "Choose a reaction order:",
+        ["Zero order", "First order", "Second order"],
+        key="half_life_order"
+    )
+
+    if half_life_choice == "Zero order":
+
+        st.latex(
+            r"\boxed{t_{1/2}=\frac{[A]_0}{2k}}"
+        )
+
+        st.markdown("""
+        For a zero-order reaction, the half-life **depends on the initial
+        concentration**.
+
+        A larger initial concentration gives a longer half-life.
+        """)
+
+    elif half_life_choice == "First order":
+
+        st.latex(
+            r"\boxed{t_{1/2}=\frac{\ln 2}{k}}"
+        )
+
+        st.markdown("""
+        For a first-order reaction, the half-life **does not depend on the
+        initial concentration**.
+
+        As long as the temperature and conditions remain constant, the
+        half-life remains constant.
+        """)
+
+    else:
+
+        st.latex(
+            r"\boxed{t_{1/2}=\frac{1}{k[A]_0}}"
+        )
+
+        st.markdown("""
+        For a second-order reaction, the half-life **depends on the initial
+        concentration**.
+        """)
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 7. Interactive half-life calculator
+    # ---------------------------------------------------------
+
+    st.subheader("7. Interactive half-life calculator")
+
+    half_order = st.selectbox(
+        "Reaction order:",
+        ["Zero order", "First order", "Second order"],
+        key="half_order_calc"
+    )
+
+    half_A0 = st.number_input(
+        "Initial concentration, [A]₀ (mol L⁻¹)",
+        min_value=0.01,
+        max_value=5.00,
+        value=1.00,
+        step=0.10,
+        key="half_A0_calc"
+    )
+
+    if half_order == "Zero order":
+
+        half_k = st.number_input(
+            "Rate constant, k (mol L⁻¹ s⁻¹)",
+            min_value=0.001,
+            max_value=10.0,
+            value=0.050,
+            step=0.001,
+            format="%.3f",
+            key="half_zero_k"
+        )
+
+        half_life = half_A0 / (2 * half_k)
+
+        st.latex(
+            r"t_{1/2}=\frac{[A]_0}{2k}"
+        )
+
+        st.metric(
+            "Half-life",
+            f"{half_life:.2f} s"
+        )
+
+    elif half_order == "First order":
+
+        half_k = st.number_input(
+            "Rate constant, k (s⁻¹)",
+            min_value=0.001,
+            max_value=10.0,
+            value=0.050,
+            step=0.001,
+            format="%.3f",
+            key="half_first_k"
+        )
+
+        half_life = np.log(2) / half_k
+
+        st.latex(
+            r"t_{1/2}=\frac{\ln 2}{k}"
+        )
+
+        st.metric(
+            "Half-life",
+            f"{half_life:.2f} s"
+        )
+
+    else:
+
+        half_k = st.number_input(
+            "Rate constant, k (L mol⁻¹ s⁻¹)",
+            min_value=0.001,
+            max_value=10.0,
+            value=0.050,
+            step=0.001,
+            format="%.3f",
+            key="half_second_k"
+        )
+
+        half_life = 1 / (half_k * half_A0)
+
+        st.latex(
+            r"t_{1/2}=\frac{1}{k[A]_0}"
+        )
+
+        st.metric(
+            "Half-life",
+            f"{half_life:.2f} s"
+        )
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 8. Important comparison
+    # ---------------------------------------------------------
+
+    st.subheader("8. An important difference between reaction orders")
+
+    st.markdown("""
+    Half-life provides a particularly useful way to distinguish a
+    first-order reaction from zero- and second-order reactions.
+    """)
+
+    st.info("""
+    **First-order reaction**
+
+    The half-life is constant and does not depend on the initial concentration.
+
+    **Zero- and second-order reactions**
+
+    The half-life depends on the initial concentration.
+    """)
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 9. Check your understanding
+    # ---------------------------------------------------------
+
+    st.subheader("9. Check your understanding")
+
+    question = st.selectbox(
+        "Which integrated rate law applies to a first-order reaction?",
+        [
+            "Select an answer",
+            "[A]ₜ = [A]₀ − kt",
+            "ln[A]ₜ = ln[A]₀ − kt",
+            "1/[A]ₜ = 1/[A]₀ + kt"
+        ],
+        key="integrated_rate_question"
+    )
+
+    if question != "Select an answer":
+
+        if question == "ln[A]ₜ = ln[A]₀ − kt":
+
+            st.success("""
+            Correct. For a first-order reaction:
+
+            ln[A]ₜ = ln[A]₀ − kt
+            """)
+
+        else:
+
+            st.error("""
+            Not quite. Recall that each reaction order has its own integrated
+            rate law. For a first-order reaction, the logarithm of concentration
+            appears in the equation.
+            """)
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 10. Key points
+    # ---------------------------------------------------------
+
+    st.subheader("Key points")
+
+    st.markdown("""
+    - Integrated rate laws describe how concentration changes with time.
+    - The integrated rate law depends on the reaction order.
+    - Zero order: \([A]_t=[A]_0-kt\)
+    - First order: \(\ln[A]_t=\ln[A]_0-kt\)
+    - Second order: \(1/[A]_t=1/[A]_0+kt\)
+    - The gradient of the appropriate linear plot can be used to determine \(k\).
+    - Half-life is the time required for a reactant concentration to decrease to half its initial value.
+    - First-order reactions have a constant half-life that is independent of initial concentration.
+    """)
+
