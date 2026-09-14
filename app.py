@@ -2446,3 +2446,610 @@ elif topic == "Rate Laws":
     9. Reaction orders are generally determined experimentally.
     10. The exponents in a rate law cannot generally be obtained from the balanced equation.
     """) 
+
+elif topic == "Order of Reaction":
+
+    st.header("Order of Reaction")
+
+    st.markdown("""
+    The **order of a reaction** describes how the reaction rate depends on the
+    concentration of one or more reactants.
+    """)
+
+    st.subheader("1. What does reaction order mean?")
+
+    st.markdown("""
+    From the rate-law section, we saw that a reaction may have a rate law such as:
+    """)
+
+    st.latex(r"\text{rate}=k[A]^m[B]^n")
+
+    st.markdown("""
+    The exponents **m** and **n** tell us how the rate depends on the
+    concentrations of A and B.
+
+    - **m** = order with respect to A
+    - **n** = order with respect to B
+    - **m + n** = overall reaction order
+
+    Importantly, these exponents are generally determined **experimentally**.
+    They cannot usually be obtained simply by looking at the coefficients in
+    the balanced chemical equation.
+    """)
+
+    st.latex(r"\boxed{\text{Overall order}=m+n}")
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 2. Simple examples
+    # ---------------------------------------------------------
+
+    st.subheader("2. How concentration affects rate")
+
+    st.markdown("""
+    Consider a rate law containing only reactant A:
+
+    """)
+
+    st.latex(r"\text{rate}=k[A]^m")
+
+    st.markdown("""
+    The value of **m** determines how the rate changes when the concentration
+    of A changes.
+    """)
+
+    order_choice = st.selectbox(
+        "Choose the order with respect to A:",
+        ["Zero order", "First order", "Second order"],
+        key="order_example"
+    )
+
+    if order_choice == "Zero order":
+
+        st.latex(r"\text{rate}=k[A]^0=k")
+
+        st.info("""
+        **Zero order:** The rate does not depend on the concentration of A.
+
+        If [A] doubles, the rate remains unchanged.
+        """)
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric("Change in [A]", "×2")
+
+        with col2:
+            st.metric("Change in rate", "×1")
+
+    elif order_choice == "First order":
+
+        st.latex(r"\text{rate}=k[A]")
+
+        st.info("""
+        **First order:** The rate is directly proportional to the concentration
+        of A.
+
+        If [A] doubles, the rate doubles.
+        """)
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric("Change in [A]", "×2")
+
+        with col2:
+            st.metric("Change in rate", "×2")
+
+    else:
+
+        st.latex(r"\text{rate}=k[A]^2")
+
+        st.info("""
+        **Second order:** The rate is proportional to the square of the
+        concentration of A.
+
+        If [A] doubles, the rate increases by a factor of four.
+        """)
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric("Change in [A]", "×2")
+
+        with col2:
+            st.metric("Change in rate", "×4")
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 3. Determining reaction order experimentally
+    # ---------------------------------------------------------
+
+    st.subheader("3. Determining reaction order from experimental data")
+
+    st.markdown("""
+    Reaction orders are commonly determined using **initial-rate experiments**.
+
+    In these experiments, the initial concentrations of the reactants are
+    changed systematically and the corresponding initial reaction rates are
+    measured.
+    """)
+
+    st.markdown("""
+    For example, suppose the rate law is:
+    """)
+
+    st.latex(r"\text{rate}=k[A]^m[B]^n")
+
+    st.markdown("""
+    To determine the order with respect to **A**, compare two experiments in
+    which **[B] is kept constant**.
+
+    To determine the order with respect to **B**, compare two experiments in
+    which **[A] is kept constant**.
+    """)
+
+    # ---------------------------------------------------------
+    # 4. Experimental data
+    # ---------------------------------------------------------
+
+    st.subheader("4. Example: initial-rate data")
+
+    data = {
+        "Experiment": [1, 2, 3],
+        "[A] (mol L⁻¹)": [0.10, 0.20, 0.10],
+        "[B] (mol L⁻¹)": [0.10, 0.10, 0.20],
+        "Initial rate (mol L⁻¹ s⁻¹)": [0.020, 0.040, 0.080]
+    }
+
+    st.dataframe(
+        data,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    st.markdown("""
+    Notice that the experiments have been designed so that we can compare
+    one reactant at a time.
+    """)
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 5. Determine order with respect to A
+    # ---------------------------------------------------------
+
+    st.subheader("5. Determining the order with respect to A")
+
+    st.markdown("""
+    Compare **Experiments 1 and 2**.
+
+    The concentration of B remains constant:
+    """)
+
+    st.latex(r"[B]_1=[B]_2=0.10\ \text{mol L}^{-1}")
+
+    st.markdown("""
+    Therefore, any change in rate is associated with the change in [A].
+    """)
+
+    st.latex(
+        r"\frac{\text{rate}_2}{\text{rate}_1}"
+        r"="
+        r"\left(\frac{[A]_2}{[A]_1}\right)^m"
+    )
+
+    st.markdown("Substituting the experimental values:")
+
+    st.latex(
+        r"\frac{0.040}{0.020}"
+        r"="
+        r"\left(\frac{0.20}{0.10}\right)^m"
+    )
+
+    st.latex(r"2=2^m")
+
+    st.markdown("""
+    Therefore:
+    """)
+
+    st.latex(r"\boxed{m=1}")
+
+    st.success("The reaction is **first order with respect to A**.")
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 6. Determine order with respect to B
+    # ---------------------------------------------------------
+
+    st.subheader("6. Determining the order with respect to B")
+
+    st.markdown("""
+    Now compare **Experiments 1 and 3**.
+
+    The concentration of A remains constant:
+    """)
+
+    st.latex(r"[A]_1=[A]_3=0.10\ \text{mol L}^{-1}")
+
+    st.markdown("""
+    Therefore, the change in rate is associated with the change in [B].
+    """)
+
+    st.latex(
+        r"\frac{\text{rate}_3}{\text{rate}_1}"
+        r"="
+        r"\left(\frac{[B]_3}{[B]_1}\right)^n"
+    )
+
+    st.markdown("Substituting the experimental values:")
+
+    st.latex(
+        r"\frac{0.080}{0.020}"
+        r"="
+        r"\left(\frac{0.20}{0.10}\right)^n"
+    )
+
+    st.latex(r"4=2^n")
+
+    st.markdown("""
+    Therefore:
+    """)
+
+    st.latex(r"\boxed{n=2}")
+
+    st.success("The reaction is **second order with respect to B**.")
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 7. Overall order
+    # ---------------------------------------------------------
+
+    st.subheader("7. Determining the overall reaction order")
+
+    st.markdown("""
+    We have determined:
+    """)
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric("Order with respect to A", "1")
+
+    with col2:
+        st.metric("Order with respect to B", "2")
+
+    with col3:
+        st.metric("Overall order", "3")
+
+    st.latex(
+        r"\boxed{\text{Overall order}=m+n=1+2=3}"
+    )
+
+    st.markdown("""
+    Therefore, the rate law is:
+    """)
+
+    st.latex(
+        r"\boxed{\text{rate}=k[A][B]^2}"
+    )
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 8. Determining rate constant k
+    # ---------------------------------------------------------
+
+    st.subheader("8. Determining the rate constant, k")
+
+    st.markdown("""
+    Once the reaction orders are known, the rate constant can be calculated
+    using the rate law.
+    """)
+
+    st.latex(
+        r"\text{rate}=k[A][B]^2"
+    )
+
+    st.markdown("""
+    Rearranging:
+    """)
+
+    st.latex(
+        r"\boxed{k=\frac{\text{rate}}{[A][B]^2}}"
+    )
+
+    st.markdown("Using Experiment 1:")
+
+    st.latex(
+        r"k=\frac{0.020}{(0.10)(0.10)^2}"
+    )
+
+    st.latex(r"k=20")
+
+    st.success(
+        "For this example, **k = 20 L² mol⁻² s⁻¹**."
+    )
+
+    st.markdown("""
+    The units of the rate constant depend on the overall reaction order.
+    """)
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 9. Interactive experiment comparison
+    # ---------------------------------------------------------
+
+    st.subheader("9. Interactive: compare two experiments")
+
+    st.markdown("""
+    Choose two experiments to compare. The app will determine which reactant
+    changed and calculate the corresponding reaction order when possible.
+    """)
+
+    exp1 = st.selectbox(
+        "First experiment:",
+        [1, 2, 3],
+        index=0,
+        key="order_exp1"
+    )
+
+    exp2 = st.selectbox(
+        "Second experiment:",
+        [1, 2, 3],
+        index=1,
+        key="order_exp2"
+    )
+
+    experiments = {
+        1: {"A": 0.10, "B": 0.10, "rate": 0.020},
+        2: {"A": 0.20, "B": 0.10, "rate": 0.040},
+        3: {"A": 0.10, "B": 0.20, "rate": 0.080}
+    }
+
+    e1 = experiments[exp1]
+    e2 = experiments[exp2]
+
+    st.markdown("### Selected data")
+
+    comparison_data = {
+        "": [f"Experiment {exp1}", f"Experiment {exp2}"],
+        "[A] (mol L⁻¹)": [e1["A"], e2["A"]],
+        "[B] (mol L⁻¹)": [e1["B"], e2["B"]],
+        "Initial rate (mol L⁻¹ s⁻¹)": [e1["rate"], e2["rate"]]
+    }
+
+    st.dataframe(
+        comparison_data,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    if exp1 == exp2:
+
+        st.warning("Please choose two different experiments.")
+
+    else:
+
+        A_changed = not np.isclose(e1["A"], e2["A"])
+        B_changed = not np.isclose(e1["B"], e2["B"])
+
+        if A_changed and not B_changed:
+
+            concentration_ratio = e2["A"] / e1["A"]
+            rate_ratio = e2["rate"] / e1["rate"]
+
+            st.markdown("### A changed while B remained constant")
+
+            st.latex(
+                rf"\frac{[A]_2}{[A]_1}={concentration_ratio:.2f}"
+            )
+
+            st.latex(
+                rf"\frac{{\text{{rate}}_2}}{{\text{{rate}}_1}}={rate_ratio:.2f}"
+            )
+
+            if concentration_ratio > 0 and concentration_ratio != 1 and rate_ratio > 0:
+
+                calculated_order = (
+                    np.log(rate_ratio) /
+                    np.log(concentration_ratio)
+                )
+
+                st.latex(
+                    rf"m=\frac{{\ln(\text{{rate}}_2/\text{{rate}}_1)}}"
+                    rf"{{\ln([A]_2/[A]_1)}}"
+                    rf"={calculated_order:.2f}"
+                )
+
+                if np.isclose(calculated_order, round(calculated_order), atol=0.05):
+                    order_display = int(round(calculated_order))
+                    st.success(
+                        f"The reaction is approximately **{order_display} order with respect to A**."
+                    )
+                else:
+                    st.info(
+                        f"The calculated order with respect to A is approximately **{calculated_order:.2f}**."
+                    )
+
+        elif B_changed and not A_changed:
+
+            concentration_ratio = e2["B"] / e1["B"]
+            rate_ratio = e2["rate"] / e1["rate"]
+
+            st.markdown("### B changed while A remained constant")
+
+            st.latex(
+                rf"\frac{{[B]_2}}{{[B]_1}}={concentration_ratio:.2f}"
+            )
+
+            st.latex(
+                rf"\frac{{\text{{rate}}_2}}{{\text{{rate}}_1}}={rate_ratio:.2f}"
+            )
+
+            if concentration_ratio > 0 and concentration_ratio != 1 and rate_ratio > 0:
+
+                calculated_order = (
+                    np.log(rate_ratio) /
+                    np.log(concentration_ratio)
+                )
+
+                st.latex(
+                    rf"n=\frac{{\ln(\text{{rate}}_2/\text{{rate}}_1)}}"
+                    rf"{{\ln([B]_2/[B]_1)}}"
+                    rf"={calculated_order:.2f}"
+                )
+
+                if np.isclose(calculated_order, round(calculated_order), atol=0.05):
+                    order_display = int(round(calculated_order))
+                    st.success(
+                        f"The reaction is approximately **{order_display} order with respect to B**."
+                    )
+                else:
+                    st.info(
+                        f"The calculated order with respect to B is approximately **{calculated_order:.2f}**."
+                    )
+
+        else:
+
+            st.warning("""
+            Both reactant concentrations changed between these experiments.
+
+            These experiments cannot be used directly to determine the order
+            with respect to a single reactant because more than one concentration
+            changed.
+            """)
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 10. Worked example summary
+    # ---------------------------------------------------------
+
+    st.subheader("10. Worked example: complete rate law")
+
+    st.markdown("""
+    From the experimental data:
+
+    **Step 1 — Determine the order with respect to A**
+
+    Experiments 1 and 2:
+    - [A] doubles
+    - [B] remains constant
+    - rate doubles
+
+    Therefore:
+    """)
+
+    st.latex(r"m=1")
+
+    st.markdown("""
+    **Step 2 — Determine the order with respect to B**
+
+    Experiments 1 and 3:
+    - [B] doubles
+    - [A] remains constant
+    - rate increases by a factor of four
+
+    Therefore:
+    """)
+
+    st.latex(r"n=2")
+
+    st.markdown("""
+    **Step 3 — Write the rate law**
+    """)
+
+    st.latex(
+        r"\boxed{\text{rate}=k[A][B]^2}"
+    )
+
+    st.markdown("""
+    **Step 4 — Determine the overall order**
+    """)
+
+    st.latex(
+        r"\boxed{\text{Overall order}=1+2=3}"
+    )
+
+    st.markdown("""
+    **Step 5 — Calculate k**
+    """)
+
+    st.latex(
+        r"\boxed{k=20\ \text{L}^2\text{mol}^{-2}\text{s}^{-1}}"
+    )
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 11. Practice question
+    # ---------------------------------------------------------
+
+    st.subheader("11. Check your understanding")
+
+    st.markdown("""
+    Consider the following experimental results:
+    """)
+
+    practice_data = {
+        "Experiment": [1, 2, 3],
+        "[A] (mol L⁻¹)": [0.10, 0.20, 0.10],
+        "[B] (mol L⁻¹)": [0.10, 0.10, 0.20],
+        "Initial rate (mol L⁻¹ s⁻¹)": [0.030, 0.060, 0.120]
+    }
+
+    st.dataframe(
+        practice_data,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    question = st.selectbox(
+        "What is the order with respect to A?",
+        [
+            "Select an answer",
+            "Zero order",
+            "First order",
+            "Second order",
+            "Third order"
+        ],
+        key="order_practice"
+    )
+
+    if question != "Select an answer":
+
+        if question == "First order":
+            st.success(
+                "Correct. When [A] doubles while [B] remains constant, "
+                "the rate also doubles. Therefore, the reaction is first order with respect to A."
+            )
+        else:
+            st.error(
+                "Not quite. Compare Experiments 1 and 2: [A] doubles while [B] "
+                "remains constant, and the rate also doubles. What does this tell you about the order?"
+            )
+
+    st.divider()
+
+    # ---------------------------------------------------------
+    # 12. Key points
+    # ---------------------------------------------------------
+
+    st.subheader("Key points")
+
+    st.markdown("""
+    - Reaction order describes how the rate depends on reactant concentration.
+    - The exponents in a rate law are determined experimentally.
+    - To determine the order with respect to one reactant, keep the other reactant concentrations constant.
+    - If doubling a concentration doubles the rate → **first order**.
+    - If doubling a concentration leaves the rate unchanged → **zero order**.
+    - If doubling a concentration makes the rate four times larger → **second order**.
+    - Overall order is the sum of the individual orders.
+    - Once the rate law is known, the rate constant \(k\) can be calculated.
+    """)
