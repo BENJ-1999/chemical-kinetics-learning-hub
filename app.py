@@ -931,14 +931,18 @@ elif topic == "Factors Affecting Reaction Rate":
     st.title("Factors Affecting Reaction Rate")
 
     st.write(
-        "Several factors can affect how quickly a chemical reaction occurs. "
-        "These factors influence the frequency of collisions and/or the "
-        "fraction of collisions that are effective."
+        "The rate of a chemical reaction depends on how often reactant "
+        "particles collide and how many of those collisions are effective."
     )
 
-    # -----------------------------------------------------
-    # CONCENTRATION
-    # -----------------------------------------------------
+    st.info(
+        "Remember: an effective collision requires sufficient energy to "
+        "overcome the activation energy, Ea, and the correct orientation."
+    )
+
+    # =====================================================
+    # 1. CONCENTRATION
+    # =====================================================
 
     st.header("1. Concentration")
 
@@ -948,164 +952,853 @@ elif topic == "Factors Affecting Reaction Rate":
     )
 
     st.write(
-        "With more particles present in the same volume, collisions occur "
-        "more frequently. This increases the number of effective collisions "
-        "per unit time and generally increases the reaction rate."
+        "This increases the frequency of collisions between reactant "
+        "particles. If the temperature and other conditions remain "
+        "constant, more effective collisions can occur per unit time."
     )
+
+    st.subheader("Interactive particle model")
 
     concentration_level = st.slider(
         "Reactant concentration",
-        min_value=1,
+        min_value=2,
         max_value=10,
         value=5,
-        key="concentration_factor"
+        step=1,
+        key="concentration_visual"
     )
 
-    st.metric(
-        "Relative particle concentration",
-        concentration_level
+    # Create a reproducible set of molecule positions
+    rng = np.random.default_rng(10)
+
+    max_molecules = 40
+
+    positions = rng.uniform(
+        low=0.08,
+        high=0.92,
+        size=(max_molecules, 2)
     )
 
-    # -----------------------------------------------------
-    # TEMPERATURE
-    # -----------------------------------------------------
+    visible_molecules = concentration_level * 4
+
+    fig_concentration, ax_concentration = plt.subplots(
+        figsize=(7, 4.5)
+    )
+
+    for i in range(visible_molecules):
+
+        x, y = positions[i]
+
+        circle = plt.Circle(
+            (x, y),
+            0.025,
+            fill=False,
+            linewidth=1.8
+        )
+
+        ax_concentration.add_patch(circle)
+
+    ax_concentration.set_xlim(0, 1)
+    ax_concentration.set_ylim(0, 1)
+    ax_concentration.set_aspect("equal")
+    ax_concentration.set_xticks([])
+    ax_concentration.set_yticks([])
+
+    ax_concentration.set_title(
+        f"Reactant molecules at relative concentration {concentration_level}"
+    )
+
+    st.pyplot(fig_concentration)
+
+    if concentration_level <= 3:
+
+        st.info(
+            "Lower concentration: fewer reactant molecules occupy the "
+            "same volume, so collisions occur less frequently."
+        )
+
+    elif concentration_level <= 6:
+
+        st.info(
+            "Moderate concentration: reactant molecules are more closely "
+            "packed, increasing the frequency of collisions."
+        )
+
+    else:
+
+        st.success(
+            "Higher concentration: more reactant molecules occupy the "
+            "same volume, so collisions occur more frequently."
+        )
+
+    st.markdown("""
+    **Key idea**
+
+    Higher concentration → more frequent collisions → more effective
+    collisions per unit time → generally faster reaction.
+    """)
+
+    # =====================================================
+    # 2. TEMPERATURE
+    # =====================================================
 
     st.header("2. Temperature")
 
     st.write(
         "Increasing temperature increases the average kinetic energy of "
-        "the particles."
+        "the particles. The particles therefore move faster."
     )
 
     st.write(
-        "As temperature increases, particles move faster and collisions "
-        "occur more frequently. More importantly, a greater fraction of "
-        "particles have enough energy to overcome the activation energy, "
-        "\(E_a\). Therefore, the number of effective collisions increases."
+        "More importantly, increasing temperature increases the fraction "
+        "of particles with enough energy to overcome the activation energy, "
+        "Ea."
     )
 
-    temperature = st.slider(
-        "Temperature (°C)",
-        min_value=10,
-        max_value=100,
-        value=25,
-        step=5,
-        key="temperature_factor"
+    st.subheader("Interactive temperature model")
+
+    temperature_level = st.slider(
+        "Temperature",
+        min_value=1,
+        max_value=3,
+        value=2,
+        step=1,
+        key="temperature_visual"
     )
 
-    fraction_above_ea = min(
-        95,
-        max(
-            5,
-            int(
-                10
-                + (temperature - 10) * 0.9
-            )
+    temperature_labels = {
+        1: "Lower temperature",
+        2: "Moderate temperature",
+        3: "Higher temperature"
+    }
+
+    temperature_speeds = {
+        1: 0.035,
+        2: 0.065,
+        3: 0.10
+    }
+
+    speed = temperature_speeds[temperature_level]
+
+    st.write(
+        f"**{temperature_labels[temperature_level]}**"
+    )
+
+    rng_temperature = np.random.default_rng(20)
+
+    temperature_positions = rng_temperature.uniform(
+        low=0.10,
+        high=0.90,
+        size=(12, 2)
+    )
+
+    fig_temperature, ax_temperature = plt.subplots(
+        figsize=(7, 4.5)
+    )
+
+    for x, y in temperature_positions:
+
+        # Different directions make the diagram look more like
+        # a collection of moving molecules.
+        angle = rng_temperature.uniform(0, 2 * np.pi)
+
+        dx = np.cos(angle) * speed
+        dy = np.sin(angle) * speed
+
+        circle = plt.Circle(
+            (x, y),
+            0.025,
+            fill=False,
+            linewidth=1.8
         )
+
+        ax_temperature.add_patch(circle)
+
+        ax_temperature.arrow(
+            x,
+            y,
+            dx,
+            dy,
+            head_width=0.012,
+            head_length=0.018,
+            length_includes_head=True
+        )
+
+    ax_temperature.set_xlim(0, 1)
+    ax_temperature.set_ylim(0, 1)
+    ax_temperature.set_aspect("equal")
+    ax_temperature.set_xticks([])
+    ax_temperature.set_yticks([])
+
+    ax_temperature.set_title(
+        "Conceptual model of particle motion"
     )
 
-    st.metric(
-        "Conceptual fraction with energy ≥ Ea",
-        f"{fraction_above_ea}%"
-    )
+    st.pyplot(fig_temperature)
+
+    if temperature_level == 1:
+
+        st.info(
+            "At lower temperature, particles have lower average kinetic "
+            "energy and move more slowly."
+        )
+
+    elif temperature_level == 2:
+
+        st.info(
+            "At moderate temperature, particles have a higher average "
+            "kinetic energy than at lower temperature."
+        )
+
+    else:
+
+        st.success(
+            "At higher temperature, particles move faster and a greater "
+            "fraction have energy equal to or greater than Ea."
+        )
 
     # -----------------------------------------------------
-    # SURFACE AREA
+    # ENERGY DISTRIBUTION CONCEPT
     # -----------------------------------------------------
+
+    st.subheader("Why does temperature have such a strong effect?")
+
+    st.write(
+        "Particles in a sample do not all have exactly the same kinetic "
+        "energy. They have a distribution of energies."
+    )
+
+    st.write(
+        "When the temperature increases, the energy distribution shifts "
+        "so that a greater fraction of particles have energy at or above "
+        "the activation energy."
+    )
+
+    energy = np.linspace(0, 10, 400)
+
+    # Two conceptual Maxwell-Boltzmann-like curves.
+    # These are deliberately normalised illustrative curves,
+    # not quantitative experimental distributions.
+
+    low_temperature = (
+        energy ** 1.2
+        * np.exp(-energy / 1.35)
+    )
+
+    high_temperature = (
+        energy ** 1.2
+        * np.exp(-energy / 2.2)
+    )
+
+    # Normalise only for visual comparison
+    low_temperature = (
+        low_temperature / np.max(low_temperature)
+    )
+
+    high_temperature = (
+        high_temperature / np.max(high_temperature)
+    )
+
+    activation_energy_position = 5.5
+
+    fig_energy, ax_energy = plt.subplots(
+        figsize=(8, 5)
+    )
+
+    ax_energy.plot(
+        energy,
+        low_temperature,
+        label="Lower temperature"
+    )
+
+    ax_energy.plot(
+        energy,
+        high_temperature,
+        label="Higher temperature"
+    )
+
+    ax_energy.axvline(
+        activation_energy_position,
+        linestyle="--",
+        label=r"$E_a$"
+    )
+
+    ax_energy.set_xlabel("Kinetic energy")
+    ax_energy.set_ylabel("Relative number of particles")
+    ax_energy.set_title(
+        "Conceptual energy distributions at different temperatures"
+    )
+
+    ax_energy.legend()
+    ax_energy.grid(True)
+
+    st.pyplot(fig_energy)
+
+    st.info(
+        "The shaded region is not shown quantitatively here. The key idea "
+        "is that at higher temperature, a greater fraction of particles "
+        "have energy ≥ Ea."
+    )
+
+    st.markdown("""
+    **Key idea**
+
+    Higher temperature → greater average kinetic energy → greater fraction
+    of particles with energy ≥ Ea → more effective collisions → faster reaction.
+    """)
+
+    # =====================================================
+    # 3. SURFACE AREA
+    # =====================================================
 
     st.header("3. Surface Area")
 
     st.write(
-        "For reactions involving a solid, increasing the surface area "
-        "exposes more particles at the surface where collisions can occur."
+        "Surface area is important when a reaction involves a solid."
     )
 
-    surface_area = st.slider(
-        "Relative surface area",
-        min_value=1,
-        max_value=10,
-        value=5,
-        key="surface_factor"
+    st.write(
+        "Only particles at the exposed surface of a solid are directly "
+        "available to collide with particles in another phase, such as "
+        "a gas or solution."
     )
 
-    st.metric(
-        "Relative exposed surface",
-        surface_area
+    surface_choice = st.radio(
+        "Choose a solid arrangement:",
+        [
+            "One large piece",
+            "Same amount divided into smaller pieces"
+        ],
+        horizontal=True,
+        key="surface_area_choice"
     )
 
-    st.info(
-        "A powdered solid generally has a greater exposed surface area "
-        "than the same amount of solid in a single large piece."
+    fig_surface, ax_surface = plt.subplots(
+        figsize=(7, 4.5)
     )
 
-    # -----------------------------------------------------
-    # CATALYST
-    # -----------------------------------------------------
+    if surface_choice == "One large piece":
+
+        large_piece = plt.Rectangle(
+            (0.30, 0.25),
+            0.40,
+            0.50,
+            fill=False,
+            linewidth=2.5
+        )
+
+        ax_surface.add_patch(large_piece)
+
+        # Surface particles
+        surface_points = [
+            (0.30, 0.25),
+            (0.50, 0.25),
+            (0.70, 0.25),
+            (0.30, 0.50),
+            (0.30, 0.75),
+            (0.50, 0.75),
+            (0.70, 0.75),
+            (0.70, 0.50)
+        ]
+
+        for x, y in surface_points:
+
+            ax_surface.plot(
+                x,
+                y,
+                marker="o",
+                markersize=7
+            )
+
+        ax_surface.set_title(
+            "One large piece: smaller exposed surface area"
+        )
+
+    else:
+
+        small_pieces = [
+            (0.18, 0.58),
+            (0.40, 0.58),
+            (0.62, 0.58),
+            (0.29, 0.32),
+            (0.51, 0.32),
+            (0.73, 0.32)
+        ]
+
+        for x, y in small_pieces:
+
+            piece = plt.Rectangle(
+                (x, y),
+                0.15,
+                0.15,
+                fill=False,
+                linewidth=2
+            )
+
+            ax_surface.add_patch(piece)
+
+        ax_surface.set_title(
+            "Smaller pieces: greater total exposed surface area"
+        )
+
+    ax_surface.set_xlim(0, 1)
+    ax_surface.set_ylim(0, 1)
+    ax_surface.set_aspect("equal")
+    ax_surface.set_xticks([])
+    ax_surface.set_yticks([])
+
+    st.pyplot(fig_surface)
+
+    if surface_choice == "One large piece":
+
+        st.info(
+            "A smaller fraction of the solid's particles are exposed at "
+            "the surface."
+        )
+
+    else:
+
+        st.success(
+            "Breaking the same amount of solid into smaller pieces increases "
+            "the total exposed surface area."
+        )
+
+    st.markdown("""
+    **Key idea**
+
+    Greater surface area → more exposed particles → more opportunities
+    for collisions → generally faster reaction.
+    """)
+
+    # =====================================================
+    # 4. CATALYST
+    # =====================================================
 
     st.header("4. Catalyst")
 
     st.write(
-        "A catalyst increases the reaction rate by providing an "
-        "alternative reaction pathway with a lower activation energy."
-    )
-
-    st.latex(
-        r"E_{a,\mathrm{catalysed}} < E_{a,\mathrm{uncatalysed}}"
+        "A catalyst increases reaction rate by providing an alternative "
+        "reaction pathway with a lower activation energy."
     )
 
     st.write(
-        "Because the activation energy is lower, a greater fraction of "
-        "collisions can have sufficient energy to result in reaction."
+        "The catalyst does not change the identities or energies of the "
+        "reactants and products, so the overall enthalpy change, ΔH, "
+        "remains the same."
     )
 
-    st.write(
-        "A catalyst is not consumed overall in the reaction and does not "
-        "change the overall enthalpy change of the reaction."
+    catalyst_present = st.radio(
+        "Reaction pathway:",
+        [
+            "Without catalyst",
+            "With catalyst"
+        ],
+        horizontal=True,
+        key="catalyst_pathway"
     )
 
-    catalyst = st.checkbox(
-        "Add catalyst",
-        value=False,
-        key="catalyst_factor"
+    reaction_coordinate = np.linspace(0, 10, 300)
+
+    reactant_energy = 2.0
+    product_energy = 4.0
+
+    # Uncatalysed pathway
+    uncatalysed_peak = 8.0
+    uncatalysed_curve = (
+        reactant_energy
+        + (
+            uncatalysed_peak - reactant_energy
+        )
+        * np.exp(
+            -((reaction_coordinate - 5.0) ** 2) / 1.6
+        )
     )
 
-    if catalyst:
+    # Catalysed pathway
+    catalysed_peak = 5.8
+    catalysed_curve = (
+        reactant_energy
+        + (
+            catalysed_peak - reactant_energy
+        )
+        * np.exp(
+            -((reaction_coordinate - 5.0) ** 2) / 1.6
+        )
+    )
+
+    # Correct the product end of both curves
+    product_transition = (
+        1 / (
+            1 + np.exp(
+                -(reaction_coordinate - 7.0) * 4
+            )
+        )
+    )
+
+    uncatalysed_curve = (
+        uncatalysed_curve
+        * (1 - product_transition)
+        + product_energy * product_transition
+    )
+
+    catalysed_curve = (
+        catalysed_curve
+        * (1 - product_transition)
+        + product_energy * product_transition
+    )
+
+    fig_catalyst, ax_catalyst = plt.subplots(
+        figsize=(8, 5)
+    )
+
+    ax_catalyst.plot(
+        reaction_coordinate,
+        uncatalysed_curve,
+        linestyle="--",
+        label="Uncatalysed pathway"
+    )
+
+    ax_catalyst.plot(
+        reaction_coordinate,
+        catalysed_curve,
+        label="Catalysed pathway"
+    )
+
+    ax_catalyst.axhline(
+        reactant_energy,
+        linestyle=":",
+        label="Reactants"
+    )
+
+    ax_catalyst.axhline(
+        product_energy,
+        linestyle="-.",
+        label="Products"
+    )
+
+    ax_catalyst.set_xlabel("Reaction progress")
+    ax_catalyst.set_ylabel("Potential energy")
+    ax_catalyst.set_title(
+        "Energy Profile: Catalysed and Uncatalysed Pathways"
+    )
+
+    ax_catalyst.legend()
+    ax_catalyst.grid(True)
+
+    st.pyplot(fig_catalyst)
+
+    if catalyst_present == "With catalyst":
 
         st.success(
-            "Catalyst present: the alternative pathway has a lower activation energy."
+            "With a catalyst, the reaction follows a pathway with a lower "
+            "activation energy."
+        )
+
+        st.latex(
+            r"E_{a,\mathrm{catalysed}}"
+            r"<"
+            r"E_{a,\mathrm{uncatalysed}}"
         )
 
     else:
 
         st.info(
-            "No catalyst: the reaction follows the uncatalysed pathway."
+            "Without a catalyst, the reaction follows the pathway with "
+            "the higher activation energy."
         )
 
-    # -----------------------------------------------------
-    # SUMMARY
-    # -----------------------------------------------------
+    st.write(
+        "Notice that the reactant and product energy levels remain the "
+        "same. Therefore, the overall ΔH of the reaction is unchanged."
+    )
+
+    st.markdown("""
+    **Key idea**
+
+    Catalyst → alternative pathway → lower \(E_a\) → greater fraction of
+    collisions can overcome \(E_a\) → faster reaction.
+    """)
+
+    # =====================================================
+    # COMPARING THE FOUR FACTORS
+    # =====================================================
+
+    st.header("Compare the Factors")
+
+    st.write(
+        "Use the activity below to identify the main reason each factor "
+        "changes the reaction rate."
+    )
+
+    comparison_factor = st.selectbox(
+        "Choose a factor:",
+        [
+            "Concentration",
+            "Temperature",
+            "Surface area",
+            "Catalyst"
+        ],
+        key="factor_comparison"
+    )
+
+    if comparison_factor == "Concentration":
+
+        st.write(
+            "**Question:** Why does increasing concentration generally "
+            "increase reaction rate?"
+        )
+
+        answer = st.radio(
+            "Choose the best explanation:",
+            [
+                "Particles become larger",
+                "There are more frequent collisions between reactant particles",
+                "The activation energy always increases",
+                "The products become more stable"
+            ],
+            key="compare_concentration"
+        )
+
+        if st.button(
+            "Check concentration answer",
+            key="check_concentration"
+        ):
+
+            if answer == (
+                "There are more frequent collisions between reactant particles"
+            ):
+
+                st.success(
+                    "Correct. More reactant particles in the same volume "
+                    "lead to more frequent collisions."
+                )
+
+            else:
+
+                st.error(
+                    "Not quite. Increasing concentration mainly increases "
+                    "the frequency of collisions."
+                )
+
+    elif comparison_factor == "Temperature":
+
+        st.write(
+            "**Question:** Why does increasing temperature generally "
+            "increase reaction rate?"
+        )
+
+        answer = st.radio(
+            "Choose the best explanation:",
+            [
+                "All particles suddenly have the same energy",
+                "The activation energy becomes zero",
+                "A greater fraction of particles have energy ≥ Ea",
+                "The concentration automatically doubles"
+            ],
+            key="compare_temperature"
+        )
+
+        if st.button(
+            "Check temperature answer",
+            key="check_temperature"
+        ):
+
+            if answer == (
+                "A greater fraction of particles have energy ≥ Ea"
+            ):
+
+                st.success(
+                    "Correct. Increasing temperature increases the fraction "
+                    "of particles energetic enough to overcome Ea."
+                )
+
+            else:
+
+                st.error(
+                    "Not quite. The important idea is that a greater fraction "
+                    "of particles have energy ≥ Ea."
+                )
+
+    elif comparison_factor == "Surface area":
+
+        st.write(
+            "**Question:** Why does increasing the surface area of a solid "
+            "generally increase reaction rate?"
+        )
+
+        answer = st.radio(
+            "Choose the best explanation:",
+            [
+                "The solid becomes chemically different",
+                "More particles are exposed at the surface",
+                "The activation energy becomes zero",
+                "The mass of the solid automatically increases"
+            ],
+            key="compare_surface"
+        )
+
+        if st.button(
+            "Check surface-area answer",
+            key="check_surface"
+        ):
+
+            if answer == (
+                "More particles are exposed at the surface"
+            ):
+
+                st.success(
+                    "Correct. A greater exposed surface provides more "
+                    "opportunities for collisions."
+                )
+
+            else:
+
+                st.error(
+                    "Not quite. Increasing surface area exposes more "
+                    "particles to potential collisions."
+                )
+
+    else:
+
+        st.write(
+            "**Question:** How does a catalyst increase reaction rate?"
+        )
+
+        answer = st.radio(
+            "Choose the best explanation:",
+            [
+                "It increases the overall ΔH",
+                "It increases the concentration of products",
+                "It provides an alternative pathway with lower Ea",
+                "It permanently changes the reactants"
+            ],
+            key="compare_catalyst"
+        )
+
+        if st.button(
+            "Check catalyst answer",
+            key="check_catalyst"
+        ):
+
+            if answer == (
+                "It provides an alternative pathway with lower Ea"
+            ):
+
+                st.success(
+                    "Correct. A catalyst provides an alternative pathway "
+                    "with a lower activation energy."
+                )
+
+            else:
+
+                st.error(
+                    "Not quite. A catalyst increases reaction rate by "
+                    "providing an alternative pathway with lower Ea."
+                )
+
+    # =====================================================
+    # SUMMARY TABLE
+    # =====================================================
 
     st.header("Summary")
 
     st.markdown("""
-    | Factor | Effect on reaction rate |
-    |---|---|
-    | **Concentration** | More frequent collisions |
-    | **Temperature** | More particles have energy ≥ \(E_a\) |
-    | **Surface area** | More exposed particles available for collisions |
-    | **Catalyst** | Provides an alternative pathway with lower \(E_a\) |
+    | Factor | Main effect | Why the rate changes |
+    |---|---|---|
+    | **Concentration** | More frequent collisions | More reactant particles are present in the same volume |
+    | **Temperature** | More particles have energy ≥ \(E_a\) | A greater fraction of collisions can be effective |
+    | **Surface area** | More exposed particles | More opportunities for collisions at a solid surface |
+    | **Catalyst** | Lower \(E_a\) pathway | A greater fraction of collisions can overcome \(E_a\) |
     """)
 
+    # =====================================================
+    # CHECK YOUR UNDERSTANDING
+    # =====================================================
 
-# =========================================================
-# OTHER TOPICS — TEMPORARY PLACEHOLDERS
-# =========================================================
+    st.header("Check Your Understanding")
 
-else:
+    st.write(
+        "Test whether you can explain the factors using collision theory."
+    )
 
-    st.title(topic)
+    q1 = st.radio(
+        "1. A reaction is carried out at a higher concentration, "
+        "with temperature unchanged. What is the main effect?",
+        [
+            "The particles have greater average kinetic energy",
+            "There are more frequent collisions",
+            "The activation energy increases",
+            "The products disappear"
+        ],
+        key="factor_q1"
+    )
 
-    st.info(
-        "This section is currently being developed. "
-        "More interactive activities will be added soon."
+    if st.button("Check Question 1", key="factor_check1"):
+
+        if q1 == "There are more frequent collisions":
+
+            st.success("Correct!")
+
+        else:
+
+            st.error(
+                "Not quite. Increasing concentration increases the "
+                "frequency of collisions."
+            )
+
+    q2 = st.radio(
+        "2. Why does increasing temperature increase the number of "
+        "effective collisions?",
+        [
+            "All collisions become effective",
+            "The activation energy becomes zero",
+            "A greater fraction of particles have energy ≥ Ea",
+            "The particles stop moving"
+        ],
+        key="factor_q2"
+    )
+
+    if st.button("Check Question 2", key="factor_check2"):
+
+        if q2 == "A greater fraction of particles have energy ≥ Ea":
+
+            st.success("Correct!")
+
+        else:
+
+            st.error(
+                "Not quite. Higher temperature increases the fraction "
+                "of particles with energy ≥ Ea."
+            )
+
+    q3 = st.radio(
+        "3. Which statement about a catalyst is correct?",
+        [
+            "A catalyst increases the overall ΔH",
+            "A catalyst is always consumed completely",
+            "A catalyst provides an alternative pathway with lower Ea",
+            "A catalyst changes the products into different substances"
+        ],
+        key="factor_q3"
+    )
+
+    if st.button("Check Question 3", key="factor_check3"):
+
+        if q3 == (
+            "A catalyst provides an alternative pathway with lower Ea"
+        ):
+
+            st.success("Correct!")
+
+        else:
+
+            st.error(
+                "Not quite. A catalyst provides an alternative pathway "
+                "with a lower activation energy."
+            )
+
+    st.success(
+        "Excellent. The key connection is: reaction conditions affect "
+        "the frequency of collisions and/or the fraction of collisions "
+        "that are effective."
     )
