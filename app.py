@@ -1802,3 +1802,647 @@ elif topic == "Factors Affecting Reaction Rate":
         "the frequency of collisions and/or the fraction of collisions "
         "that are effective."
     )
+    # =========================================================
+# RATE LAWS
+# =========================================================
+
+elif topic == "Rate Laws":
+
+    st.title("Rate Laws")
+
+    st.write(
+        "A rate law describes how the rate of a reaction depends on the "
+        "concentrations of the reactants."
+    )
+
+    st.info(
+        "A rate law is determined experimentally. The exponents in a "
+        "rate law are not automatically taken from the stoichiometric "
+        "coefficients of the balanced chemical equation."
+    )
+
+    # =====================================================
+    # 1. INTRODUCTION
+    # =====================================================
+
+    st.header("1. What Is a Rate Law?")
+
+    st.write(
+        "For many reactions, changing the concentration of a reactant "
+        "changes the reaction rate. A rate law gives the mathematical "
+        "relationship between reactant concentration and reaction rate."
+    )
+
+    st.subheader("General form")
+
+    st.latex(
+        r"\boxed{\text{rate}=k[\mathrm{A}]^m[\mathrm{B}]^n}"
+    )
+
+    st.write(
+        "For this rate law:"
+    )
+
+    st.markdown("""
+    - **rate** = reaction rate
+    - **k** = rate constant
+    - **[A] and [B]** = concentrations of reactants A and B
+    - **m and n** = reaction orders with respect to A and B
+    """)
+
+    st.write(
+        "The values of \(m\) and \(n\) determine how strongly the reaction "
+        "rate depends on the concentration of each reactant."
+    )
+
+    # =====================================================
+    # 2. RATE CONSTANT
+    # =====================================================
+
+    st.header("2. The Rate Constant, k")
+
+    st.write(
+        "The constant \(k\) is called the **rate constant**. For a given "
+        "reaction under specified conditions, \(k\) has a constant value."
+    )
+
+    st.write(
+        "The value of \(k\) depends on conditions such as temperature and "
+        "the nature of the reaction."
+    )
+
+    st.write(
+        "A larger value of \(k\) generally corresponds to a faster reaction "
+        "when the reactant concentrations and reaction orders are the same."
+    )
+
+    st.warning(
+        "The units of \(k\) depend on the overall reaction order."
+    )
+
+    # =====================================================
+    # 3. REACTION ORDER
+    # =====================================================
+
+    st.header("3. Reaction Order")
+
+    st.write(
+        "The exponent of a reactant concentration in the rate law tells "
+        "us the order of the reaction with respect to that reactant."
+    )
+
+    st.subheader("Order with respect to A")
+
+    st.latex(
+        r"\text{rate}=k[\mathrm{A}]^m"
+    )
+
+    st.write(
+        "The reaction is said to be **\(m\)th order with respect to A**."
+    )
+
+    st.subheader("Overall reaction order")
+
+    st.write(
+        "The overall reaction order is the sum of the individual reaction "
+        "orders."
+    )
+
+    st.latex(
+        r"\boxed{\text{Overall order}=m+n}"
+    )
+
+    st.write(
+        "For example, if a rate law is:"
+    )
+
+    st.latex(
+        r"\text{rate}=k[\mathrm{A}]^2[\mathrm{B}]"
+    )
+
+    st.write(
+        "then the reaction is:"
+    )
+
+    st.markdown("""
+    - second order with respect to A
+    - first order with respect to B
+    - third order overall
+    """)
+
+    st.latex(
+        r"\text{Overall order}=2+1=3"
+    )
+
+    # =====================================================
+    # 4. WHAT DO THE EXPONENTS MEAN?
+    # =====================================================
+
+    st.header("4. What Do the Exponents Mean?")
+
+    st.write(
+        "The exponent tells us how the reaction rate changes when the "
+        "concentration of that reactant changes."
+    )
+
+    st.subheader("Zero order")
+
+    st.latex(
+        r"\text{rate}=k[\mathrm{A}]^0"
+    )
+
+    st.write(
+        "Because any non-zero quantity raised to the power of zero is 1:"
+    )
+
+    st.latex(
+        r"[\mathrm{A}]^0=1"
+    )
+
+    st.latex(
+        r"\boxed{\text{rate}=k}"
+    )
+
+    st.write(
+        "The rate does not depend on the concentration of A."
+    )
+
+    st.subheader("First order")
+
+    st.latex(
+        r"\text{rate}=k[\mathrm{A}]"
+    )
+
+    st.write(
+        "The rate is directly proportional to the concentration of A."
+    )
+
+    st.markdown("""
+    If [A] doubles:
+
+    **rate doubles**
+    """)
+
+    st.subheader("Second order")
+
+    st.latex(
+        r"\text{rate}=k[\mathrm{A}]^2"
+    )
+
+    st.write(
+        "The rate is proportional to the square of the concentration of A."
+    )
+
+    st.markdown("""
+    If [A] doubles:
+
+    **rate increases by a factor of 4**
+    """)
+
+    # =====================================================
+    # 5. INTERACTIVE EXPONENT EXPLORER
+    # =====================================================
+
+    st.header("5. Interactive Rate-Law Explorer")
+
+    st.write(
+        "Change the concentration of A and the reaction order to see "
+        "how the reaction rate changes."
+    )
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+
+        concentration_A = st.slider(
+            "Concentration of A (mol L⁻¹)",
+            min_value=0.1,
+            max_value=2.0,
+            value=1.0,
+            step=0.1,
+            key="rate_law_concentration"
+        )
+
+    with col2:
+
+        reaction_order_A = st.selectbox(
+            "Order with respect to A",
+            [0, 1, 2, 3],
+            index=1,
+            key="rate_law_order"
+        )
+
+    with col3:
+
+        rate_constant = st.number_input(
+            "Rate constant, k",
+            min_value=0.01,
+            max_value=10.0,
+            value=1.0,
+            step=0.1,
+            key="rate_law_k"
+        )
+
+    calculated_rate = (
+        rate_constant
+        * concentration_A ** reaction_order_A
+    )
+
+    st.latex(
+        rf"\text{{rate}}=k[\mathrm{{A}}]^{{{reaction_order_A}}}"
+    )
+
+    st.metric(
+        "Calculated rate",
+        f"{calculated_rate:.3f}"
+    )
+
+    if reaction_order_A == 0:
+
+        st.info(
+            "Zero order: changing [A] does not change the rate."
+        )
+
+    elif reaction_order_A == 1:
+
+        st.info(
+            "First order: doubling [A] doubles the rate."
+        )
+
+    elif reaction_order_A == 2:
+
+        st.info(
+            "Second order: doubling [A] increases the rate by a factor of 4."
+        )
+
+    else:
+
+        st.info(
+            f"Third order: doubling [A] increases the rate by a factor of 8."
+        )
+
+    # =====================================================
+    # 6. HOW CONCENTRATION AFFECTS RATE
+    # =====================================================
+
+    st.header("6. How Does Concentration Affect Rate?")
+
+    st.write(
+        "The effect of changing concentration depends on the reaction order."
+    )
+
+    selected_order = st.slider(
+        "Select the reaction order",
+        min_value=0,
+        max_value=3,
+        value=1,
+        step=1,
+        key="order_comparison"
+    )
+
+    initial_concentration = 1.0
+    doubled_concentration = 2.0
+
+    initial_rate_relative = (
+        initial_concentration ** selected_order
+    )
+
+    doubled_rate_relative = (
+        doubled_concentration ** selected_order
+    )
+
+    if initial_rate_relative != 0:
+
+        rate_factor = (
+            doubled_rate_relative
+            / initial_rate_relative
+        )
+
+    else:
+
+        rate_factor = 1
+
+    st.write(
+        f"Consider a reaction with order **{selected_order}** with respect "
+        "to A."
+    )
+
+    st.latex(
+        rf"\text{{rate}}\propto[\mathrm{{A}}]^{{{selected_order}}}"
+    )
+
+    result_col1, result_col2, result_col3 = st.columns(3)
+
+    with result_col1:
+
+        st.metric(
+            "[A] before",
+            "1.0 mol L⁻¹"
+        )
+
+    with result_col2:
+
+        st.metric(
+            "[A] after",
+            "2.0 mol L⁻¹"
+        )
+
+    with result_col3:
+
+        st.metric(
+            "Rate change",
+            f"{rate_factor:.0f} ×"
+        )
+
+    if selected_order == 0:
+
+        st.success(
+            "Zero order: doubling the concentration does not change the rate."
+        )
+
+    elif selected_order == 1:
+
+        st.success(
+            "First order: doubling the concentration doubles the rate."
+        )
+
+    elif selected_order == 2:
+
+        st.success(
+            "Second order: doubling the concentration makes the rate "
+            "four times larger."
+        )
+
+    else:
+
+        st.success(
+            "Third order: doubling the concentration makes the rate "
+            "eight times larger."
+        )
+
+    # =====================================================
+    # 7. TWO-REACTANT RATE LAW
+    # =====================================================
+
+    st.header("7. Rate Laws with More Than One Reactant")
+
+    st.write(
+        "A rate law can contain more than one reactant concentration."
+    )
+
+    st.latex(
+        r"\boxed{\text{rate}=k[\mathrm{A}]^m[\mathrm{B}]^n}"
+    )
+
+    st.write(
+        "For example:"
+    )
+
+    st.latex(
+        r"\text{rate}=k[\mathrm{A}]^2[\mathrm{B}]"
+    )
+
+    st.write(
+        "This tells us that:"
+    )
+
+    st.markdown("""
+    - the reaction is second order with respect to A
+    - the reaction is first order with respect to B
+    - the reaction is third order overall
+    """)
+
+    st.latex(
+        r"\text{Overall order}=2+1=3"
+    )
+
+    # =====================================================
+    # 8. INTERACTIVE TWO-REACTANT RATE LAW
+    # =====================================================
+
+    st.header("8. Interactive Two-Reactant Rate Law")
+
+    st.write(
+        "Explore how changing the concentrations of A and B affects "
+        "the reaction rate."
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        concentration_A_two = st.slider(
+            "Concentration of A (mol L⁻¹)",
+            min_value=0.1,
+            max_value=2.0,
+            value=1.0,
+            step=0.1,
+            key="two_reactant_A"
+        )
+
+        order_A_two = st.selectbox(
+            "Order with respect to A",
+            [0, 1, 2],
+            index=1,
+            key="two_reactant_order_A"
+        )
+
+    with col2:
+
+        concentration_B_two = st.slider(
+            "Concentration of B (mol L⁻¹)",
+            min_value=0.1,
+            max_value=2.0,
+            value=1.0,
+            step=0.1,
+            key="two_reactant_B"
+        )
+
+        order_B_two = st.selectbox(
+            "Order with respect to B",
+            [0, 1, 2],
+            index=1,
+            key="two_reactant_order_B"
+        )
+
+    k_two = 1.0
+
+    two_reactant_rate = (
+        k_two
+        * concentration_A_two ** order_A_two
+        * concentration_B_two ** order_B_two
+    )
+
+    st.latex(
+        rf"\text{{rate}}="
+        rf"k[\mathrm{{A}}]^{{{order_A_two}}}"
+        rf"[\mathrm{{B}}]^{{{order_B_two}}}"
+    )
+
+    st.metric(
+        "Calculated relative rate",
+        f"{two_reactant_rate:.3f}"
+    )
+
+    overall_order_two = (
+        order_A_two + order_B_two
+    )
+
+    st.info(
+        f"Overall reaction order = "
+        f"{order_A_two} + {order_B_two} = "
+        f"{overall_order_two}"
+    )
+
+    # =====================================================
+    # 9. IMPORTANT NOTE ABOUT STOICHIOMETRY
+    # =====================================================
+
+    st.header("9. Rate Law vs Balanced Equation")
+
+    st.write(
+        "It is important not to assume that the exponents in a rate law "
+        "are the same as the stoichiometric coefficients in the balanced "
+        "chemical equation."
+    )
+
+    st.latex(
+        r"\mathrm{A+2B\rightarrow products}"
+    )
+
+    st.write(
+        "For a general reaction, the experimentally determined rate law "
+        "could, for example, be:"
+    )
+
+    st.latex(
+        r"\text{rate}=k[\mathrm{A}]^2[\mathrm{B}]"
+    )
+
+    st.warning(
+        "The exponents in an experimentally determined rate law must be "
+        "determined from experimental data. They cannot generally be "
+        "obtained simply by looking at the balanced equation."
+    )
+
+    # =====================================================
+    # 10. CHECK YOUR UNDERSTANDING
+    # =====================================================
+
+    st.header("Check Your Understanding")
+
+    question1 = st.radio(
+        "1. What does the exponent of a reactant concentration in a "
+        "rate law tell us?",
+        [
+            "The molar mass of the reactant",
+            "The reaction order with respect to that reactant",
+            "The activation energy",
+            "The temperature of the reaction"
+        ],
+        key="rate_law_question1"
+    )
+
+    if st.button(
+        "Check Question 1",
+        key="rate_law_check1"
+    ):
+
+        if question1 == (
+            "The reaction order with respect to that reactant"
+        ):
+
+            st.success(
+                "Correct! The exponent gives the reaction order "
+                "with respect to that reactant."
+            )
+
+        else:
+
+            st.error(
+                "Not quite. The exponent tells us the reaction order "
+                "with respect to that reactant."
+            )
+
+    question2 = st.radio(
+        "2. For rate = k[A]², what happens to the rate if [A] doubles?",
+        [
+            "The rate stays the same",
+            "The rate doubles",
+            "The rate becomes four times larger",
+            "The rate becomes eight times larger"
+        ],
+        key="rate_law_question2"
+    )
+
+    if st.button(
+        "Check Question 2",
+        key="rate_law_check2"
+    ):
+
+        if question2 == (
+            "The rate becomes four times larger"
+        ):
+
+            st.success(
+                "Correct! For a second-order dependence, "
+                "2² = 4."
+            )
+
+        else:
+
+            st.error(
+                "Not quite. If [A] doubles, the rate changes by "
+                "2² = 4."
+            )
+
+    question3 = st.radio(
+        "3. How are the exponents in a rate law usually determined?",
+        [
+            "From the molar masses of the reactants",
+            "From the balanced equation in every case",
+            "Experimentally",
+            "From the colour of the reaction"
+        ],
+        key="rate_law_question3"
+    )
+
+    if st.button(
+        "Check Question 3",
+        key="rate_law_check3"
+    ):
+
+        if question3 == "Experimentally":
+
+            st.success(
+                "Correct! Reaction orders are generally determined "
+                "experimentally."
+            )
+
+        else:
+
+            st.error(
+                "Not quite. Reaction orders are generally determined "
+                "from experimental measurements."
+            )
+
+    # =====================================================
+    # KEY POINTS
+    # =====================================================
+
+    st.header("Key Points")
+
+    st.markdown("""
+    **Remember:**
+
+    1. A rate law describes how reaction rate depends on reactant concentrations.
+    2. The general form is \( \text{rate}=k[A]^m[B]^n \).
+    3. \(k\) is the rate constant.
+    4. The exponent gives the order with respect to that reactant.
+    5. The overall order is the sum of the individual orders.
+    6. Zero-order reactions do not depend on that reactant concentration.
+    7. First-order dependence means doubling concentration doubles the rate.
+    8. Second-order dependence means doubling concentration makes the rate four times larger.
+    9. Reaction orders are generally determined experimentally.
+    10. The exponents in a rate law cannot generally be obtained from the balanced equation.
+    """) 
