@@ -4518,3 +4518,518 @@ elif topic == "Catalysts":
     - A catalyst allows equilibrium to be reached **more quickly**.
     - Catalysts increase reaction rate without being consumed overall.
     """)
+
+elif topic == "Reaction Mechanisms":
+
+    st.header("Reaction Mechanisms")
+
+    st.markdown("""
+    ### What is a reaction mechanism?
+
+    A **reaction mechanism** describes the individual steps by which a chemical
+    reaction occurs.
+
+    A chemical reaction that appears to occur in one step in the overall equation
+    may actually occur through several smaller steps called **elementary steps**.
+    """)
+
+    st.markdown("### Overall Reaction vs Reaction Mechanism")
+
+    st.markdown("""
+    Consider the overall reaction:
+    """)
+
+    st.latex(
+        r"\boxed{A+B\rightarrow C}"
+    )
+
+    st.markdown("""
+    This equation tells us the overall change in reactants and products.
+
+    It does **not necessarily tell us how the reaction occurs at the molecular level**.
+    """)
+
+    st.markdown("""
+    For example, the reaction could occur through two elementary steps:
+    """)
+
+    st.latex(
+        r"A+B\rightarrow I"
+    )
+
+    st.latex(
+        r"I\rightarrow C"
+    )
+
+    st.markdown("""
+    Here, **I** is a reaction intermediate.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Elementary Steps")
+
+    st.markdown("""
+    An **elementary step** represents a single molecular event in a reaction
+    mechanism.
+
+    For an elementary step, the rate law can be related directly to the reacting
+    species in that step.
+    """)
+
+    st.markdown("For example:")
+
+    st.latex(
+        r"A+B\rightarrow C"
+    )
+
+    st.markdown("""
+    For this elementary step, the rate law is:
+    """)
+
+    st.latex(
+        r"\boxed{\text{rate}=k[A][B]}"
+    )
+
+    st.markdown("""
+    This is different from an overall reaction, where the experimentally determined
+    rate law may not be directly related to the coefficients in the overall balanced
+    equation.
+    """)
+
+    st.info(
+        "The coefficients in an overall chemical equation cannot generally be used directly as exponents in the rate law."
+    )
+
+    st.markdown("---")
+
+    st.markdown("### Reaction Intermediates")
+
+    st.markdown("""
+    A **reaction intermediate** is a species that is produced in one elementary step
+    and consumed in a later step.
+
+    It appears in the mechanism but does **not appear in the overall reaction**.
+    """)
+
+    st.markdown("Consider the mechanism:")
+
+    st.latex(
+        r"A+B\rightarrow I"
+    )
+
+    st.latex(
+        r"I+D\rightarrow C"
+    )
+
+    st.markdown("""
+    Adding the two elementary steps gives:
+    """)
+
+    st.latex(
+        r"A+B+I+D\rightarrow I+C"
+    )
+
+    st.markdown("""
+    The intermediate \(I\) appears on both sides and cancels:
+    """)
+
+    st.latex(
+        r"\boxed{A+B+D\rightarrow C}"
+    )
+
+    st.markdown("""
+    Therefore, \(I\) is an **intermediate**.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Identifying an Intermediate")
+
+    st.markdown("""
+    An intermediate:
+
+    - is **formed** in one step,
+    - is **consumed** in a later step,
+    - does not appear in the overall reaction.
+    """)
+
+    mechanism_data = {
+        "Species": [
+            "A",
+            "B",
+            "I",
+            "D",
+            "C"
+        ],
+        "Role": [
+            "Reactant",
+            "Reactant",
+            "Intermediate",
+            "Reactant",
+            "Product"
+        ]
+    }
+
+    st.table(mechanism_data)
+
+    st.markdown("---")
+
+    st.markdown("### Slow and Fast Elementary Steps")
+
+    st.markdown("""
+    Different elementary steps can occur at different rates.
+
+    A reaction mechanism may contain:
+
+    - a **fast step**, which occurs relatively quickly
+    - a **slow step**, which occurs relatively slowly
+    """)
+
+    st.markdown("""
+    Consider the mechanism:
+    """)
+
+    st.latex(
+        r"A+B\rightarrow I\qquad\text{fast}"
+    )
+
+    st.latex(
+        r"I+D\rightarrow C\qquad\text{slow}"
+    )
+
+    st.markdown("""
+    The slow step is often important in determining the overall reaction rate.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Rate-Determining Step")
+
+    st.markdown("""
+    The **rate-determining step** is the slow step in a simplified mechanism that
+    limits the overall rate of the reaction.
+
+    Because this step is slow, the reaction cannot proceed overall much faster than
+    this step allows.
+    """)
+
+    st.latex(
+        r"\boxed{\text{Slow step}\quad\Rightarrow\quad\text{rate-determining step}}"
+    )
+
+    st.warning(
+        "For more complicated mechanisms, determining the rate law from a mechanism can require additional kinetic analysis. The slow-step approximation is a useful introductory model."
+    )
+
+    st.markdown("---")
+
+    st.markdown("### Worked Example")
+
+    st.markdown("""
+    Consider the mechanism:
+    """)
+
+    st.latex(
+        r"A+B\rightarrow I\qquad\text{slow}"
+    )
+
+    st.latex(
+        r"I\rightarrow C\qquad\text{fast}"
+    )
+
+    st.markdown("""
+    The slow step is the first step, so it is the rate-determining step.
+
+    For this elementary slow step:
+    """)
+
+    st.latex(
+        r"\boxed{\text{rate}=k[A][B]}"
+    )
+
+    st.markdown("""
+    Notice that the intermediate \(I\) does not appear in the rate law because it is
+    formed in the first step and consumed in the second step.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Interactive Mechanism Explorer")
+
+    mechanism_choice = st.selectbox(
+        "Choose a mechanism:",
+        [
+            "One-step reaction",
+            "Two-step reaction with an intermediate",
+            "Two-step reaction with a slow first step"
+        ],
+        key="mechanism_choice"
+    )
+
+    if mechanism_choice == "One-step reaction":
+
+        st.markdown("#### Mechanism")
+
+        st.latex(
+            r"A+B\rightarrow C"
+        )
+
+        st.markdown("""
+        This mechanism contains one elementary step.
+        """)
+
+        st.latex(
+            r"\boxed{\text{rate}=k[A][B]}"
+        )
+
+        st.success(
+            "There is no intermediate because the reaction occurs in a single elementary step."
+        )
+
+    elif mechanism_choice == "Two-step reaction with an intermediate":
+
+        st.markdown("#### Mechanism")
+
+        st.latex(
+            r"A+B\rightarrow I"
+        )
+
+        st.latex(
+            r"I\rightarrow C"
+        )
+
+        st.markdown("""
+        \(I\) is formed in the first step and consumed in the second step.
+        Therefore, \(I\) is an intermediate.
+        """)
+
+        st.latex(
+            r"\boxed{A+B+I\rightarrow I+C}"
+        )
+
+        st.markdown("After cancelling the intermediate:")
+
+        st.latex(
+            r"\boxed{A+B\rightarrow C}"
+        )
+
+        st.success(
+            "Correct: I is an intermediate because it is produced and then consumed."
+        )
+
+    else:
+
+        st.markdown("#### Mechanism")
+
+        st.latex(
+            r"A+B\rightarrow I\qquad\text{slow}"
+        )
+
+        st.latex(
+            r"I\rightarrow C\qquad\text{fast}"
+        )
+
+        st.markdown("""
+        The first step is slow, so it is the rate-determining step.
+        """)
+
+        st.latex(
+            r"\boxed{\text{rate}=k[A][B]}"
+        )
+
+        st.success(
+            "The rate law follows the reactants involved in the slow elementary step in this simplified mechanism."
+        )
+
+    st.markdown("---")
+
+    st.markdown("### Mechanisms and Rate Laws")
+
+    st.markdown("""
+    This is an important connection between reaction mechanisms and kinetics.
+
+    The **overall balanced equation** tells us the overall stoichiometric change.
+
+    The **experimentally determined rate law** tells us how the reaction rate depends
+    on reactant concentrations.
+
+    A proposed mechanism must be consistent with the experimentally observed rate law.
+    """)
+
+    st.latex(
+        r"\boxed{\text{Proposed mechanism}\quad\Longleftrightarrow\quad\text{experimentally observed rate law}}"
+    )
+
+    st.markdown("""
+    If a proposed mechanism predicts a rate law that is inconsistent with experiment,
+    the mechanism is not an appropriate explanation for the observed reaction.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Catalysts in Reaction Mechanisms")
+
+    st.markdown("""
+    Catalysts can participate in reaction mechanisms.
+
+    A catalyst may react with a reactant in one elementary step and then be regenerated
+    in a later step.
+
+    Because it is regenerated, the catalyst is not consumed overall.
+    """)
+
+    st.markdown("For example:")
+
+    st.latex(
+        r"A+\mathrm{Cat}\rightarrow I"
+    )
+
+    st.latex(
+        r"I+B\rightarrow C+\mathrm{Cat}"
+    )
+
+    st.markdown("""
+    Adding the two steps gives:
+    """)
+
+    st.latex(
+        r"A+B+\mathrm{Cat}\rightarrow C+\mathrm{Cat}"
+    )
+
+    st.markdown("""
+    The catalyst appears on both sides and cancels:
+    """)
+
+    st.latex(
+        r"\boxed{A+B\rightarrow C}"
+    )
+
+    st.success(
+        "The catalyst participates in the mechanism but is regenerated and therefore does not appear in the overall reaction."
+    )
+
+    st.markdown("---")
+
+    st.markdown("### Energy Profiles and Reaction Mechanisms")
+
+    st.markdown("""
+    A multi-step reaction mechanism can have more than one energy barrier.
+
+    Each elementary step can have its own activation energy.
+    """)
+
+    reaction_coordinate = np.linspace(0, 1, 500)
+
+    baseline = 0.15
+
+    energy_profile = (
+        baseline
+        + 0.95 * np.exp(-((reaction_coordinate - 0.28) / 0.10) ** 2)
+        + 0.65 * np.exp(-((reaction_coordinate - 0.72) / 0.12) ** 2)
+        - 0.10 * reaction_coordinate
+    )
+
+    fig, ax = plt.subplots(figsize=(9, 4.5))
+
+    ax.plot(
+        reaction_coordinate,
+        energy_profile
+    )
+
+    ax.set_xlabel("Reaction coordinate")
+    ax.set_ylabel("Potential energy")
+    ax.set_title("Example Energy Profile for a Two-Step Mechanism")
+    ax.grid(alpha=0.25)
+
+    st.pyplot(fig)
+
+    st.markdown("""
+    Each maximum represents a transition state for an elementary step.
+
+    The minimum between the two maxima represents an **intermediate**.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Check Your Understanding")
+
+    mechanism_q1 = st.radio(
+        "1. What is a reaction mechanism?",
+        [
+            "The individual steps by which a reaction occurs",
+            "The balanced equation only",
+            "The energy released by a reaction",
+            "The concentration of the products"
+        ],
+        key="mechanism_q1"
+    )
+
+    if mechanism_q1 == "The individual steps by which a reaction occurs":
+        st.success("Correct. A reaction mechanism describes the elementary steps of a reaction.")
+    else:
+        st.error("Not quite. A reaction mechanism describes the individual steps by which a reaction occurs.")
+
+    mechanism_q2 = st.radio(
+        "2. What is a reaction intermediate?",
+        [
+            "A species produced in one step and consumed in a later step",
+            "A reactant that is never consumed",
+            "A catalyst that changes the rate",
+            "The final product"
+        ],
+        key="mechanism_q2"
+    )
+
+    if mechanism_q2 == "A species produced in one step and consumed in a later step":
+        st.success("Correct. An intermediate is formed and then consumed during the mechanism.")
+    else:
+        st.error("Not quite. An intermediate is formed in one step and consumed in a later step.")
+
+    mechanism_q3 = st.radio(
+        "3. What is the rate-determining step?",
+        [
+            "The slow step in a simplified mechanism",
+            "The fastest step",
+            "The final step in every mechanism",
+            "The step with the smallest activation energy"
+        ],
+        key="mechanism_q3"
+    )
+
+    if mechanism_q3 == "The slow step in a simplified mechanism":
+        st.success("Correct. The slow step is commonly treated as the rate-determining step in an introductory mechanism.")
+    else:
+        st.error("Not quite. In the simplified treatment, the slow step is the rate-determining step.")
+
+    mechanism_q4 = st.radio(
+        "4. Can the coefficients in an overall balanced equation generally be used as rate-law exponents?",
+        [
+            "Yes, always",
+            "No, not generally",
+            "Only for products",
+            "Only when a catalyst is present"
+        ],
+        key="mechanism_q4"
+    )
+
+    if mechanism_q4 == "No, not generally":
+        st.success("Correct. Rate-law exponents must generally be determined experimentally.")
+    else:
+        st.error("Not quite. The exponents in an experimentally determined rate law cannot generally be obtained from the overall equation.")
+
+    st.markdown("---")
+
+    st.markdown("### Key Points")
+
+    st.markdown("""
+    - A **reaction mechanism** describes the individual steps of a chemical reaction.
+    - Individual steps are called **elementary steps**.
+    - A **reaction intermediate** is produced in one step and consumed in another.
+    - Intermediates do not appear in the overall reaction.
+    - The **slow step** is commonly treated as the rate-determining step in a simplified mechanism.
+    - The overall balanced equation does not necessarily show the actual molecular pathway.
+    - Rate laws must generally be supported by **experimental evidence**.
+    - Catalysts can participate in mechanisms and are regenerated rather than consumed overall.
+    - A proposed mechanism should be consistent with the experimentally observed rate law.
+    """)
