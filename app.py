@@ -2447,7 +2447,6 @@ elif topic == "Rate Laws":
     10. The exponents in a rate law cannot generally be obtained from the balanced equation.
     """) 
 
-```python
 elif topic == "Order of Reaction":
 
     st.header("Order of Reaction")
