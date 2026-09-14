@@ -3721,125 +3721,106 @@ elif topic == "Arrhenius Equation":
     st.header("Arrhenius Equation")
 
     st.markdown("""
-    We have seen that **temperature affects reaction rate**. The Arrhenius
-    equation allows us to describe how temperature affects the **rate constant,
-    k**.
+    ### Why does temperature affect reaction rate?
+
+    Temperature affects the rate constant, **k**, and therefore affects the rate of a chemical reaction.
+
+    The Arrhenius equation describes how the rate constant depends on temperature and activation energy.
     """)
 
-    st.divider()
-
-    # ---------------------------------------------------------
-    # 1. Temperature and the rate constant
-    # ---------------------------------------------------------
-
-    st.subheader("1. Temperature and the rate constant")
+    st.markdown("### Activation Energy")
 
     st.markdown("""
-    Recall the general rate law:
-    """)
+    The **activation energy**, \(E_a\), is the minimum energy required for reactant particles
+    to reach the activated state needed for a reaction to occur.
 
-    st.latex(r"\text{rate}=k[A]^m[B]^n")
-
-    st.markdown("""
-    For a particular reaction, the concentrations may remain the same while
-    the temperature changes.
-
-    When the temperature increases, the rate constant, **k**, generally
-    increases. This usually results in a faster reaction.
-    """)
-
-    st.info("""
-    **Important:** Temperature does not simply increase the rate by making
-    particles move faster. A higher temperature also increases the fraction
-    of particles with enough energy to overcome the activation energy.
-    """)
-
-    st.divider()
-
-    # ---------------------------------------------------------
-    # 2. Activation energy
-    # ---------------------------------------------------------
-
-    st.subheader("2. Activation energy, Eₐ")
-
-    st.markdown("""
-    For a chemical reaction to occur, reactant particles must collide with
-    sufficient energy.
-
-    The minimum energy required for a successful reaction is called the
-    **activation energy**, \(E_a\).
+    From the Arrhenius equation:
     """)
 
     st.latex(
-        r"\boxed{E_a=\text{activation energy}}"
+        r"k=Ae^{-E_a/(RT)}"
     )
 
     st.markdown("""
-    A higher activation energy means that a smaller fraction of particles
-    have enough energy to react at a given temperature.
+    The exponential term is:
+    """)
+
+    st.latex(
+        r"e^{-E_a/(RT)}"
+    )
+
+    st.markdown("""
+    When temperature increases, the magnitude of the negative exponent decreases.
+    Therefore, the value of the exponential term increases.
+
+    As a result, **k increases**.
+    """)
+
+    st.latex(
+        r"\boxed{T\uparrow\quad\Rightarrow\quad k\uparrow\quad\Rightarrow\quad \text{reaction rate generally increases}}"
+    )
+
+    st.markdown("---")
+
+    st.markdown("### Understanding the effect of temperature")
+
+    st.markdown("""
+    At a higher temperature, particles have a wider range of energies and a greater
+    fraction of particles have energy equal to or greater than the activation energy, \(E_a\).
+
+    This increases the number of effective collisions and therefore generally increases
+    the reaction rate.
     """)
 
     # Conceptual energy distribution graph
-    st.markdown("### Temperature and molecular energy")
+    energy = np.linspace(0, 200, 500)
 
-    energy = np.linspace(0, 10, 400)
+    T1 = 1.0
+    T2 = 1.35
 
-    temperature_low = (
-        energy ** 1.5
-        * np.exp(-energy / 1.4)
-    )
+    distribution_low = energy * np.exp(-energy / (40 * T1))
+    distribution_high = energy * np.exp(-energy / (40 * T2))
 
-    temperature_high = (
-        energy ** 1.5
-        * np.exp(-energy / 2.0)
-    )
+    Ea_visual = 80
 
-    Ea_value = 5.0
-
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(9, 4.5))
 
     ax.plot(
         energy,
-        temperature_low,
+        distribution_low,
         label="Lower temperature"
     )
 
     ax.plot(
         energy,
-        temperature_high,
+        distribution_high,
         label="Higher temperature"
     )
 
     ax.axvline(
-        Ea_value,
+        Ea_visual,
         linestyle="--",
         label=r"$E_a$"
     )
 
-    ax.set_xlabel("Molecular energy")
+    ax.set_xlabel("Energy")
     ax.set_ylabel("Relative number of particles")
-    ax.set_title("Energy distribution at different temperatures")
+    ax.set_title("Effect of Temperature on the Energy Distribution")
     ax.legend()
-    ax.grid(True, alpha=0.3)
+    ax.grid(alpha=0.25)
 
     st.pyplot(fig)
 
-    st.markdown("""
-    At the higher temperature, a greater fraction of particles have energies
-    at or above \(E_a\). Therefore, more collisions can result in reaction.
-    """)
+    st.info(
+        "At higher temperature, a greater fraction of particles has energy equal to or greater than Ea."
+    )
 
-    st.divider()
+    st.markdown("---")
 
-    # ---------------------------------------------------------
-    # 3. The Arrhenius equation
-    # ---------------------------------------------------------
-
-    st.subheader("3. The Arrhenius equation")
+    st.markdown("### The Arrhenius Equation")
 
     st.markdown("""
-    The relationship between the rate constant and temperature is described
-    by the **Arrhenius equation**:
+    The Arrhenius equation is:
     """)
 
     st.latex(
@@ -3849,98 +3830,45 @@ elif topic == "Arrhenius Equation":
     st.markdown("""
     where:
 
-    - \(k\) = rate constant
-    - \(A\) = frequency factor
-    - \(E_a\) = activation energy
-    - \(R\) = gas constant
-    - \(T\) = absolute temperature in kelvin
+    - **k** = rate constant
+    - **A** = frequency factor
+    - **\(E_a\)** = activation energy
+    - **R** = gas constant = \(8.314\ \mathrm{J\,mol^{-1}\,K^{-1}}\)
+    - **T** = absolute temperature in kelvin (K)
+
+    The activation energy must be expressed in units consistent with the value of \(R\).
+    Therefore, when using \(R=8.314\ \mathrm{J\,mol^{-1}\,K^{-1}}\), \(E_a\) must be in J mol⁻¹.
     """)
 
-    st.latex(
-        r"R=8.314\ \text{J mol}^{-1}\text{K}^{-1}"
+    st.markdown("---")
+
+    st.markdown("### Interactive Arrhenius Explorer")
+
+    Ea_kJ = st.slider(
+        "Activation energy, Ea (kJ mol⁻¹)",
+        min_value=10.0,
+        max_value=150.0,
+        value=50.0,
+        step=5.0
     )
 
-    st.warning("""
-    **Remember:** Temperature must be expressed in **kelvin**, and the units
-    of \(E_a\) must be consistent with the units used for \(R\).
-    """)
-
-    st.divider()
-
-    # ---------------------------------------------------------
-    # 4. Understanding the equation
-    # ---------------------------------------------------------
-
-    st.subheader("4. What happens when temperature increases?")
-
-    st.latex(
-        r"e^{-E_a/(RT)}"
+    temperature_C = st.slider(
+        "Temperature (°C)",
+        min_value=0.0,
+        max_value=150.0,
+        value=25.0,
+        step=5.0
     )
-
-    st.markdown("""
-    When temperature increases, the magnitude of the negative exponent
-    decreases. Therefore, the value of the exponential term increases.
-
-    As a result, **k increases**.
-    """)
-
-    st.latex(
-        r"\boxed{T\uparrow\quad\Rightarrow\quad k\uparrow\quad\Rightarrow\quad \text{reaction rate generally increases}}"
-    )
-   st.latex(
-    r"\boxed{T\uparrow\quad\Rightarrow\quad k\uparrow\quad\Rightarrow\quad \text{reaction rate generally increases}}"
-)
-
-    st.divider()
-
-    # ---------------------------------------------------------
-    # 5. Interactive Arrhenius explorer
-    # ---------------------------------------------------------
-
-    st.subheader("5. Interactive: explore the Arrhenius equation")
-
-    st.markdown("""
-    Change the temperature and activation energy to see how they affect
-    the rate constant.
-    """)
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        Ea_kj = st.slider(
-            "Activation energy, Eₐ (kJ mol⁻¹)",
-            min_value=10.0,
-            max_value=150.0,
-            value=50.0,
-            step=5.0,
-            key="arrhenius_Ea"
-        )
-
-    with col2:
-
-        temperature_C = st.slider(
-            "Temperature (°C)",
-            min_value=0,
-            max_value=150,
-            value=25,
-            step=5,
-            key="arrhenius_temperature"
-        )
-
-    temperature_K = temperature_C + 273.15
 
     R = 8.314
-
-    Ea_J = Ea_kj * 1000
-
     A_factor = 1.0e10
+
+    temperature_K = temperature_C + 273.15
+    Ea_J = Ea_kJ * 1000
 
     k_value = A_factor * np.exp(
         -Ea_J / (R * temperature_K)
     )
-
-    st.markdown("### Current conditions")
 
     col1, col2, col3 = st.columns(3)
 
@@ -3953,7 +3881,7 @@ elif topic == "Arrhenius Equation":
     with col2:
         st.metric(
             "Activation energy",
-            f"{Ea_kj:.1f} kJ mol⁻¹"
+            f"{Ea_kJ:.1f} kJ mol⁻¹"
         )
 
     with col3:
@@ -3962,143 +3890,130 @@ elif topic == "Arrhenius Equation":
             f"{k_value:.3e}"
         )
 
-    st.latex(
-        rf"k=(1.0\times10^{{10}})"
-        rf"e^{{-\frac{{{Ea_kj:.1f}\times10^3}}"
-        rf"{{(8.314)({temperature_K:.2f})}}}}"
+    temperatures_C = np.linspace(0, 150, 300)
+    temperatures_K = temperatures_C + 273.15
+
+    k_values = A_factor * np.exp(
+        -Ea_J / (R * temperatures_K)
     )
 
-    st.divider()
+    fig, ax = plt.subplots(figsize=(9, 4.5))
 
-    # ---------------------------------------------------------
-    # 6. Two-temperature Arrhenius equation
-    # ---------------------------------------------------------
+    ax.plot(
+        temperatures_C,
+        k_values
+    )
 
-    st.subheader("6. Comparing rate constants at two temperatures")
+    ax.scatter(
+        [temperature_C],
+        [k_value],
+        s=80,
+        zorder=5
+    )
+
+    ax.set_xlabel("Temperature (°C)")
+    ax.set_ylabel("Rate constant, k")
+    ax.set_title("Arrhenius Relationship")
+    ax.grid(alpha=0.25)
+
+    st.pyplot(fig)
 
     st.markdown("""
-    If the frequency factor \(A\) is assumed to remain constant, the
-    Arrhenius equation can be written for two temperatures and divided
-    to give:
+    **Observation:** As temperature increases, the rate constant increases.
+    The effect becomes particularly important when the activation energy is large.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Two-Temperature Form of the Arrhenius Equation")
+
+    st.markdown("""
+    Sometimes the rate constant is known at two different temperatures.
+    In this case, the Arrhenius equation can be written in a form that allows the
+    activation energy to be calculated without knowing the frequency factor, \(A\).
     """)
 
     st.latex(
-    r"\boxed{\ln\left(\frac{k_2}{k_1}\right)=-\frac{E_a}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)}"
-)
+        r"\boxed{\ln\left(\frac{k_2}{k_1}\right)=-\frac{E_a}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)}"
+    )
 
     st.markdown("""
-    This form is particularly useful when you know the rate constants at
-    two different temperatures and want to determine the activation energy.
+    Rearranging gives:
     """)
 
     st.latex(
-        r"\boxed{
-        E_a=
+        r"\boxed{E_a=-R\frac{\ln(k_2/k_1)}{(1/T_2)-(1/T_1)}}"
+    )
+
+    st.markdown("""
+    Remember that the temperatures must be expressed in **kelvin**, not degrees Celsius.
+    """)
+
+    st.markdown("---")
+
+    st.markdown("### Worked Example: Calculating Activation Energy")
+
+    st.markdown("""
+    A reaction has a rate constant of \(0.0020\ \mathrm{s^{-1}}\) at 298.15 K
+    and \(0.0100\ \mathrm{s^{-1}}\) at 318.15 K.
+
+    Calculate the activation energy.
+    """)
+
+    k1 = 0.0020
+    k2 = 0.0100
+    T1 = 298.15
+    T2 = 318.15
+
+    Ea_example = (
         -R
-        \frac{
-        \ln(k_2/k_1)
-        }{
-        (1/T_2)-(1/T_1)
-        }
-        }"
+        * np.log(k2 / k1)
+        / ((1 / T2) - (1 / T1))
     )
 
-    st.divider()
+    Ea_example_kJ = Ea_example / 1000
 
-    # ---------------------------------------------------------
-    # 7. Worked example
-    # ---------------------------------------------------------
+    st.latex(
+        r"E_a=-R\frac{\ln(k_2/k_1)}{(1/T_2)-(1/T_1)}"
+    )
 
-    st.subheader("7. Worked example: determining Eₐ")
-
-    st.markdown("""
-    A reaction has the following rate constants:
-    """)
-
-    example_k1 = 0.0020
-    example_k2 = 0.0100
-    example_T1 = 298.15
-    example_T2 = 318.15
-
-    st.table({
-        "Quantity": [
-            "k₁",
-            "k₂",
-            "T₁",
-            "T₂"
-        ],
-        "Value": [
-            "0.0020 s⁻¹",
-            "0.0100 s⁻¹",
-            "298.15 K",
-            "318.15 K"
-        ]
-    })
-
-    st.markdown("""
-    Using the two-temperature Arrhenius equation:
+    st.markdown(f"""
+    Substituting the values:
     """)
 
     st.latex(
-    r"\boxed{E_a=-R\frac{\ln(k_2/k_1)}{(1/T_2)-(1/T_1)}}"
-)
-
-    example_Ea = (
-        -R
-        * np.log(example_k2 / example_k1)
-        / (
-            (1 / example_T2)
-            - (1 / example_T1)
-        )
-    )
-
-    st.latex(
-        rf"E_a={example_Ea:.0f}\ \text{{J mol}}^{{-1}}"
-    )
-
-    st.latex(
-        rf"\boxed{{E_a={example_Ea / 1000:.1f}\ \text{{kJ mol}}^{{-1}}}}"
+        rf"E_a={Ea_example_kJ:.1f}\ \mathrm{{kJ\,mol^{{-1}}}}"
     )
 
     st.success(
-        f"The activation energy is approximately "
-        f"**{example_Ea / 1000:.1f} kJ mol⁻¹**."
+        f"The activation energy is approximately {Ea_example_kJ:.1f} kJ mol⁻¹."
     )
 
-    st.divider()
+    st.markdown("---")
 
-    # ---------------------------------------------------------
-    # 8. Arrhenius plot
-    # ---------------------------------------------------------
-
-    st.subheader("8. Arrhenius plot")
+    st.markdown("### Linear Form of the Arrhenius Equation")
 
     st.markdown("""
-    The Arrhenius equation can also be rearranged into a linear form:
+    The Arrhenius equation can also be rearranged into a linear form.
     """)
 
     st.latex(
-        r"\boxed{
-        \ln k=
-        \ln A-
-        \frac{E_a}{R}
-        \frac{1}{T}
-        }"
+        r"\boxed{\ln k=\ln A-\frac{E_a}{R}\frac{1}{T}}"
     )
 
     st.markdown("""
-    This has the form of a straight-line equation:
+    This has the same form as the equation of a straight line:
 
-    """)
+    \[
+    y=mx+c
+    \]
 
-    st.latex(
-        r"y=c+mx"
-    )
+    Therefore:
 
-    st.markdown("""
-    Therefore, a plot of **ln k against 1/T** should be linear.
-
-    The gradient is:
+    - \(y=\ln k\)
+    - \(x=1/T\)
+    - gradient \(=-E_a/R\)
+    - intercept \(=\ln A\)
     """)
 
     st.latex(
@@ -4106,113 +4021,120 @@ elif topic == "Arrhenius Equation":
     )
 
     st.markdown("""
-    Once the gradient is known, the activation energy can be calculated:
+    Therefore, if a graph of **ln k against 1/T** is a straight line,
+    the activation energy can be obtained from the gradient.
     """)
 
-    st.latex(
-        r"\boxed{E_a=-\text{gradient}\times R}"
-    )
+    st.markdown("---")
 
-    # Interactive Arrhenius plot
-    Ea_plot_kj = st.slider(
-        "Choose Eₐ for the Arrhenius plot (kJ mol⁻¹)",
+    st.markdown("### Interactive Arrhenius Plot")
+
+    Ea_plot_kJ = st.slider(
+        "Choose activation energy for the Arrhenius plot (kJ mol⁻¹)",
         min_value=20.0,
         max_value=120.0,
         value=60.0,
-        step=5.0,
-        key="arrhenius_plot_Ea"
+        step=5.0
     )
 
-    A_plot = 1.0e10
+    Ea_plot_J = Ea_plot_kJ * 1000
 
-    temperatures = np.linspace(
-        280,
-        380,
-        50
+    T_plot = np.linspace(280, 380, 100)
+
+    ln_k_plot = (
+        np.log(A_factor)
+        - Ea_plot_J / (R * T_plot)
     )
 
-    Ea_plot_J = Ea_plot_kj * 1000
+    inverse_T = 1 / T_plot
 
-    k_values = A_plot * np.exp(
-        -Ea_plot_J / (R * temperatures)
-    )
+    fig, ax = plt.subplots(figsize=(9, 4.5))
 
-    ln_k_values = np.log(k_values)
-    inverse_T = 1 / temperatures
-
-    fig, ax = plt.subplots()
-
-    ax.scatter(
+    ax.plot(
         inverse_T,
-        ln_k_values
+        ln_k_plot
     )
 
     ax.set_xlabel("1/T (K⁻¹)")
     ax.set_ylabel("ln k")
-    ax.set_title("Arrhenius plot")
-    ax.grid(True, alpha=0.3)
+    ax.set_title("Linear Arrhenius Plot")
+    ax.grid(alpha=0.25)
 
     st.pyplot(fig)
 
-    st.markdown("""
-    The slope of the Arrhenius plot is related directly to the activation
-    energy.
-    """)
+    gradient = -Ea_plot_J / R
 
-    st.divider()
-
-    # ---------------------------------------------------------
-    # 9. Check your understanding
-    # ---------------------------------------------------------
-
-    st.subheader("9. Check your understanding")
-
-    question = st.selectbox(
-        "If the temperature of a reaction increases, what generally happens to k?",
-        [
-            "Select an answer",
-            "k decreases",
-            "k remains unchanged",
-            "k increases"
-        ],
-        key="arrhenius_question"
+    st.write(
+        f"Gradient = {gradient:.3e} K"
     )
 
-    if question != "Select an answer":
-
-        if question == "k increases":
-
-            st.success("""
-            Correct. According to the Arrhenius equation, increasing
-            temperature generally increases the rate constant, k.
-            """)
-
-        else:
-
-            st.error("""
-            Not quite. Consider the Arrhenius equation:
-
-            k = A e⁻ᴱᵃ/ᴿᵀ
-
-            Increasing temperature generally increases k.
-            """)
-
-    st.divider()
-
-    # ---------------------------------------------------------
-    # 10. Key points
-    # ---------------------------------------------------------
-
-    st.subheader("Key points")
-
     st.markdown("""
-    - The Arrhenius equation describes how the rate constant depends on temperature.
-    - \(E_a\) is the activation energy.
-    - \(A\) is the frequency factor.
-    - \(R=8.314\ \text{J mol}^{-1}\text{K}^{-1}\).
-    - Temperature must be expressed in kelvin.
-    - Increasing temperature generally increases the rate constant, \(k\).
-    - The two-temperature Arrhenius equation can be used to determine \(E_a\).
-    - A plot of ln \(k\) against 1/T has a gradient of \(-E_a/R\).
+    The gradient is negative because \(k\) increases as temperature increases,
+    while \(1/T\) decreases.
     """)
 
+    st.markdown("---")
+
+    st.markdown("### Check Your Understanding")
+
+    q1 = st.radio(
+        "1. What happens to the rate constant when temperature increases?",
+        [
+            "It generally increases",
+            "It always decreases",
+            "It remains unchanged",
+            "It becomes zero"
+        ],
+        key="arrhenius_q1"
+    )
+
+    if q1 == "It generally increases":
+        st.success("Correct. Increasing temperature generally increases k.")
+    else:
+        st.error("Not quite. According to the Arrhenius equation, increasing temperature generally increases k.")
+
+    q2 = st.radio(
+        "2. Which temperature unit should be used in the Arrhenius equation?",
+        [
+            "°C",
+            "K",
+            "°F",
+            "Any temperature scale"
+        ],
+        key="arrhenius_q2"
+    )
+
+    if q2 == "K":
+        st.success("Correct. Temperature must be expressed in kelvin.")
+    else:
+        st.error("Not quite. Temperature must be expressed in kelvin.")
+
+    q3 = st.radio(
+        "3. What does the gradient of a plot of ln k against 1/T represent?",
+        [
+            r"$-E_a/R$",
+            r"$E_a/R$",
+            r"$-R/E_a$",
+            r"$E_a$"
+        ],
+        key="arrhenius_q3"
+    )
+
+    if q3 == r"$-E_a/R$":
+        st.success("Correct. The gradient is −Ea/R.")
+    else:
+        st.error("Not quite. The gradient of an ln k versus 1/T plot is −Ea/R.")
+
+    st.markdown("---")
+
+    st.markdown("### Key Points")
+
+    st.markdown("""
+    - The **Arrhenius equation** relates the rate constant to temperature and activation energy.
+    - Increasing temperature generally increases the **rate constant, k**.
+    - \(E_a\) is the activation energy.
+    - Temperature must be expressed in **kelvin**.
+    - When \(R=8.314\ \mathrm{J\,mol^{-1}\,K^{-1}}\), \(E_a\) must be in **J mol⁻¹**.
+    - The two-temperature form allows \(E_a\) to be calculated from two values of \(k\).
+    - A plot of **ln k against 1/T** has gradient \(-E_a/R\).
+    """)
