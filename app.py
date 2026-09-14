@@ -3111,4 +3111,4 @@ elif topic == "Order of Reaction":
     - Overall order is the sum of the individual orders.
     - Once the rate law is known, the rate constant \(k\) can be calculated.
     """)
-```
+
