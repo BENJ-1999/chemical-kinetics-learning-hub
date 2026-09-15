@@ -82,213 +82,88 @@ elif topic == "Reaction Rate":
     # SECTION 1 — COLLISION THEORY
     # =====================================================
 
-    st.header("1. Collision Theory")
+    elif topic == "Collision Theory":
 
-    st.write(
-        "Collision theory provides a molecular explanation for why "
-        "chemical reactions occur at different rates."
-    )
-
-    st.subheader("What is a particle?")
-
-    st.write(
-        "In collision theory, the term **particle** refers to the "
-        "individual chemical species involved in a reaction. Depending "
-        "on the reaction, these particles may be atoms, molecules, or ions."
-    )
-
-    st.write(
-        "For a molecular reaction, it is often useful to refer to these "
-        "particles specifically as **reactant molecules**."
-    )
-
-    st.subheader("Collisions between reactant molecules")
-
-    st.write(
-        "For a chemical reaction to occur, reactant particles must collide. "
-        "However, not every collision results in a reaction."
-    )
+    st.header("Collision Theory")
 
     st.markdown("""
+    Collision theory provides a molecular explanation for why chemical reactions
+    occur at different rates.
+
+    For a chemical reaction to occur, **reactant particles must collide**.
+    In collision theory, the term *particle* refers to an individual chemical
+    species involved in a reaction. Depending on the reaction, these particles
+    may be **atoms, molecules, or ions**.
+
+    However, not every collision results in a reaction.
+
     For a collision to result in a reaction, the reactant particles must:
 
     1. collide with **sufficient energy**
     2. have the **correct orientation**
     """)
 
-    st.subheader("Activation Energy")
+    st.markdown("---")
 
-    st.write(
-        "For a chemical reaction to occur, reactant particles must collide "
-        "with sufficient energy. The **minimum energy required for a "
-        "collision to result in a reaction is called the activation energy**, "
-        "represented by \(E_a\)."
+    st.markdown("### Sufficient Energy")
+
+    st.markdown("""
+    The colliding particles must have enough energy for the reaction to occur.
+    The minimum energy required for a collision to result in a reaction is called
+    the **activation energy, \(E_a\)**.
+    """)
+
+    st.image(
+        "collision_theory_Ea_diagram.png",
+        use_container_width=True
     )
 
-    st.latex(r"E_a = \text{activation energy}")
+    st.markdown("""
+    In the energy profile above, \(E_a\) represents the energy barrier that the
+    reactant particles must overcome for the reaction to occur.
+    """)
 
-    st.write(
-        "A collision must have energy equal to or greater than \(E_a\) "
-        "for the particles to have enough energy to react."
+    st.markdown("---")
+
+    st.markdown("### Correct Orientation")
+
+    st.markdown("""
+    Having sufficient energy is not enough. The reactant molecules must also
+    collide with the **correct orientation**.
+
+    This means that the appropriate parts of the molecules must be positioned
+    correctly during the collision so that the necessary bonds can form or break.
+    """)
+
+    st.image(
+        "collision_theory_orientation_diagram.png",
+        use_container_width=True
     )
 
-    st.subheader("Correct orientation")
+    st.markdown("""
+    A collision with the correct orientation can result in a reaction, whereas
+    a collision with an incorrect orientation may not result in a reaction,
+    even when the particles have sufficient energy.
+    """)
 
-    st.write(
-        "The reactant particles must also collide with an orientation that "
-        "allows the appropriate bonds to break and form."
+    st.markdown("---")
+
+    st.markdown("### Effective Collisions")
+
+    st.markdown("""
+    A collision that has both **sufficient energy** and the **correct orientation**
+    is called an **effective collision**.
+
+    Therefore:
+    """)
+
+    st.latex(
+        r"\boxed{\text{Effective collision}=\text{sufficient energy}+\text{correct orientation}}"
     )
-
-    st.write(
-        "Therefore, a collision with sufficient energy will not necessarily "
-        "produce a reaction if the particles have the wrong orientation."
-    )
-
-    st.subheader("Effective collisions")
-
-    st.write(
-        "A collision that has sufficient energy to overcome \(E_a\) and "
-        "occurs with the correct orientation is called an **effective collision**."
-    )
-
-    st.success(
-        "Effective collision = sufficient energy + correct orientation"
-    )
-
-    # -----------------------------------------------------
-    # COLLISION THEORY SIMULATION
-    # -----------------------------------------------------
-
-    st.subheader("Interactive Collision Simulation")
-
-    st.write(
-        "Adjust the controls to explore how collision energy and "
-        "orientation affect whether a collision is effective."
-    )
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        collision_energy = st.slider(
-            "Collision energy",
-            min_value=20,
-            max_value=120,
-            value=70,
-            step=5
-        )
-
-    with col2:
-
-        orientation = st.slider(
-            "Orientation suitability",
-            min_value=0,
-            max_value=100,
-            value=70,
-            step=5
-        )
-
-    activation_energy = 60
-
-    if collision_energy >= activation_energy and orientation >= 60:
-        collision_result = "Effective collision"
-        result_message = (
-            "The collision has sufficient energy to overcome "
-            "the activation energy and a suitable orientation."
-        )
-    elif collision_energy < activation_energy:
-        collision_result = "Insufficient energy"
-        result_message = (
-            "The collision does not have enough energy to overcome "
-            "the activation energy."
-        )
-    else:
-        collision_result = "Incorrect orientation"
-        result_message = (
-            "The particles have sufficient energy, but their orientation "
-            "is not suitable for the reaction."
-        )
-
-    sim_col1, sim_col2 = st.columns([1, 1])
-
-    with sim_col1:
-
-        fig_collision, ax_collision = plt.subplots(figsize=(5, 4))
-
-        # Reactant molecules
-        molecule_positions = np.array([
-            [0.25, 0.70],
-            [0.38, 0.70],
-            [0.62, 0.30],
-            [0.75, 0.30]
-        ])
-
-        for x, y in molecule_positions:
-            circle = plt.Circle(
-                (x, y),
-                0.045,
-                fill=False,
-                linewidth=2
-            )
-            ax_collision.add_patch(circle)
-
-        # Motion arrows
-        ax_collision.arrow(
-            0.25, 0.70,
-            0.09, 0,
-            head_width=0.025,
-            head_length=0.025,
-            length_includes_head=True
-        )
-
-        ax_collision.arrow(
-            0.75, 0.30,
-            -0.09, 0,
-            head_width=0.025,
-            head_length=0.025,
-            length_includes_head=True
-        )
-
-        ax_collision.set_xlim(0, 1)
-        ax_collision.set_ylim(0, 1)
-        ax_collision.set_aspect("equal")
-        ax_collision.set_xticks([])
-        ax_collision.set_yticks([])
-        ax_collision.set_title("Reactant molecules approaching")
-
-        st.pyplot(fig_collision)
-
-    with sim_col2:
-
-        st.metric(
-            "Activation energy, Ea",
-            f"{activation_energy} energy units"
-        )
-
-        st.metric(
-            "Collision energy",
-            f"{collision_energy} energy units"
-        )
-
-        st.metric(
-            "Orientation suitability",
-            f"{orientation}%"
-        )
-
-        if collision_result == "Effective collision":
-            st.success(collision_result)
-        elif collision_result == "Insufficient energy":
-            st.warning(collision_result)
-        else:
-            st.warning(collision_result)
-
-        st.write(result_message)
 
     st.info(
-        "The simulation is a conceptual model. In a real reaction, "
-        "molecules have a distribution of energies and orientations."
+        "Only collisions that satisfy both conditions can result in a chemical reaction."
     )
-
     # =====================================================
     # SECTION 2 — WHAT IS THE RATE OF A REACTION?
     # =====================================================
