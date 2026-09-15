@@ -130,10 +130,10 @@ elif topic == "Reaction Rate":
     correctly during the collision so that the necessary bonds can form or break.
     """)
 
-   st.image(
+    st.image(
     "collision_theory_orientation_diagram.png",
     width=600
-)
+) 
 
     st.markdown("""
     A collision with the correct orientation can result in a reaction, whereas
