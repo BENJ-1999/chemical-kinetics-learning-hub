@@ -110,7 +110,7 @@ elif topic == "Reaction Rate":
 
     st.image(
     "collision_theory_Ea_diagram.png",
-    width=500
+    width=525
 )
 
     st.markdown("""
@@ -132,7 +132,7 @@ elif topic == "Reaction Rate":
 
     st.image(
     "collision_theory_orientation_diagram.png",
-    width=500
+    width=550
 ) 
 
     st.markdown("""
