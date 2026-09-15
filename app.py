@@ -78,11 +78,6 @@ elif topic == "Reaction Rate":
         "reactants or products changes as a chemical reaction occurs."
     )
 
-    # =====================================================
-    # SECTION 1 — COLLISION THEORY
-    # =====================================================
-
-elif topic == "Collision Theory":
 
     st.header("Collision Theory")
 
