@@ -82,7 +82,7 @@ elif topic == "Reaction Rate":
     # SECTION 1 — COLLISION THEORY
     # =====================================================
 
-    elif topic == "Collision Theory":
+elif topic == "Collision Theory":
 
     st.header("Collision Theory")
 
