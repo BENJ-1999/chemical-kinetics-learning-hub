@@ -109,9 +109,9 @@ elif topic == "Reaction Rate":
     """)
 
     st.image(
-        "collision_theory_Ea_diagram.png",
-        use_container_width=True
-    )
+    "collision_theory_Ea_diagram.png",
+    width=600
+)
 
     st.markdown("""
     In the energy profile above, \(E_a\) represents the energy barrier that the
@@ -130,10 +130,10 @@ elif topic == "Reaction Rate":
     correctly during the collision so that the necessary bonds can form or break.
     """)
 
-    st.image(
-        "collision_theory_orientation_diagram.png",
-        use_container_width=True
-    )
+   st.image(
+    "collision_theory_orientation_diagram.png",
+    width=600
+)
 
     st.markdown("""
     A collision with the correct orientation can result in a reaction, whereas
