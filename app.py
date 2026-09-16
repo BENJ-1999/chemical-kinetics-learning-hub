@@ -436,10 +436,7 @@ with col1:
         """
     )
 
-    st.latex(
-        r"\text{Average rate} = "
-        r"-\frac{\Delta[A]}{\Delta t}"
-    )
+   st.latex(r"\text{Average rate} = -\frac{\Delta[A]}{\Delta t}")
 
 with col2:
     st.markdown("**Instantaneous rate**")
@@ -451,10 +448,7 @@ with col2:
         """
     )
 
-    st.latex(
-        r"\text{Instantaneous rate} = "
-        r"-\frac{d[A]}{dt}"
-    )
+    st.latex(r"\text{Instantaneous rate} = -\frac{d[A]}{dt}")
 
 with col3:
     st.markdown("**Initial rate**")
@@ -466,10 +460,7 @@ with col3:
         """
     )
 
-    st.latex(
-        r"\text{Initial rate} =
-        \left.-\frac{d[A]}{dt}\right|_{t=0}"
-    )
+    st.latex(r"\text{Initial rate} = \left.-\frac{d[A]}{dt}\right|_{t=0}")
 
 # ------------------------------------------------------------
 # Explaining Δ and the time interval
