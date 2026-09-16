@@ -883,6 +883,8 @@ else:
             "Not quite. The slope of a concentration–time curve "
             "represents the rate of concentration change with time."
         )
+    
+    
     # =====================================================
     # KEY POINTS
     # =====================================================
@@ -890,7 +892,7 @@ else:
     st.header("Key Points")
 
     st.markdown("""
-    **Reaction rate tells us how quickly a reaction occurs.**
+        **Reaction rate tells us how quickly a reaction occurs.**
 
     Remember:
 
@@ -907,9 +909,9 @@ else:
     """)
 
 
-# =========================================================
-# FACTORS AFFECTING REACTION RATE
-# =========================================================
+    # =========================================================
+    # FACTORS AFFECTING REACTION RATE
+    # =========================================================
 
 elif topic == "Factors Affecting Reaction Rate":
 
