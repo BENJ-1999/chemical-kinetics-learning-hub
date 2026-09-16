@@ -159,7 +159,7 @@ elif topic == "Reaction Rate":
     st.info(
         "Only collisions that satisfy both conditions can result in a chemical reaction."
     )
-    # ```python
+   
 # =====================================================
 # SECTION 2 — WHAT IS THE RATE OF A REACTION?
 # =====================================================
@@ -871,9 +871,7 @@ else:
         key="slope_question"
     )
 
-    if st.button("Check Slope Answer"):
-
-        if question3 == "The reaction rate":
+           if question3 == "The reaction rate":
 
             st.success(
                 "Correct! The slope of a concentration–time curve "
