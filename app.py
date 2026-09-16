@@ -615,7 +615,6 @@ st.success(
     "Average reaction rate = 0.015 mol L⁻¹ s⁻¹"
 )
 
-
 # =====================================================
 # INTERACTIVE AVERAGE RATE
 # =====================================================
@@ -634,9 +633,7 @@ col1, col2 = st.columns(2)
 
 with col1:
 
-    st.write(
-        "**Initial point**"
-    )
+    st.write("**Initial point**")
 
     t1 = st.number_input(
         "Initial time, t₁ (s)",
@@ -654,12 +651,9 @@ with col1:
         step=0.05
     )
 
-
 with col2:
 
-    st.write(
-        "**Later point**"
-    )
+    st.write("**Later point**")
 
     t2 = st.number_input(
         "Later time, t₂ (s)",
@@ -677,7 +671,6 @@ with col2:
         step=0.05
     )
 
-
 if t2 <= t1:
 
     st.error(
@@ -688,23 +681,16 @@ if t2 <= t1:
 else:
 
     delta_concentration = (
-        concentration_t2
-        - concentration_t1
+        concentration_t2 - concentration_t1
     )
 
-    delta_time = (
-        t2
-        - t1
-    )
+    delta_time = t2 - t1
 
     average_rate = (
-        -delta_concentration
-        / delta_time
+        -delta_concentration / delta_time
     )
 
-    st.write(
-        "### Your calculated values"
-    )
+    st.write("### Your calculated values")
 
     result_col1, result_col2, result_col3 = st.columns(3)
 
@@ -736,183 +722,190 @@ else:
     )
 
 
-    # =====================================================
-    # STOICHIOMETRIC RATE
-    # =====================================================
+# =====================================================
+# STOICHIOMETRIC RATE
+# =====================================================
 
-    st.subheader("Reaction Rate and Stoichiometric Coefficients")
+st.subheader("Reaction Rate and Stoichiometric Coefficients")
 
-    st.write(
-        "For a reaction involving several reactants and products, "
-        "the rate can be expressed in terms of the concentration "
-        "change of each species."
-    )
+st.write(
+    "For a reaction involving several reactants and products, "
+    "the rate can be expressed in terms of the concentration "
+    "change of each species."
+)
 
-    st.latex(
-        r"\mathrm{aA+bB\rightarrow cC+dD}"
-    )
+st.latex(
+    r"\mathrm{aA+bB\rightarrow cC+dD}"
+)
 
-    st.write(
-        "The stoichiometric coefficients are used to ensure that the "
-        "same reaction rate is obtained regardless of which species "
-        "is used to describe the rate."
-    )
+st.write(
+    "The stoichiometric coefficients are used to ensure that the "
+    "same reaction rate is obtained regardless of which species "
+    "is used to describe the rate."
+)
 
-    st.latex(
-        r"\boxed{"
-        r"\text{rate}"
-        r"="
-        r"-\frac{1}{a}\frac{d[\mathrm{A}]}{dt}"
-        r"="
-        r"-\frac{1}{b}\frac{d[\mathrm{B}]}{dt}"
-        r"="
-        r"\frac{1}{c}\frac{d[\mathrm{C}]}{dt}"
-        r"="
-        r"\frac{1}{d}\frac{d[\mathrm{D}]}{dt}"
-        r"}"
-    )
+st.latex(
+    r"\boxed{"
+    r"\text{rate}"
+    r"="
+    r"-\frac{1}{a}\frac{d[\mathrm{A}]}{dt}"
+    r"="
+    r"-\frac{1}{b}\frac{d[\mathrm{B}]}{dt}"
+    r"="
+    r"\frac{1}{c}\frac{d[\mathrm{C}]}{dt}"
+    r"="
+    r"\frac{1}{d}\frac{d[\mathrm{D}]}{dt}"
+    r"}"
+)
 
-    st.write(
-        "The negative signs are used for reactants because their "
-        "concentrations decrease with time. Products have positive "
-        "signs because their concentrations increase with time."
-    )
+st.write(
+    "The negative signs are used for reactants because their "
+    "concentrations decrease with time. Products have positive "
+    "signs because their concentrations increase with time."
+)
 
-    st.subheader("Example")
+st.subheader("Example")
 
-    st.latex(
-        r"\mathrm{2A+B\rightarrow3C}"
-    )
+st.latex(
+    r"\mathrm{2A+B\rightarrow3C}"
+)
 
-    st.latex(
-        r"\text{rate}"
-        r"=-\frac{1}{2}\frac{d[\mathrm{A}]}{dt}"
-        r"=-\frac{d[\mathrm{B}]}{dt}"
-        r"=\frac{1}{3}\frac{d[\mathrm{C}]}{dt}"
-    )
+st.latex(
+    r"\text{rate}"
+    r"=-\frac{1}{2}\frac{d[\mathrm{A}]}{dt}"
+    r"=-\frac{d[\mathrm{B}]}{dt}"
+    r"=\frac{1}{3}\frac{d[\mathrm{C}]}{dt}"
+)
 
-    st.info(
-        "The stoichiometric coefficients connect the rates of "
-        "consumption of reactants with the rate of formation of products."
-    )
+st.info(
+    "The stoichiometric coefficients connect the rates of "
+    "consumption of reactants with the rate of formation of products."
+)
 
-    # =====================================================
-    # CHECK YOUR UNDERSTANDING
-    # =====================================================
 
-    st.header("Check Your Understanding")
+# =====================================================
+# CHECK YOUR UNDERSTANDING
+# =====================================================
 
-    question1 = st.radio(
-        "1. Which collision is most likely to result in a reaction?",
-        [
-            "A collision with low energy and the correct orientation",
-            "A collision with sufficient energy but the wrong orientation",
-            "A collision with sufficient energy and the correct orientation",
-            "Any collision between reactant molecules"
-        ],
-        key="collision_question"
-    )
+st.header("Check Your Understanding")
 
-    if st.button("Check Collision Answer"):
+question1 = st.radio(
+    "1. Which collision is most likely to result in a reaction?",
+    [
+        "A collision with low energy and the correct orientation",
+        "A collision with sufficient energy but the wrong orientation",
+        "A collision with sufficient energy and the correct orientation",
+        "Any collision between reactant molecules"
+    ],
+    key="collision_question"
+)
 
-        if question1 == (
-            "A collision with sufficient energy and the correct orientation"
-        ):
+if st.button("Check Collision Answer"):
 
-            st.success(
-                "Correct! An effective collision requires sufficient "
-                "energy to overcome Ea and the correct orientation."
-            )
+    if question1 == (
+        "A collision with sufficient energy and the correct orientation"
+    ):
 
-        else:
+        st.success(
+            "Correct! An effective collision requires sufficient "
+            "energy to overcome Ea and the correct orientation."
+        )
 
-            st.error(
-                "Not quite. An effective collision requires both "
-                "sufficient energy and the correct orientation."
-            )
+    else:
 
-    question2 = st.radio(
-        "2. What does average reaction rate describe?",
-        [
-            "The rate at exactly one instant",
-            "The change in concentration over a time interval",
-            "Only the concentration of products",
-            "The activation energy of the reaction"
-        ],
-        key="average_rate_question"
-    )
+        st.error(
+            "Not quite. An effective collision requires both "
+            "sufficient energy and the correct orientation."
+        )
 
-    if st.button("Check Average Rate Answer"):
 
-        if question2 == (
-            "The change in concentration over a time interval"
-        ):
+question2 = st.radio(
+    "2. What does average reaction rate describe?",
+    [
+        "The rate at exactly one instant",
+        "The change in concentration over a time interval",
+        "Only the concentration of products",
+        "The activation energy of the reaction"
+    ],
+    key="average_rate_question"
+)
 
-            st.success(
-                "Correct! Average rate describes the change in "
-                "concentration over a particular time interval."
-            )
+if st.button("Check Average Rate Answer"):
 
-        else:
+    if question2 == (
+        "The change in concentration over a time interval"
+    ):
 
-            st.error(
-                "Not quite. Average rate describes the change in "
-                "concentration over a time interval."
-            )
+        st.success(
+            "Correct! Average rate describes the change in "
+            "concentration over a particular time interval."
+        )
 
-    question3 = st.radio(
-        "3. What does the slope of a concentration–time curve represent?",
-        [
-            "The concentration",
-            "The activation energy",
-            "The reaction rate",
-            "The stoichiometric coefficient"
-        ],
-        key="slope_question"
-    )
+    else:
 
-    if st.button("Check Slope Answer"):
+        st.error(
+            "Not quite. Average rate describes the change in "
+            "concentration over a time interval."
+        )
 
-        if question3 == "The reaction rate":
-            st.success(
-                "Correct! The slope of a concentration–time curve "
+
+question3 = st.radio(
+    "3. What does the slope of a concentration–time curve represent?",
+    [
+        "The concentration",
+        "The activation energy",
+        "The reaction rate",
+        "The stoichiometric coefficient"
+    ],
+    key="slope_question"
+)
+
+if st.button("Check Slope Answer"):
+
+    if question3 == "The reaction rate":
+
+        st.success(
+            "Correct! The slope of a concentration–time curve "
             "is related to the reaction rate."
         )
-        else:
-            st.error(
+
+    else:
+
+        st.error(
             "Not quite. The slope of a concentration–time curve "
             "represents the rate of concentration change with time."
         )
-    
-    
-    # =====================================================
-    # KEY POINTS
-    # =====================================================
 
-    st.header("Key Points")
 
-    st.markdown("""
-        **Reaction rate tells us how quickly a reaction occurs.**
+# =====================================================
+# KEY POINTS
+# =====================================================
 
-    Remember:
+st.header("Key Points")
 
-    1. Reactant particles must collide for a reaction to occur.
-    2. An effective collision requires sufficient energy and the correct orientation.
-    3. **Activation energy, \(E_a\), is the minimum energy required for a collision to result in a reaction.**
-    4. Reaction rate describes how concentration changes with time.
-    5. Reactant concentrations generally decrease as a reaction proceeds.
-    6. Product concentrations generally increase as a reaction proceeds.
-    7. Average rate describes concentration change over a time interval.
-    8. Instantaneous rate describes the rate at a particular instant.
-    9. Initial rate is the instantaneous rate at \(t=0\).
-    10. Stoichiometric coefficients relate the rates of consumption and formation of different species.
-    """)
+st.markdown("""
+**Reaction rate tells us how quickly a reaction occurs.**
+
+Remember:
+
+1. Reactant particles must collide for a reaction to occur.
+2. An effective collision requires sufficient energy and the correct orientation.
+3. **Activation energy, \(E_a\), is the minimum energy required for a collision to result in a reaction.**
+4. Reaction rate describes how concentration changes with time.
+5. Reactant concentrations generally decrease as a reaction proceeds.
+6. Product concentrations generally increase as a reaction proceeds.
+7. Average rate describes concentration change over a time interval.
+8. Instantaneous rate describes the rate at a particular instant.
+9. Initial rate is the instantaneous rate at \(t=0\).
+10. Stoichiometric coefficients relate the rates of consumption and formation of different species.
+""")
 
 
 # =========================================================
 # FACTORS AFFECTING REACTION RATE
 # =========================================================
 
+elif topic == "Factors Affecting Reaction Rate":
 elif topic == "Factors Affecting Reaction Rate":
     st.title("Factors Affecting Reaction Rate")
 
