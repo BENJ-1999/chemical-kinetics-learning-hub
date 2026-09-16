@@ -871,7 +871,7 @@ else:
         key="slope_question"
     )
 
-           if question3 == "The reaction rate":
+    if question3 == "The reaction rate":
 
             st.success(
                 "Correct! The slope of a concentration–time curve "
