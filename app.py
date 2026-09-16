@@ -436,7 +436,7 @@ with col1:
         """
     )
 
-   st.latex(r"\text{Average rate} = -\frac{\Delta[A]}{\Delta t}")
+    st.latex(r"\text{Average rate} = -\frac{\Delta[A]}{\Delta t}")
 
 with col2:
     st.markdown("**Instantaneous rate**")
