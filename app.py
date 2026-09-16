@@ -874,12 +874,12 @@ else:
     if st.button("Check Slope Answer"):
 
         if question3 == "The reaction rate":
-        st.success(
-            "Correct! The slope of a concentration–time curve "
+            st.success(
+                "Correct! The slope of a concentration–time curve "
             "is related to the reaction rate."
         )
         else:
-        st.error(
+            st.error(
             "Not quite. The slope of a concentration–time curve "
             "represents the rate of concentration change with time."
         )
