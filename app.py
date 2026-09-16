@@ -500,7 +500,7 @@ st.markdown(
 
 st.subheader("Worked Example")
 
-    st.write(
+st.write(
         "The concentration of reactant A changes from "
         "0.80 mol L⁻¹ at 10 s to 0.50 mol L⁻¹ at 30 s."
     )
