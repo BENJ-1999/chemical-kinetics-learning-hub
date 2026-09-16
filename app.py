@@ -882,8 +882,7 @@ else:
 
             st.error(
                 "Not quite. The slope of a concentration–time curve "
-                "represents the rate of concentration change."
-            )
+                "represents the rate of concentration change." )
 
     # =====================================================
     # KEY POINTS
