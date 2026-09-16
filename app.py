@@ -906,7 +906,6 @@ Remember:
 # =========================================================
 
 elif topic == "Factors Affecting Reaction Rate":
-elif topic == "Factors Affecting Reaction Rate":
     st.title("Factors Affecting Reaction Rate")
 
     st.write(
