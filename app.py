@@ -878,7 +878,7 @@ else:
                 "is related to the reaction rate."
             )
 
-        else:
+      else:
 
             st.error(
                 "Not quite. The slope of a concentration–time curve "
