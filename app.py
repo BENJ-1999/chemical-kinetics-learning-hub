@@ -191,111 +191,318 @@ elif topic == "Reaction Rate":
         "mol L⁻¹ s⁻¹."
     )
 
-    # -----------------------------------------------------
-    # CONCENTRATION-TIME GRAPH
-    # -----------------------------------------------------
+   # ============================================================
+# THREE WAYS TO DESCRIBE REACTION RATE
+# ============================================================
 
-    st.subheader("Concentration changes with time")
+def plot_three_rates():
+    """Compact concentration-time diagram showing
+    average, instantaneous and initial rates.
+    """
 
-    time_data = np.array([0, 10, 20, 30, 40, 50, 60])
-    reactant_data = np.array([
-        1.00, 0.80, 0.65, 0.50, 0.38, 0.28, 0.20
+    t = np.linspace(0, 10, 300)
+
+    # Simple exponential decrease in reactant concentration
+    A0 = 1.00
+    k = 0.20
+    A = A0 * np.exp(-k * t)
+
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+
+    # --------------------------------------------------------
+    # Concentration-time curve
+    # --------------------------------------------------------
+    ax.plot(
+        t,
+        A,
+        linewidth=2.5
+    )
+
+    # --------------------------------------------------------
+    # Average rate: secant between t₁ and t₂
+    # --------------------------------------------------------
+    t1 = 2.5
+    t2 = 6.5
+
+    A1 = A0 * np.exp(-k * t1)
+    A2 = A0 * np.exp(-k * t2)
+
+    average_slope = (A2 - A1) / (t2 - t1)
+
+    t_average = np.array([t1, t2])
+    A_average = A1 + average_slope * (t_average - t1)
+
+    ax.plot(
+        t_average,
+        A_average,
+        linestyle="--",
+        linewidth=2
+    )
+
+    ax.scatter(
+        [t1, t2],
+        [A1, A2],
+        s=45,
+        zorder=5
+    )
+
+    # --------------------------------------------------------
+    # Instantaneous rate: tangent at t
+    # --------------------------------------------------------
+    ti = 4.5
+    Ai = A0 * np.exp(-k * ti)
+
+    instantaneous_slope = -k * Ai
+
+    tangent_width = 1.8
+
+    t_tangent = np.array([
+        ti - tangent_width,
+        ti + tangent_width
     ])
-    product_data = np.array([
-        0.00, 0.20, 0.35, 0.50, 0.62, 0.72, 0.80
-    ])
 
-    fig_conc, ax_conc = plt.subplots(figsize=(8, 5))
-
-    ax_conc.plot(
-        time_data,
-        reactant_data,
-        marker="o",
-        label="Reactant A"
+    A_tangent = (
+        Ai
+        + instantaneous_slope * (t_tangent - ti)
     )
 
-    ax_conc.plot(
-        time_data,
-        product_data,
-        marker="o",
-        label="Product B"
+    ax.plot(
+        t_tangent,
+        A_tangent,
+        linestyle=":",
+        linewidth=2.5
     )
 
-    ax_conc.set_xlabel("Time (s)")
-    ax_conc.set_ylabel("Concentration (mol L⁻¹)")
-    ax_conc.set_title("Concentration of Reactant and Product vs Time")
-    ax_conc.legend()
-    ax_conc.grid(True)
-
-    st.pyplot(fig_conc)
-
-    st.write(
-        "The decreasing curve represents the reactant being consumed. "
-        "The increasing curve represents the product being formed."
+    ax.scatter(
+        [ti],
+        [Ai],
+        s=50,
+        zorder=5
     )
 
-    # =====================================================
-    # AVERAGE RATE
-    # =====================================================
+    # --------------------------------------------------------
+    # Initial rate: tangent at t = 0
+    # --------------------------------------------------------
+    initial_slope = -k * A0
 
-    st.subheader("Average Reaction Rate")
+    t_initial = np.array([0, 2.0])
 
-    st.write(
-        "The average reaction rate describes the change in concentration "
-        "over a particular time interval."
+    A_initial = (
+        A0
+        + initial_slope * t_initial
     )
 
-    st.write(
-        "For a reactant, the rate is based on the **absolute value of the "
-        "change in concentration** over the time interval. Because the "
-        "reactant concentration decreases, the conventional rate equation "
-        "includes a negative sign."
+    ax.plot(
+        t_initial,
+        A_initial,
+        linestyle="-.",
+        linewidth=2
+    )
+
+    ax.scatter(
+        [0],
+        [A0],
+        s=50,
+        zorder=5
+    )
+
+    # --------------------------------------------------------
+    # Graph labels
+    # --------------------------------------------------------
+
+    ax.annotate(
+        "Initial rate\n(t = 0)",
+        xy=(0.3, A0 + initial_slope * 0.3),
+        xytext=(1.0, 1.04),
+        arrowprops=dict(
+            arrowstyle="->",
+            lw=1.2
+        ),
+        fontsize=10
+    )
+
+    ax.annotate(
+        "Instantaneous rate\nat time t",
+        xy=(ti + 0.2,
+            Ai + instantaneous_slope * 0.2),
+        xytext=(5.5, 0.72),
+        arrowprops=dict(
+            arrowstyle="->",
+            lw=1.2
+        ),
+        fontsize=10
+    )
+
+    ax.annotate(
+        "Average rate\nbetween $t_1$ and $t_2$",
+        xy=(4.5, (A1 + A2) / 2),
+        xytext=(6.0, 0.40),
+        arrowprops=dict(
+            arrowstyle="->",
+            lw=1.2
+        ),
+        fontsize=10
+    )
+
+    # Time labels
+    ax.text(
+        t1,
+        -0.07,
+        r"$t_1$",
+        ha="center",
+        fontsize=11
+    )
+
+    ax.text(
+        t2,
+        -0.07,
+        r"$t_2$",
+        ha="center",
+        fontsize=11
+    )
+
+    ax.text(
+        ti,
+        -0.07,
+        r"$t$",
+        ha="center",
+        fontsize=11
+    )
+
+    # --------------------------------------------------------
+    # Formatting
+    # --------------------------------------------------------
+
+    ax.set_xlabel("Time", fontsize=11)
+    ax.set_ylabel("Concentration of A", fontsize=11)
+
+    ax.set_title(
+        "Average, instantaneous and initial reaction rates",
+        fontsize=13,
+        pad=10
+    )
+
+    ax.set_xlim(-0.3, 10)
+    ax.set_ylim(-0.12, 1.15)
+
+    ax.grid(alpha=0.2)
+
+    plt.tight_layout()
+
+    return fig
+
+
+# ============================================================
+# REACTION RATE SECTION
+# ============================================================
+
+st.markdown("## Reaction Rate")
+
+st.markdown(
+    """
+    Consider a simple reaction:
+
+    """
+)
+
+st.latex(r"A \rightarrow \text{products}")
+
+st.markdown(
+    """
+    As the reaction proceeds, the concentration of reactant A decreases.
+    The **reaction rate** describes how quickly this concentration changes
+    with time.
+    """
+)
+
+st.markdown("### Three ways to describe reaction rate")
+
+fig = plot_three_rates()
+st.pyplot(fig, use_container_width=True)
+plt.close(fig)
+
+# ------------------------------------------------------------
+# Three concise explanations
+# ------------------------------------------------------------
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("**Average rate**")
+
+    st.markdown(
+        """
+        The rate of reaction over a specified time interval.
+        """
     )
 
     st.latex(
-        r"\text{Average rate}"
-        r"=-\frac{\Delta[\mathrm{A}]}{\Delta t}"
+        r"\text{Average rate} = "
+        r"-\frac{\Delta[A]}{\Delta t}"
     )
 
-    st.write(
-        "The change in concentration between two times can be written using "
-        "the concentrations at \(t_1\) and \(t_2\):"
-    )
+with col2:
+    st.markdown("**Instantaneous rate**")
 
-    st.latex(
-        r"\Delta[\mathrm{A}]"
-        r"=[\mathrm{A}]_{t_2}-[\mathrm{A}]_{t_1}"
-    )
-
-    st.latex(
-        r"\Delta t=t_2-t_1"
-    )
-
-    st.write(
-        "Therefore, the average rate can be written directly in terms of "
-        "the concentrations at \(t_1\) and \(t_2\):"
+    st.markdown(
+        """
+        The rate of reaction at a particular instant.
+        It is the **slope of the tangent** to the curve.
+        """
     )
 
     st.latex(
-        r"\boxed{"
-        r"\text{Average rate}"
-        r"=-\frac{[\mathrm{A}]_{t_2}-[\mathrm{A}]_{t_1}}"
-        r"{t_2-t_1}"
-        r"}"
+        r"\text{Instantaneous rate} = "
+        r"-\frac{d[A]}{dt}"
     )
 
-    st.write(
-        "For a product, whose concentration increases as the reaction "
-        "proceeds, the average rate is:"
+with col3:
+    st.markdown("**Initial rate**")
+
+    st.markdown(
+        """
+        The instantaneous rate at the start of the reaction,
+        when \(t = 0\).
+        """
     )
 
     st.latex(
-        r"\boxed{"
-        r"\text{Average rate}"
-        r"=\frac{\Delta[\mathrm{B}]}{\Delta t}"
-        r"}"
+        r"\text{Initial rate} =
+        \left.-\frac{d[A]}{dt}\right|_{t=0}"
     )
 
+# ------------------------------------------------------------
+# Explaining Δ and the time interval
+# ------------------------------------------------------------
+
+st.markdown("### Calculating an average rate")
+
+st.markdown(
+    """
+    For an average rate, the change in concentration is considered
+    between two times, \(t_1\) and \(t_2\).
+    """
+)
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.latex(
+        r"\Delta[A] = [A]_{t_2} - [A]_{t_1}"
+    )
+
+with col2:
+    st.latex(
+        r"\Delta t = t_2 - t_1"
+    )
+
+st.markdown(
+    """
+    Here, \(\Delta\) means **change in**. For a reactant, the concentration
+    decreases as the reaction proceeds, so the negative sign in the rate
+    equation gives a positive reaction rate.
+    """
+)
     # =====================================================
     # WORKED EXAMPLE
     # =====================================================
@@ -445,179 +652,7 @@ elif topic == "Reaction Rate":
             r"{t_2-t_1}"
         )
 
-        # -------------------------------------------------
-        # INTERACTIVE GRAPH
-        # -------------------------------------------------
-
-        graph_time = np.array([t1, t2])
-        graph_concentration = np.array(
-            [concentration_t1, concentration_t2]
-        )
-
-        fig_rate, ax_rate = plt.subplots(figsize=(8, 5))
-
-        ax_rate.plot(
-            graph_time,
-            graph_concentration,
-            marker="o"
-        )
-
-        ax_rate.plot(
-            graph_time,
-            graph_concentration,
-            linestyle="--"
-        )
-
-        ax_rate.set_xlabel("Time (s)")
-        ax_rate.set_ylabel("Reactant concentration (mol L⁻¹)")
-        ax_rate.set_title("Average Rate Between Two Selected Points")
-        ax_rate.grid(True)
-
-        st.pyplot(fig_rate)
-
-        st.write(
-            "The two selected points define the time interval over which "
-            "the average reaction rate is calculated."
-        )
-
-    # =====================================================
-    # INSTANTANEOUS RATE
-    # =====================================================
-
-    st.subheader("Instantaneous Reaction Rate")
-
-    st.write(
-        "The average reaction rate describes the rate over a particular "
-        "time interval. However, the reaction rate usually changes as "
-        "the reaction proceeds."
-    )
-
-    st.write(
-        "The **instantaneous reaction rate** is the reaction rate at "
-        "a particular instant in time."
-    )
-
-    st.write(
-        "On a concentration–time graph, the instantaneous rate is "
-        "determined from the **slope of the tangent to the curve** "
-        "at that particular time."
-    )
-
-    st.latex(
-        r"\boxed{"
-        r"\text{rate}=-\frac{d[\mathrm{A}]}{dt}"
-        r"}"
-    )
-
-    st.write(
-        "For a product:"
-    )
-
-    st.latex(
-        r"\boxed{"
-        r"\text{rate}=\frac{d[\mathrm{B}]}{dt}"
-        r"}"
-    )
-
-    # -----------------------------------------------------
-    # TANGENT SIMULATION
-    # -----------------------------------------------------
-
-    st.subheader("Interactive Tangent to the Curve")
-
-    tangent_time = st.slider(
-        "Choose a time to examine the instantaneous rate (s)",
-        min_value=0.0,
-        max_value=60.0,
-        value=30.0,
-        step=1.0
-    )
-
-    # Smooth model for demonstration
-    smooth_time = np.linspace(0, 60, 300)
-
-    # Exponential-like reactant decay
-    smooth_reactant = np.exp(-smooth_time / 35)
-
-    # Numerical derivative
-    derivative = np.gradient(
-        smooth_reactant,
-        smooth_time
-    )
-
-    tangent_index = np.argmin(
-        np.abs(smooth_time - tangent_time)
-    )
-
-    tangent_concentration = smooth_reactant[tangent_index]
-    tangent_slope = derivative[tangent_index]
-
-    # Tangent line
-    tangent_line = (
-        tangent_concentration
-        + tangent_slope * (smooth_time - tangent_time)
-    )
-
-    fig_tangent, ax_tangent = plt.subplots(figsize=(8, 5))
-
-    ax_tangent.plot(
-        smooth_time,
-        smooth_reactant,
-        label="Reactant concentration"
-    )
-
-    ax_tangent.plot(
-        smooth_time,
-        tangent_line,
-        linestyle="--",
-        label="Tangent"
-    )
-
-    ax_tangent.plot(
-        tangent_time,
-        tangent_concentration,
-        marker="o",
-        markersize=8
-    )
-
-    ax_tangent.set_xlabel("Time (s)")
-    ax_tangent.set_ylabel("Reactant concentration (relative units)")
-    ax_tangent.set_title(
-        "Instantaneous Rate from the Tangent"
-    )
-    ax_tangent.legend()
-    ax_tangent.grid(True)
-
-    st.pyplot(fig_tangent)
-
-    st.info(
-        f"At t = {tangent_time:.0f} s, the tangent represents the "
-        "instantaneous rate at that particular moment."
-    )
-
-    # =====================================================
-    # INITIAL RATE
-    # =====================================================
-
-    st.subheader("Initial Reaction Rate")
-
-    st.write(
-        "The **initial rate** is the instantaneous reaction rate "
-        "at the beginning of the reaction, when \(t=0\)."
-    )
-
-    st.latex(
-        r"\boxed{"
-        r"\text{Initial rate}"
-        r"=-\left.\frac{d[\mathrm{A}]}{dt}\right|_{t=0}"
-        r"}"
-    )
-
-    st.write(
-        "Initial rates are particularly useful when comparing the "
-        "effect of changing experimental conditions on a reaction."
-    )
-
+        
     # =====================================================
     # STOICHIOMETRIC RATE
     # =====================================================
