@@ -498,7 +498,7 @@ st.markdown(
     # WORKED EXAMPLE
     # =====================================================
 
-    st.subheader("Worked Example")
+st.subheader("Worked Example")
 
     st.write(
         "The concentration of reactant A changes from "
