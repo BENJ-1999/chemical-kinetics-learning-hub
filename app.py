@@ -28,7 +28,6 @@ topic = st.sidebar.radio(
         "Order of Reaction",
         "Integrated Rate Laws",
         "Arrhenius Equation",
-        "Collision Theory",
         "Catalysts",
         "Reaction Mechanisms"
     ]
