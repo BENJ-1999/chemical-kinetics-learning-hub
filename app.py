@@ -21,7 +21,7 @@ st.sidebar.title("Topics")
 topic = st.sidebar.radio(
     "Choose a topic:",
     [
-        "Welcome",
+        "Introduction to Chemical Kinetics",
         "Reaction Rate",
         "Factors Affecting Reaction Rate",
         "Rate Laws",
@@ -33,133 +33,142 @@ topic = st.sidebar.radio(
     ]
 )
 
-# ---------------------------------------------------------
-# WELCOME
-# ---------------------------------------------------------
-
-if topic == "Welcome":
-
-    st.title("Welcome")
-
-    st.header("What is Chemical Kinetics?")
-
-    st.write(
-        "Chemical kinetics is the study of how quickly chemical "
-        "reactions occur and the factors that influence reaction rates."
-    )
-
-    st.markdown("""
-    Chemical kinetics helps us understand:
-
-    - how fast chemical reactions occur
-    - how reaction rates are measured
-    - how concentration changes during a reaction
-    - how temperature affects reaction rates
-    - how catalysts affect reaction rates
-    - how reaction mechanisms can be investigated
-    """)
-
-    st.info(
-        "Use the Topics menu on the left to explore Chemical Kinetics."
-    )
-
-
 # =========================================================
-# REACTION RATE
+# INTRODUCTION TO CHEMICAL KINETICS
 # =========================================================
 
-elif topic == "Reaction Rate":
+if topic == "Introduction to Chemical Kinetics":
 
-    st.title("Reaction Rate")
+    st.title("Introduction to Chemical Kinetics")
 
-    st.write(
-        "Reaction rate describes how quickly the concentration of "
-        "reactants or products changes as a chemical reaction occurs."
+    st.markdown(
+        """
+        Chemical reactions are happening all around us — from the
+        digestion of food and the action of medicines to the combustion
+        of fuels and the breakdown of pollutants.
+
+        But chemical reactions do not all happen at the same speed.
+        Some occur almost instantly, while others take minutes, hours,
+        or even years.
+        """
     )
 
-
-    st.header("Collision Theory")
-
-    st.markdown("""
-    Collision theory provides a molecular explanation for why chemical reactions
-    occur at different rates.
-
-    For a chemical reaction to occur, **reactant particles must collide**.
-    In collision theory, the term *particle* refers to an individual chemical
-    species involved in a reaction. Depending on the reaction, these particles
-    may be **atoms, molecules, or ions**.
-
-    However, not every collision results in a reaction.
-
-    For a collision to result in a reaction, the reactant particles must:
-
-    1. collide with **sufficient energy**
-    2. have the **correct orientation**
-    """)
-
-    st.markdown("---")
-
-    st.markdown("### Sufficient Energy")
-
-    st.markdown("""
-    The colliding particles must have enough energy for the reaction to occur.
-    The minimum energy required for a collision to result in a reaction is called
-    the **activation energy, \(E_a\)**.
-    """)
-
-    st.image(
-    "collision_theory_Ea_diagram.png",
-    width=525
+    st.markdown(
+        """
+        **Chemical kinetics** is the study of how quickly chemical
+        reactions occur and the factors that influence their rates.
+        """
     )
 
-    st.markdown("""
-    In the energy profile above, \(E_a\) represents the energy barrier that the
-    reactant particles must overcome for the reaction to occur.
-    """)
+    # -----------------------------------------------------
+    # WHY IS CHEMICAL KINETICS IMPORTANT?
+    # -----------------------------------------------------
 
-    st.markdown("---")
+    st.header("Why is chemical kinetics important?")
 
-    st.markdown("### Correct Orientation")
-
-    st.markdown("""
-    Having sufficient energy is not enough. The reactant molecules must also
-    collide with the **correct orientation**.
-
-    This means that the appropriate parts of the molecules must be positioned
-    correctly during the collision so that the necessary bonds can form or break.
-    """)
-
-    
-    st.image(
-        "collision_theory_orientation_diagram.png",
-        use_container_width=True
+    st.markdown(
+        """
+        Understanding reaction rates helps scientists and engineers
+        control chemical reactions — making them faster when needed,
+        slowing them down when necessary, and understanding what
+        happens as a reaction proceeds.
+        """
     )
 
-    st.markdown("""
-    A collision with the correct orientation can result in a reaction, whereas
-    a collision with an incorrect orientation may not result in a reaction,
-    even when the particles have sufficient energy.
-    """)
-
-    st.markdown("---")
-
-    st.markdown("### Effective Collisions")
-
-    st.markdown("""
-    A collision that has both **sufficient energy** and the **correct orientation**
-    is called an **effective collision**.
-
-    Therefore:
-    """)
-
-    st.latex(
-        r"\boxed{\text{Effective collision}=\text{sufficient energy}+\text{correct orientation}}"
+    st.markdown(
+        """
+        Chemical kinetics is important in many areas:
+        """
     )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.markdown(
+            """
+            🧬 **Biochemistry and medicine**  
+            Understanding enzyme reactions and how substances are
+            transformed in the body.
+
+            🏭 **Chemical industry**  
+            Controlling reaction conditions to produce useful chemicals
+            efficiently.
+
+            🍎 **Food science**  
+            Understanding and controlling processes such as food
+            spoilage and preservation.
+            """
+        )
+
+    with col2:
+
+        st.markdown(
+            """
+            🌏 **Environmental science**  
+            Studying how pollutants are formed, transformed and broken
+            down.
+
+            ⚡ **Energy science**  
+            Understanding chemical reactions involved in fuels,
+            batteries and other energy technologies.
+            """
+        )
+
+    # -----------------------------------------------------
+    # WHAT WILL YOU DISCOVER?
+    # -----------------------------------------------------
+
+    st.header("What will you discover?")
+
+    st.markdown(
+        """
+        As you explore this learning hub, you will investigate
+        questions such as:
+        """
+    )
+
+    st.markdown(
+        """
+        ⚡ **How fast does a reaction happen?**  
+        Learn how reaction rates are measured and expressed.
+
+        🔬 **What makes a reaction happen?**  
+        Use **collision theory** to explore how particles collide
+        and what makes a collision successful.
+
+        🌡️ **Why does temperature affect reaction rate?**  
+        Discover how temperature changes the frequency and energy
+        of collisions.
+
+        🧪 **How does concentration affect reaction rate?**  
+        Investigate how changing the concentration of reactants
+        can change the rate of a reaction.
+
+        🚀 **How do catalysts speed up reactions?**  
+        Explore how catalysts provide an alternative reaction
+        pathway with a lower activation energy.
+
+        📈 **How do concentrations change as a reaction proceeds?**  
+        Use concentration–time graphs to understand reaction
+        progress and determine reaction rates.
+
+        🧩 **How can we work out what happens during a reaction?**  
+        Use experimental rate data to investigate **rate laws,
+        reaction orders and reaction mechanisms**.
+        """
+    )
+
+    # -----------------------------------------------------
+    # CONNECTION TO THE LEARNING HUB
+    # -----------------------------------------------------
 
     st.info(
-        "Only collisions that satisfy both conditions can result in a chemical reaction."
+        """
+        **Your goal:** Connect what you observe experimentally
+        with what is happening at the particle level.
+        """
     )
-   
     # =====================================================
     # SECTION 2 — WHAT IS THE RATE OF A REACTION?
     # =====================================================
