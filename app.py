@@ -213,9 +213,9 @@ st.pyplot(
 
 plt.close(fig)
 
-    """Compact concentration-time diagram showing
-    average, instantaneous and initial rates.
-    """
+"""Compact concentration-time diagram showing
+average, instantaneous and initial rates.
+"""
 
     t = np.linspace(0, 10, 300)
 
