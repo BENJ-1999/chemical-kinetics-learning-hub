@@ -217,18 +217,18 @@ plt.close(fig)
 average, instantaneous and initial rates.
 """
 
-    t = np.linspace(0, 10, 300)
+t = np.linspace(0, 10, 300)
 
-    # Simple exponential decrease in reactant concentration
-    A0 = 1.00
-    k = 0.20
-    A = A0 * np.exp(-k * t)
+# Simple exponential decrease in reactant concentration
+A0 = 1.00
+k = 0.20
+A = A0 * np.exp(-k * t)
 
-    fig, ax = plt.subplots(figsize=(9, 4.8))
+fig, ax = plt.subplots(figsize=(9, 4.8))
 
-    # --------------------------------------------------------
-    # Concentration-time curve
-    # --------------------------------------------------------
+# --------------------------------------------------------
+# Concentration-time curve
+# --------------------------------------------------------
 
     ax.plot(
         t,
