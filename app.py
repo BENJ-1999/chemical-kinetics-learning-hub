@@ -456,8 +456,7 @@ elif topic == "Reaction Rate":
     
     plt.tight_layout()
     
-return fig
-    
+  
     
     # ============================================================
     # DISPLAY THREE RATES
