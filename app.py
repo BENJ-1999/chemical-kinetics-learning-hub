@@ -230,28 +230,28 @@ fig, ax = plt.subplots(figsize=(9, 4.8))
 # Concentration-time curve
 # --------------------------------------------------------
 
-    ax.plot(
+ax.plot(
         t,
         A,
         linewidth=2.5
-    )
+)
 
-    # --------------------------------------------------------
-    # Average rate: secant between t₁ and t₂
-    # --------------------------------------------------------
+# --------------------------------------------------------
+# Average rate: secant between t₁ and t₂
+# --------------------------------------------------------
 
-    t1_graph = 2.5
-    t2_graph = 6.5
+t1_graph = 2.5
+t2_graph = 6.5
 
-    A1 = A0 * np.exp(-k * t1_graph)
-    A2 = A0 * np.exp(-k * t2_graph)
+A1 = A0 * np.exp(-k * t1_graph)
+A2 = A0 * np.exp(-k * t2_graph)
 
-    average_slope = (A2 - A1) / (t2_graph - t1_graph)
+average_slope = (A2 - A1) / (t2_graph - t1_graph)
 
-    t_average = np.array([
-        t1_graph,
-        t2_graph
-    ])
+t_average = np.array([
+    t1_graph,
+    t2_graph
+])
 
     A_average = (
         A1
