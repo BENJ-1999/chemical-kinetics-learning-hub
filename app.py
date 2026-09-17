@@ -465,12 +465,12 @@ return fig
     
     st.subheader(
         "Average, Instantaneous and Initial Rates"
-    )
+        )
     
     st.write(
         "Reaction rate can be described over a time interval "
         "or at a particular instant during a reaction."
-    )
+        )
     
     fig = plot_three_rates()
     
