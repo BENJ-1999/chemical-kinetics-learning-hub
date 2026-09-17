@@ -253,210 +253,210 @@ t_average = np.array([
     t2_graph
 ])
 
-    A_average = (
-        A1
-        + average_slope * (t_average - t1_graph)
-    )
+A_average = (
+    A1
+    + average_slope * (t_average - t1_graph)
+)
 
-    ax.plot(
-        t_average,
-        A_average,
-        linestyle="--",
-        linewidth=2
-    )
+ax.plot(
+    t_average,
+    A_average,
+    linestyle="--",
+    linewidth=2
+)
 
-    ax.scatter(
-        [t1_graph, t2_graph],
-        [A1, A2],
-        s=45,
-        zorder=5
-    )
+ax.scatter(
+    [t1_graph, t2_graph],
+    [A1, A2],
+    s=45,
+    zorder=5
+)
 
-    # --------------------------------------------------------
-    # Instantaneous rate: tangent at t
-    # --------------------------------------------------------
+# --------------------------------------------------------
+# Instantaneous rate: tangent at t
+# --------------------------------------------------------
 
-    ti = 4.5
-    Ai = A0 * np.exp(-k * ti)
+ti = 4.5
+Ai = A0 * np.exp(-k * ti)
 
-    instantaneous_slope = -k * Ai
+instantaneous_slope = -k * Ai
 
-    tangent_width = 1.8
+tangent_width = 1.8
 
-    t_tangent = np.array([
-        ti - tangent_width,
-        ti + tangent_width
-    ])
+t_tangent = np.array([
+    ti - tangent_width,
+    ti + tangent_width
+])
 
-    A_tangent = (
-        Ai
-        + instantaneous_slope * (t_tangent - ti)
-    )
+A_tangent = (
+    Ai
+    + instantaneous_slope * (t_tangent - ti)
+)
 
-    ax.plot(
-        t_tangent,
-        A_tangent,
-        linestyle=":",
-        linewidth=2.5
-    )
+ax.plot(
+    t_tangent,
+    A_tangent,
+    linestyle=":",
+    linewidth=2.5
+)
 
-    ax.scatter(
-        [ti],
-        [Ai],
-        s=50,
-        zorder=5
-    )
+ax.scatter(
+    [ti],
+    [Ai],
+    s=50,
+    zorder=5
+)
 
-    # --------------------------------------------------------
-    # Initial rate: tangent at t = 0
-    # --------------------------------------------------------
+# --------------------------------------------------------
+# Initial rate: tangent at t = 0
+# --------------------------------------------------------
 
-    initial_slope = -k * A0
+initial_slope = -k * A0
 
-    t_initial = np.array([
-        0,
-        2.0
-    ])
+t_initial = np.array([
+    0,
+    2.0
+])
 
-    A_initial = (
-        A0
-        + initial_slope * t_initial
-    )
+A_initial = (
+    A0
+    + initial_slope * t_initial
+)
 
-    ax.plot(
-        t_initial,
-        A_initial,
-        linestyle="-.",
-        linewidth=2
-    )
+ax.plot(
+    t_initial,
+    A_initial,
+    linestyle="-.",
+    linewidth=2
+)
 
-    ax.scatter(
-        [0],
-        [A0],
-        s=50,
-        zorder=5
-    )
+ax.scatter(
+    [0],
+    [A0],
+    s=50,
+    zorder=5
+)
 
-    # --------------------------------------------------------
-    # Graph labels
-    # --------------------------------------------------------
+# --------------------------------------------------------
+# Graph labels
+# --------------------------------------------------------
 
-    ax.annotate(
-        "Initial rate\n(t = 0)",
-        xy=(
-            0.3,
-            A0 + initial_slope * 0.3
-        ),
-        xytext=(
-            1.0,
-            1.04
-        ),
-        arrowprops=dict(
-            arrowstyle="->",
-            lw=1.2
-        ),
-        fontsize=10
-    )
+ax.annotate(
+    "Initial rate\n(t = 0)",
+    xy=(
+        0.3,
+        A0 + initial_slope * 0.3
+    ),
+    xytext=(
+        1.0,
+        1.04
+    ),
+    arrowprops=dict(
+        arrowstyle="->",
+        lw=1.2
+    ),
+    fontsize=10
+)
 
-    ax.annotate(
-        "Instantaneous rate\nat time t",
-        xy=(
-            ti + 0.2,
-            Ai + instantaneous_slope * 0.2
-        ),
-        xytext=(
-            5.5,
-            0.72
-        ),
-        arrowprops=dict(
-            arrowstyle="->",
-            lw=1.2
-        ),
-        fontsize=10
-    )
+ax.annotate(
+    "Instantaneous rate\nat time t",
+    xy=(
+        ti + 0.2,
+        Ai + instantaneous_slope * 0.2
+    ),
+    xytext=(
+        5.5,
+        0.72
+    ),
+    arrowprops=dict(
+        arrowstyle="->",
+        lw=1.2
+    ),
+    fontsize=10
+)
 
-    ax.annotate(
-        "Average rate\nbetween $t_1$ and $t_2$",
-        xy=(
-            4.5,
-            (A1 + A2) / 2
-        ),
-        xytext=(
-            6.0,
-            0.40
-        ),
-        arrowprops=dict(
-            arrowstyle="->",
-            lw=1.2
-        ),
-        fontsize=10
-    )
+ax.annotate(
+    "Average rate\nbetween $t_1$ and $t_2$",
+    xy=(
+        4.5,
+        (A1 + A2) / 2
+    ),
+    xytext=(
+        6.0,
+        0.40
+    ),
+    arrowprops=dict(
+        arrowstyle="->",
+        lw=1.2
+    ),
+    fontsize=10
+)
 
-    # --------------------------------------------------------
-    # Time labels
-    # --------------------------------------------------------
+# --------------------------------------------------------
+# Time labels
+# --------------------------------------------------------
 
-    ax.text(
-        t1_graph,
-        -0.07,
-        r"$t_1$",
-        ha="center",
-        fontsize=11
-    )
+ax.text(
+    t1_graph,
+    -0.07,
+    r"$t_1$",
+    ha="center",
+    fontsize=11
+)
 
-    ax.text(
-        t2_graph,
-        -0.07,
-        r"$t_2$",
-        ha="center",
-        fontsize=11
-    )
+ax.text(
+    t2_graph,
+    -0.07,
+    r"$t_2$",
+    ha="center",
+    fontsize=11
+)
 
-    ax.text(
-        ti,
-        -0.07,
-        r"$t$",
-        ha="center",
-        fontsize=11
-    )
+ax.text(
+    ti,
+    -0.07,
+    r"$t$",
+    ha="center",
+    fontsize=11
+)
 
-    # --------------------------------------------------------
-    # Formatting
-    # --------------------------------------------------------
+# --------------------------------------------------------
+# Formatting
+# --------------------------------------------------------
 
-    ax.set_xlabel(
-        "Time",
-        fontsize=11
-    )
+ax.set_xlabel(
+    "Time",
+    fontsize=11
+)
 
-    ax.set_ylabel(
-        "Concentration of A",
-        fontsize=11
-    )
+ax.set_ylabel(
+    "Concentration of A",
+    fontsize=11
+)
 
-    ax.set_title(
-        "Three ways to describe reaction rate",
-        fontsize=13,
-        pad=10
-    )
+ax.set_title(
+    "Three ways to describe reaction rate",
+    fontsize=13,
+    pad=10
+)
 
-    ax.set_xlim(
-        -0.3,
-        10
-    )
+ax.set_xlim(
+    -0.3,
+    10
+)
 
-    ax.set_ylim(
-        -0.12,
-        1.15
-    )
+ax.set_ylim(
+    -0.12,
+    1.15
+)
 
-    ax.grid(
-        alpha=0.2
-    )
+ax.grid(
+    alpha=0.2
+)
 
-    plt.tight_layout()
+plt.tight_layout()
 
-    return fig
+return fig
 
 
 # ============================================================
