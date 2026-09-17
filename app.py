@@ -60,7 +60,7 @@ if topic == "Introduction to Chemical Kinetics":
         """
     )
 
-    # -----------------------------------------------------
+        # -----------------------------------------------------
     # WHY IS CHEMICAL KINETICS IMPORTANT?
     # -----------------------------------------------------
 
@@ -78,34 +78,28 @@ if topic == "Introduction to Chemical Kinetics":
     st.markdown(
         """
         Chemical kinetics is important in many areas:
+
+        🧬 **Biochemistry and medicine**  
+        Understanding enzyme reactions and how substances are
+        transformed in the body.
+
+        🏭 **Chemical industry**  
+        Controlling reaction conditions to produce useful chemicals
+        efficiently.
+
+        🍎 **Food science**  
+        Understanding and controlling processes such as food
+        spoilage and preservation.
+
+        🌏 **Environmental science**  
+        Studying how pollutants are formed, transformed and broken
+        down.
+
+        ⚡ **Energy science**  
+        Understanding chemical reactions involved in fuels,
+        batteries and other energy technologies.
         """
     )
-    
-    st.markdown(
-            """
-            🧬 **Biochemistry and medicine**  
-            Understanding enzyme reactions and how substances are
-            transformed in the body.
-
-            🏭 **Chemical industry**  
-            Controlling reaction conditions to produce useful chemicals
-            efficiently.
-
-            🍎 **Food science**  
-            Understanding and controlling processes such as food
-            spoilage and preservation.
-            """
-         🌏 **Environmental science**  
-            Studying how pollutants are formed, transformed and broken
-            down.
-
-            ⚡ **Energy science**  
-            Understanding chemical reactions involved in fuels,
-            batteries and other energy technologies.
-            """
-        )
-           
-
     # -----------------------------------------------------
     # WHAT WILL YOU DISCOVER?
     # -----------------------------------------------------
