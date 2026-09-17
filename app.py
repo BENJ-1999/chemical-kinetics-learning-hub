@@ -80,12 +80,8 @@ if topic == "Introduction to Chemical Kinetics":
         Chemical kinetics is important in many areas:
         """
     )
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        st.markdown(
+    
+    st.markdown(
             """
             🧬 **Biochemistry and medicine**  
             Understanding enzyme reactions and how substances are
@@ -99,13 +95,7 @@ if topic == "Introduction to Chemical Kinetics":
             Understanding and controlling processes such as food
             spoilage and preservation.
             """
-        )
-
-    with col2:
-
-        st.markdown(
-            """
-            🌏 **Environmental science**  
+         🌏 **Environmental science**  
             Studying how pollutants are formed, transformed and broken
             down.
 
@@ -114,6 +104,7 @@ if topic == "Introduction to Chemical Kinetics":
             batteries and other energy technologies.
             """
         )
+           
 
     # -----------------------------------------------------
     # WHAT WILL YOU DISCOVER?
