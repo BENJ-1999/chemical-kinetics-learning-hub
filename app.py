@@ -212,7 +212,7 @@ st.pyplot(
 )
 
 plt.close(fig)
-return fig
+
     """Compact concentration-time diagram showing
     average, instantaneous and initial rates.
     """
