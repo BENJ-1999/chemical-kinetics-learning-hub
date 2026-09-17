@@ -456,7 +456,7 @@ elif topic == "Reaction Rate":
     
     plt.tight_layout()
     
-    return fig
+return fig
     
     
     # ============================================================
