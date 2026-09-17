@@ -110,7 +110,7 @@ elif topic == "Reaction Rate":
     st.image(
     "collision_theory_Ea_diagram.png",
     width=525
-)
+    )
 
     st.markdown("""
     In the energy profile above, \(E_a\) represents the energy barrier that the
@@ -160,766 +160,766 @@ elif topic == "Reaction Rate":
         "Only collisions that satisfy both conditions can result in a chemical reaction."
     )
    
-# =====================================================
-# SECTION 2 — WHAT IS THE RATE OF A REACTION?
-# =====================================================
-
-st.header("2. What Is the Rate of a Reaction?")
-
-st.write(
-    "Reaction rate describes how quickly the concentration of a "
-    "reactant decreases or the concentration of a product increases "
-    "as a reaction proceeds."
-)
-
-st.subheader("A simple reaction")
-
-st.latex(r"\mathrm{A \rightarrow B}")
-
-st.write(
-    "As the reaction proceeds, reactant A is consumed and product B "
-    "is formed."
-)
-
-st.write(
-    "Therefore, the concentration of A decreases with time, while "
-    "the concentration of B increases with time."
-)
-
-st.info(
-    "Reaction rate is commonly expressed in units of "
-    "mol L⁻¹ s⁻¹."
-)
-
-
-# ============================================================
-# THREE WAYS TO DESCRIBE REACTION RATE
-# ============================================================
-st.subheader(
-    "Average, Instantaneous and Initial Rates"
-)
-
-st.write(
-    "Reaction rate can be described over a time interval "
-    "or at a particular instant during a reaction."
-)
-
-fig = plot_three_rates()
-
-st.pyplot(
-    fig,
-    use_container_width=True
-)
-
-plt.close(fig)
-
-"""Compact concentration-time diagram showing
-average, instantaneous and initial rates.
-"""
-
-t = np.linspace(0, 10, 300)
-
-# Simple exponential decrease in reactant concentration
-A0 = 1.00
-k = 0.20
-A = A0 * np.exp(-k * t)
-
-fig, ax = plt.subplots(figsize=(9, 4.8))
-
-# --------------------------------------------------------
-# Concentration-time curve
-# --------------------------------------------------------
-
-ax.plot(
-        t,
-        A,
+    # =====================================================
+    # SECTION 2 — WHAT IS THE RATE OF A REACTION?
+    # =====================================================
+    
+    st.header("2. What Is the Rate of a Reaction?")
+    
+    st.write(
+        "Reaction rate describes how quickly the concentration of a "
+        "reactant decreases or the concentration of a product increases "
+        "as a reaction proceeds."
+    )
+    
+    st.subheader("A simple reaction")
+    
+    st.latex(r"\mathrm{A \rightarrow B}")
+    
+    st.write(
+        "As the reaction proceeds, reactant A is consumed and product B "
+        "is formed."
+    )
+    
+    st.write(
+        "Therefore, the concentration of A decreases with time, while "
+        "the concentration of B increases with time."
+    )
+    
+    st.info(
+        "Reaction rate is commonly expressed in units of "
+        "mol L⁻¹ s⁻¹."
+    )
+    
+    
+    # ============================================================
+    # THREE WAYS TO DESCRIBE REACTION RATE
+    # ============================================================
+    st.subheader(
+        "Average, Instantaneous and Initial Rates"
+    )
+    
+    st.write(
+        "Reaction rate can be described over a time interval "
+        "or at a particular instant during a reaction."
+    )
+    
+    fig = plot_three_rates()
+    
+    st.pyplot(
+        fig,
+        use_container_width=True
+    )
+    
+    plt.close(fig)
+    
+    """Compact concentration-time diagram showing
+    average, instantaneous and initial rates.
+    """
+    
+    t = np.linspace(0, 10, 300)
+    
+    # Simple exponential decrease in reactant concentration
+    A0 = 1.00
+    k = 0.20
+    A = A0 * np.exp(-k * t)
+    
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+    
+    # --------------------------------------------------------
+    # Concentration-time curve
+    # --------------------------------------------------------
+    
+    ax.plot(
+            t,
+            A,
+            linewidth=2.5
+    )
+    
+    # --------------------------------------------------------
+    # Average rate: secant between t₁ and t₂
+    # --------------------------------------------------------
+    
+    t1_graph = 2.5
+    t2_graph = 6.5
+    
+    A1 = A0 * np.exp(-k * t1_graph)
+    A2 = A0 * np.exp(-k * t2_graph)
+    
+    average_slope = (A2 - A1) / (t2_graph - t1_graph)
+    
+    t_average = np.array([
+        t1_graph,
+        t2_graph
+    ])
+    
+    A_average = (
+        A1
+        + average_slope * (t_average - t1_graph)
+    )
+    
+    ax.plot(
+        t_average,
+        A_average,
+        linestyle="--",
+        linewidth=2
+    )
+    
+    ax.scatter(
+        [t1_graph, t2_graph],
+        [A1, A2],
+        s=45,
+        zorder=5
+    )
+    
+    # --------------------------------------------------------
+    # Instantaneous rate: tangent at t
+    # --------------------------------------------------------
+    
+    ti = 4.5
+    Ai = A0 * np.exp(-k * ti)
+    
+    instantaneous_slope = -k * Ai
+    
+    tangent_width = 1.8
+    
+    t_tangent = np.array([
+        ti - tangent_width,
+        ti + tangent_width
+    ])
+    
+    A_tangent = (
+        Ai
+        + instantaneous_slope * (t_tangent - ti)
+    )
+    
+    ax.plot(
+        t_tangent,
+        A_tangent,
+        linestyle=":",
         linewidth=2.5
-)
-
-# --------------------------------------------------------
-# Average rate: secant between t₁ and t₂
-# --------------------------------------------------------
-
-t1_graph = 2.5
-t2_graph = 6.5
-
-A1 = A0 * np.exp(-k * t1_graph)
-A2 = A0 * np.exp(-k * t2_graph)
-
-average_slope = (A2 - A1) / (t2_graph - t1_graph)
-
-t_average = np.array([
-    t1_graph,
-    t2_graph
-])
-
-A_average = (
-    A1
-    + average_slope * (t_average - t1_graph)
-)
-
-ax.plot(
-    t_average,
-    A_average,
-    linestyle="--",
-    linewidth=2
-)
-
-ax.scatter(
-    [t1_graph, t2_graph],
-    [A1, A2],
-    s=45,
-    zorder=5
-)
-
-# --------------------------------------------------------
-# Instantaneous rate: tangent at t
-# --------------------------------------------------------
-
-ti = 4.5
-Ai = A0 * np.exp(-k * ti)
-
-instantaneous_slope = -k * Ai
-
-tangent_width = 1.8
-
-t_tangent = np.array([
-    ti - tangent_width,
-    ti + tangent_width
-])
-
-A_tangent = (
-    Ai
-    + instantaneous_slope * (t_tangent - ti)
-)
-
-ax.plot(
-    t_tangent,
-    A_tangent,
-    linestyle=":",
-    linewidth=2.5
-)
-
-ax.scatter(
-    [ti],
-    [Ai],
-    s=50,
-    zorder=5
-)
-
-# --------------------------------------------------------
-# Initial rate: tangent at t = 0
-# --------------------------------------------------------
-
-initial_slope = -k * A0
-
-t_initial = np.array([
-    0,
-    2.0
-])
-
-A_initial = (
-    A0
-    + initial_slope * t_initial
-)
-
-ax.plot(
-    t_initial,
-    A_initial,
-    linestyle="-.",
-    linewidth=2
-)
-
-ax.scatter(
-    [0],
-    [A0],
-    s=50,
-    zorder=5
-)
-
-# --------------------------------------------------------
-# Graph labels
-# --------------------------------------------------------
-
-ax.annotate(
-    "Initial rate\n(t = 0)",
-    xy=(
-        0.3,
-        A0 + initial_slope * 0.3
-    ),
-    xytext=(
-        1.0,
-        1.04
-    ),
-    arrowprops=dict(
-        arrowstyle="->",
-        lw=1.2
-    ),
-    fontsize=10
-)
-
-ax.annotate(
-    "Instantaneous rate\nat time t",
-    xy=(
-        ti + 0.2,
-        Ai + instantaneous_slope * 0.2
-    ),
-    xytext=(
-        5.5,
-        0.72
-    ),
-    arrowprops=dict(
-        arrowstyle="->",
-        lw=1.2
-    ),
-    fontsize=10
-)
-
-ax.annotate(
-    "Average rate\nbetween $t_1$ and $t_2$",
-    xy=(
-        4.5,
-        (A1 + A2) / 2
-    ),
-    xytext=(
-        6.0,
-        0.40
-    ),
-    arrowprops=dict(
-        arrowstyle="->",
-        lw=1.2
-    ),
-    fontsize=10
-)
-
-# --------------------------------------------------------
-# Time labels
-# --------------------------------------------------------
-
-ax.text(
-    t1_graph,
-    -0.07,
-    r"$t_1$",
-    ha="center",
-    fontsize=11
-)
-
-ax.text(
-    t2_graph,
-    -0.07,
-    r"$t_2$",
-    ha="center",
-    fontsize=11
-)
-
-ax.text(
-    ti,
-    -0.07,
-    r"$t$",
-    ha="center",
-    fontsize=11
-)
-
-# --------------------------------------------------------
-# Formatting
-# --------------------------------------------------------
-
-ax.set_xlabel(
-    "Time",
-    fontsize=11
-)
-
-ax.set_ylabel(
-    "Concentration of A",
-    fontsize=11
-)
-
-ax.set_title(
-    "Three ways to describe reaction rate",
-    fontsize=13,
-    pad=10
-)
-
-ax.set_xlim(
-    -0.3,
-    10
-)
-
-ax.set_ylim(
-    -0.12,
-    1.15
-)
-
-ax.grid(
-    alpha=0.2
-)
-
-plt.tight_layout()
-
-return fig
-
-
-# ============================================================
-# DISPLAY THREE RATES
-# ============================================================
-
-st.subheader(
-    "Average, Instantaneous and Initial Rates"
-)
-
-st.write(
-    "Reaction rate can be described over a time interval "
-    "or at a particular instant during a reaction."
-)
-
-fig = plot_three_rates()
-
-st.pyplot(
-    fig,
-    use_container_width=True
-)
-
-plt.close(fig)
-
-
-# ============================================================
-# THREE CONCISE EXPLANATIONS
-# ============================================================
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-
-    st.markdown("**Average rate**")
-
+    )
+    
+    ax.scatter(
+        [ti],
+        [Ai],
+        s=50,
+        zorder=5
+    )
+    
+    # --------------------------------------------------------
+    # Initial rate: tangent at t = 0
+    # --------------------------------------------------------
+    
+    initial_slope = -k * A0
+    
+    t_initial = np.array([
+        0,
+        2.0
+    ])
+    
+    A_initial = (
+        A0
+        + initial_slope * t_initial
+    )
+    
+    ax.plot(
+        t_initial,
+        A_initial,
+        linestyle="-.",
+        linewidth=2
+    )
+    
+    ax.scatter(
+        [0],
+        [A0],
+        s=50,
+        zorder=5
+    )
+    
+    # --------------------------------------------------------
+    # Graph labels
+    # --------------------------------------------------------
+    
+    ax.annotate(
+        "Initial rate\n(t = 0)",
+        xy=(
+            0.3,
+            A0 + initial_slope * 0.3
+        ),
+        xytext=(
+            1.0,
+            1.04
+        ),
+        arrowprops=dict(
+            arrowstyle="->",
+            lw=1.2
+        ),
+        fontsize=10
+    )
+    
+    ax.annotate(
+        "Instantaneous rate\nat time t",
+        xy=(
+            ti + 0.2,
+            Ai + instantaneous_slope * 0.2
+        ),
+        xytext=(
+            5.5,
+            0.72
+        ),
+        arrowprops=dict(
+            arrowstyle="->",
+            lw=1.2
+        ),
+        fontsize=10
+    )
+    
+    ax.annotate(
+        "Average rate\nbetween $t_1$ and $t_2$",
+        xy=(
+            4.5,
+            (A1 + A2) / 2
+        ),
+        xytext=(
+            6.0,
+            0.40
+        ),
+        arrowprops=dict(
+            arrowstyle="->",
+            lw=1.2
+        ),
+        fontsize=10
+    )
+    
+    # --------------------------------------------------------
+    # Time labels
+    # --------------------------------------------------------
+    
+    ax.text(
+        t1_graph,
+        -0.07,
+        r"$t_1$",
+        ha="center",
+        fontsize=11
+    )
+    
+    ax.text(
+        t2_graph,
+        -0.07,
+        r"$t_2$",
+        ha="center",
+        fontsize=11
+    )
+    
+    ax.text(
+        ti,
+        -0.07,
+        r"$t$",
+        ha="center",
+        fontsize=11
+    )
+    
+    # --------------------------------------------------------
+    # Formatting
+    # --------------------------------------------------------
+    
+    ax.set_xlabel(
+        "Time",
+        fontsize=11
+    )
+    
+    ax.set_ylabel(
+        "Concentration of A",
+        fontsize=11
+    )
+    
+    ax.set_title(
+        "Three ways to describe reaction rate",
+        fontsize=13,
+        pad=10
+    )
+    
+    ax.set_xlim(
+        -0.3,
+        10
+    )
+    
+    ax.set_ylim(
+        -0.12,
+        1.15
+    )
+    
+    ax.grid(
+        alpha=0.2
+    )
+    
+    plt.tight_layout()
+    
+    return fig
+    
+    
+    # ============================================================
+    # DISPLAY THREE RATES
+    # ============================================================
+    
+    st.subheader(
+        "Average, Instantaneous and Initial Rates"
+    )
+    
     st.write(
-        "The rate of reaction over a specified time interval."
+        "Reaction rate can be described over a time interval "
+        "or at a particular instant during a reaction."
     )
-
-    st.latex(
-        r"\text{Average rate} = "
-        r"-\frac{\Delta[A]}{\Delta t}"
+    
+    fig = plot_three_rates()
+    
+    st.pyplot(
+        fig,
+        use_container_width=True
     )
-
-
-with col2:
-
-    st.markdown("**Instantaneous rate**")
-
+    
+    plt.close(fig)
+    
+    
+    # ============================================================
+    # THREE CONCISE EXPLANATIONS
+    # ============================================================
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+    
+        st.markdown("**Average rate**")
+    
+        st.write(
+            "The rate of reaction over a specified time interval."
+        )
+    
+        st.latex(
+            r"\text{Average rate} = "
+            r"-\frac{\Delta[A]}{\Delta t}"
+        )
+    
+    
+    with col2:
+    
+        st.markdown("**Instantaneous rate**")
+    
+        st.write(
+            "The rate of reaction at a particular instant. "
+            "It is the slope of the tangent to the curve."
+        )
+    
+        st.latex(
+            r"\text{Instantaneous rate} = "
+            r"-\frac{d[A]}{dt}"
+        )
+    
+    
+    with col3:
+    
+        st.markdown("**Initial rate**")
+    
+        st.write(
+            "The instantaneous rate at the start of the reaction, "
+            "when t = 0."
+        )
+    
+        st.latex(
+            r"\text{Initial rate} = "
+            r"\left.-\frac{d[A]}{dt}\right|_{t=0}"
+        )
+    
+    
+    # ============================================================
+    # CALCULATING AN AVERAGE RATE
+    # ============================================================
+    
+    st.subheader(
+        "Calculating an Average Rate"
+    )
+    
     st.write(
-        "The rate of reaction at a particular instant. "
-        "It is the slope of the tangent to the curve."
+        "For an average rate, the change in concentration is "
+        "considered between two times, t₁ and t₂."
     )
-
-    st.latex(
-        r"\text{Instantaneous rate} = "
-        r"-\frac{d[A]}{dt}"
-    )
-
-
-with col3:
-
-    st.markdown("**Initial rate**")
-
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+    
+        st.latex(
+            r"\Delta[A] = [A]_{t_2} - [A]_{t_1}"
+        )
+    
+    with col2:
+    
+        st.latex(
+            r"\Delta t = t_2 - t_1"
+        )
+    
     st.write(
-        "The instantaneous rate at the start of the reaction, "
-        "when t = 0."
+        "Here, Δ means change in. For a reactant, the concentration "
+        "decreases as the reaction proceeds, so the negative sign "
+        "in the rate equation gives a positive reaction rate."
     )
-
+    
+    
+    # =====================================================
+    # WORKED EXAMPLE
+    # =====================================================
+    
+    st.subheader(
+        "Worked Example"
+    )
+    
+    st.write(
+        "The concentration of reactant A changes from "
+        "0.80 mol L⁻¹ at 10 s to 0.50 mol L⁻¹ at 30 s."
+    )
+    
+    st.markdown(
+        "**Given:**"
+    )
+    
     st.latex(
-        r"\text{Initial rate} = "
-        r"\left.-\frac{d[A]}{dt}\right|_{t=0}"
+        r"[\mathrm{A}]_{t_1}=0.80\ \mathrm{mol\,L^{-1}}"
     )
-
-
-# ============================================================
-# CALCULATING AN AVERAGE RATE
-# ============================================================
-
-st.subheader(
-    "Calculating an Average Rate"
-)
-
-st.write(
-    "For an average rate, the change in concentration is "
-    "considered between two times, t₁ and t₂."
-)
-
-col1, col2 = st.columns(2)
-
-with col1:
-
+    
     st.latex(
-        r"\Delta[A] = [A]_{t_2} - [A]_{t_1}"
+        r"[\mathrm{A}]_{t_2}=0.50\ \mathrm{mol\,L^{-1}}"
     )
-
-with col2:
-
+    
     st.latex(
-        r"\Delta t = t_2 - t_1"
+        r"t_1=10\ \mathrm{s}"
     )
-
-st.write(
-    "Here, Δ means change in. For a reactant, the concentration "
-    "decreases as the reaction proceeds, so the negative sign "
-    "in the rate equation gives a positive reaction rate."
-)
-
-
-# =====================================================
-# WORKED EXAMPLE
-# =====================================================
-
-st.subheader(
-    "Worked Example"
-)
-
-st.write(
-    "The concentration of reactant A changes from "
-    "0.80 mol L⁻¹ at 10 s to 0.50 mol L⁻¹ at 30 s."
-)
-
-st.markdown(
-    "**Given:**"
-)
-
-st.latex(
-    r"[\mathrm{A}]_{t_1}=0.80\ \mathrm{mol\,L^{-1}}"
-)
-
-st.latex(
-    r"[\mathrm{A}]_{t_2}=0.50\ \mathrm{mol\,L^{-1}}"
-)
-
-st.latex(
-    r"t_1=10\ \mathrm{s}"
-)
-
-st.latex(
-    r"t_2=30\ \mathrm{s}"
-)
-
-st.write(
-    "**Step 1: Calculate the change in concentration**"
-)
-
-st.latex(
-    r"\Delta[\mathrm{A}]"
-    r"=0.50-0.80"
-    r"=-0.30\ \mathrm{mol\,L^{-1}}"
-)
-
-st.write(
-    "**Step 2: Calculate the change in time**"
-)
-
-st.latex(
-    r"\Delta t=30-10=20\ \mathrm{s}"
-)
-
-st.write(
-    "**Step 3: Calculate the average rate**"
-)
-
-st.latex(
-    r"\text{Average rate}"
-    r"=-\frac{-0.30}{20}"
-    r"=0.015\ \mathrm{mol\,L^{-1}\,s^{-1}}"
-)
-
-st.success(
-    "Average reaction rate = 0.015 mol L⁻¹ s⁻¹"
-)
-
-# =====================================================
-# INTERACTIVE AVERAGE RATE
-# =====================================================
-
-st.subheader(
-    "Interactive Average Rate"
-)
-
-st.write(
-    "Select two points to investigate how the average reaction "
-    "rate changes when the concentration interval or time "
-    "interval changes."
-)
-
-col1, col2 = st.columns(2)
-
-with col1:
-
-    st.write("**Initial point**")
-
-    t1 = st.number_input(
-        "Initial time, t₁ (s)",
-        min_value=0.0,
-        max_value=1000.0,
-        value=10.0,
-        step=1.0
+    
+    st.latex(
+        r"t_2=30\ \mathrm{s}"
     )
-
-    concentration_t1 = st.number_input(
-        "Reactant concentration at t₁ (mol L⁻¹)",
-        min_value=0.01,
-        max_value=10.0,
-        value=0.80,
-        step=0.05
+    
+    st.write(
+        "**Step 1: Calculate the change in concentration**"
     )
-
-with col2:
-
-    st.write("**Later point**")
-
-    t2 = st.number_input(
-        "Later time, t₂ (s)",
-        min_value=0.1,
-        max_value=1000.0,
-        value=30.0,
-        step=1.0
+    
+    st.latex(
+        r"\Delta[\mathrm{A}]"
+        r"=0.50-0.80"
+        r"=-0.30\ \mathrm{mol\,L^{-1}}"
     )
-
-    concentration_t2 = st.number_input(
-        "Reactant concentration at t₂ (mol L⁻¹)",
-        min_value=0.0,
-        max_value=10.0,
-        value=0.50,
-        step=0.05
+    
+    st.write(
+        "**Step 2: Calculate the change in time**"
     )
-
-if t2 <= t1:
-
-    st.error(
-        "The later time, t₂, must be greater than the "
-        "initial time, t₁."
+    
+    st.latex(
+        r"\Delta t=30-10=20\ \mathrm{s}"
     )
-
-else:
-
-    delta_concentration = (
-        concentration_t2 - concentration_t1
+    
+    st.write(
+        "**Step 3: Calculate the average rate**"
     )
-
-    delta_time = t2 - t1
-
-    average_rate = (
-        -delta_concentration / delta_time
-    )
-
-    st.write("### Your calculated values")
-
-    result_col1, result_col2, result_col3 = st.columns(3)
-
-    with result_col1:
-
-        st.metric(
-            "Change in concentration",
-            f"{delta_concentration:.3f} mol L⁻¹"
-        )
-
-    with result_col2:
-
-        st.metric(
-            "Change in time",
-            f"{delta_time:.1f} s"
-        )
-
-    with result_col3:
-
-        st.metric(
-            "Average rate",
-            f"{average_rate:.4f} mol L⁻¹ s⁻¹"
-        )
-
+    
     st.latex(
         r"\text{Average rate}"
-        r"=-\frac{[\mathrm{A}]_{t_2}-[\mathrm{A}]_{t_1}}"
-        r"{t_2-t_1}"
+        r"=-\frac{-0.30}{20}"
+        r"=0.015\ \mathrm{mol\,L^{-1}\,s^{-1}}"
     )
-
-
-# =====================================================
-# STOICHIOMETRIC RATE
-# =====================================================
-
-st.subheader("Reaction Rate and Stoichiometric Coefficients")
-
-st.write(
-    "For a reaction involving several reactants and products, "
-    "the rate can be expressed in terms of the concentration "
-    "change of each species."
-)
-
-st.latex(
-    r"\mathrm{aA+bB\rightarrow cC+dD}"
-)
-
-st.write(
-    "The stoichiometric coefficients are used to ensure that the "
-    "same reaction rate is obtained regardless of which species "
-    "is used to describe the rate."
-)
-
-st.latex(
-    r"\boxed{"
-    r"\text{rate}"
-    r"="
-    r"-\frac{1}{a}\frac{d[\mathrm{A}]}{dt}"
-    r"="
-    r"-\frac{1}{b}\frac{d[\mathrm{B}]}{dt}"
-    r"="
-    r"\frac{1}{c}\frac{d[\mathrm{C}]}{dt}"
-    r"="
-    r"\frac{1}{d}\frac{d[\mathrm{D}]}{dt}"
-    r"}"
-)
-
-st.write(
-    "The negative signs are used for reactants because their "
-    "concentrations decrease with time. Products have positive "
-    "signs because their concentrations increase with time."
-)
-
-st.subheader("Example")
-
-st.latex(
-    r"\mathrm{2A+B\rightarrow3C}"
-)
-
-st.latex(
-    r"\text{rate}"
-    r"=-\frac{1}{2}\frac{d[\mathrm{A}]}{dt}"
-    r"=-\frac{d[\mathrm{B}]}{dt}"
-    r"=\frac{1}{3}\frac{d[\mathrm{C}]}{dt}"
-)
-
-st.info(
-    "The stoichiometric coefficients connect the rates of "
-    "consumption of reactants with the rate of formation of products."
-)
-
-
-# =====================================================
-# CHECK YOUR UNDERSTANDING
-# =====================================================
-
-st.header("Check Your Understanding")
-
-question1 = st.radio(
-    "1. Which collision is most likely to result in a reaction?",
-    [
-        "A collision with low energy and the correct orientation",
-        "A collision with sufficient energy but the wrong orientation",
-        "A collision with sufficient energy and the correct orientation",
-        "Any collision between reactant molecules"
-    ],
-    key="collision_question"
-)
-
-if st.button("Check Collision Answer"):
-
-    if question1 == (
-        "A collision with sufficient energy and the correct orientation"
-    ):
-
-        st.success(
-            "Correct! An effective collision requires sufficient "
-            "energy to overcome Ea and the correct orientation."
+    
+    st.success(
+        "Average reaction rate = 0.015 mol L⁻¹ s⁻¹"
+    )
+    
+    # =====================================================
+    # INTERACTIVE AVERAGE RATE
+    # =====================================================
+    
+    st.subheader(
+        "Interactive Average Rate"
+    )
+    
+    st.write(
+        "Select two points to investigate how the average reaction "
+        "rate changes when the concentration interval or time "
+        "interval changes."
+    )
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+    
+        st.write("**Initial point**")
+    
+        t1 = st.number_input(
+            "Initial time, t₁ (s)",
+            min_value=0.0,
+            max_value=1000.0,
+            value=10.0,
+            step=1.0
         )
-
-    else:
-
+    
+        concentration_t1 = st.number_input(
+            "Reactant concentration at t₁ (mol L⁻¹)",
+            min_value=0.01,
+            max_value=10.0,
+            value=0.80,
+            step=0.05
+        )
+    
+    with col2:
+    
+        st.write("**Later point**")
+    
+        t2 = st.number_input(
+            "Later time, t₂ (s)",
+            min_value=0.1,
+            max_value=1000.0,
+            value=30.0,
+            step=1.0
+        )
+    
+        concentration_t2 = st.number_input(
+            "Reactant concentration at t₂ (mol L⁻¹)",
+            min_value=0.0,
+            max_value=10.0,
+            value=0.50,
+            step=0.05
+        )
+    
+    if t2 <= t1:
+    
         st.error(
-            "Not quite. An effective collision requires both "
-            "sufficient energy and the correct orientation."
+            "The later time, t₂, must be greater than the "
+            "initial time, t₁."
         )
-
-
-question2 = st.radio(
-    "2. What does average reaction rate describe?",
-    [
-        "The rate at exactly one instant",
-        "The change in concentration over a time interval",
-        "Only the concentration of products",
-        "The activation energy of the reaction"
-    ],
-    key="average_rate_question"
-)
-
-if st.button("Check Average Rate Answer"):
-
-    if question2 == (
-        "The change in concentration over a time interval"
-    ):
-
-        st.success(
-            "Correct! Average rate describes the change in "
-            "concentration over a particular time interval."
-        )
-
+    
     else:
-
-        st.error(
-            "Not quite. Average rate describes the change in "
-            "concentration over a time interval."
+    
+        delta_concentration = (
+            concentration_t2 - concentration_t1
         )
-
-
-question3 = st.radio(
-    "3. What does the slope of a concentration–time curve represent?",
-    [
-        "The concentration",
-        "The activation energy",
-        "The reaction rate",
-        "The stoichiometric coefficient"
-    ],
-    key="slope_question"
-)
-
-if st.button("Check Slope Answer"):
-
-    if question3 == "The reaction rate":
-
-        st.success(
-            "Correct! The slope of a concentration–time curve "
-            "is related to the reaction rate."
+    
+        delta_time = t2 - t1
+    
+        average_rate = (
+            -delta_concentration / delta_time
         )
-
-    else:
-
-        st.error(
-            "Not quite. The slope of a concentration–time curve "
-            "represents the rate of concentration change with time."
+    
+        st.write("### Your calculated values")
+    
+        result_col1, result_col2, result_col3 = st.columns(3)
+    
+        with result_col1:
+    
+            st.metric(
+                "Change in concentration",
+                f"{delta_concentration:.3f} mol L⁻¹"
+            )
+    
+        with result_col2:
+    
+            st.metric(
+                "Change in time",
+                f"{delta_time:.1f} s"
+            )
+    
+        with result_col3:
+    
+            st.metric(
+                "Average rate",
+                f"{average_rate:.4f} mol L⁻¹ s⁻¹"
+            )
+    
+        st.latex(
+            r"\text{Average rate}"
+            r"=-\frac{[\mathrm{A}]_{t_2}-[\mathrm{A}]_{t_1}}"
+            r"{t_2-t_1}"
         )
+    
+    
+    # =====================================================
+    # STOICHIOMETRIC RATE
+    # =====================================================
+    
+    st.subheader("Reaction Rate and Stoichiometric Coefficients")
+    
+    st.write(
+        "For a reaction involving several reactants and products, "
+        "the rate can be expressed in terms of the concentration "
+        "change of each species."
+    )
+    
+    st.latex(
+        r"\mathrm{aA+bB\rightarrow cC+dD}"
+    )
+    
+    st.write(
+        "The stoichiometric coefficients are used to ensure that the "
+        "same reaction rate is obtained regardless of which species "
+        "is used to describe the rate."
+    )
+    
+    st.latex(
+        r"\boxed{"
+        r"\text{rate}"
+        r"="
+        r"-\frac{1}{a}\frac{d[\mathrm{A}]}{dt}"
+        r"="
+        r"-\frac{1}{b}\frac{d[\mathrm{B}]}{dt}"
+        r"="
+        r"\frac{1}{c}\frac{d[\mathrm{C}]}{dt}"
+        r"="
+        r"\frac{1}{d}\frac{d[\mathrm{D}]}{dt}"
+        r"}"
+    )
+    
+    st.write(
+        "The negative signs are used for reactants because their "
+        "concentrations decrease with time. Products have positive "
+        "signs because their concentrations increase with time."
+    )
+    
+    st.subheader("Example")
+    
+    st.latex(
+        r"\mathrm{2A+B\rightarrow3C}"
+    )
+    
+    st.latex(
+        r"\text{rate}"
+        r"=-\frac{1}{2}\frac{d[\mathrm{A}]}{dt}"
+        r"=-\frac{d[\mathrm{B}]}{dt}"
+        r"=\frac{1}{3}\frac{d[\mathrm{C}]}{dt}"
+    )
+    
+    st.info(
+        "The stoichiometric coefficients connect the rates of "
+        "consumption of reactants with the rate of formation of products."
+    )
+    
+    
+    # =====================================================
+    # CHECK YOUR UNDERSTANDING
+    # =====================================================
+    
+    st.header("Check Your Understanding")
+    
+    question1 = st.radio(
+        "1. Which collision is most likely to result in a reaction?",
+        [
+            "A collision with low energy and the correct orientation",
+            "A collision with sufficient energy but the wrong orientation",
+            "A collision with sufficient energy and the correct orientation",
+            "Any collision between reactant molecules"
+        ],
+        key="collision_question"
+    )
+    
+    if st.button("Check Collision Answer"):
+    
+        if question1 == (
+            "A collision with sufficient energy and the correct orientation"
+        ):
+    
+            st.success(
+                "Correct! An effective collision requires sufficient "
+                "energy to overcome Ea and the correct orientation."
+            )
+    
+        else:
+    
+            st.error(
+                "Not quite. An effective collision requires both "
+                "sufficient energy and the correct orientation."
+            )
+    
+    
+    question2 = st.radio(
+        "2. What does average reaction rate describe?",
+        [
+            "The rate at exactly one instant",
+            "The change in concentration over a time interval",
+            "Only the concentration of products",
+            "The activation energy of the reaction"
+        ],
+        key="average_rate_question"
+    )
+    
+    if st.button("Check Average Rate Answer"):
+    
+        if question2 == (
+            "The change in concentration over a time interval"
+        ):
+    
+            st.success(
+                "Correct! Average rate describes the change in "
+                "concentration over a particular time interval."
+            )
+    
+        else:
+    
+            st.error(
+                "Not quite. Average rate describes the change in "
+                "concentration over a time interval."
+            )
+    
+    
+    question3 = st.radio(
+        "3. What does the slope of a concentration–time curve represent?",
+        [
+            "The concentration",
+            "The activation energy",
+            "The reaction rate",
+            "The stoichiometric coefficient"
+        ],
+        key="slope_question"
+    )
+    
+    if st.button("Check Slope Answer"):
+    
+        if question3 == "The reaction rate":
+    
+            st.success(
+                "Correct! The slope of a concentration–time curve "
+                "is related to the reaction rate."
+            )
+    
+        else:
+    
+            st.error(
+                "Not quite. The slope of a concentration–time curve "
+                "represents the rate of concentration change with time."
+            )
+    
+    
+    # =====================================================
+    # KEY POINTS
+    # =====================================================
+    
+    st.header("Key Points")
+    
+    st.markdown("""
+    **Reaction rate tells us how quickly a reaction occurs.**
+    
+    Remember:
+    
+    1. Reactant particles must collide for a reaction to occur.
+    2. An effective collision requires sufficient energy and the correct orientation.
+    3. **Activation energy, \(E_a\), is the minimum energy required for a collision to result in a reaction.**
+    4. Reaction rate describes how concentration changes with time.
+    5. Reactant concentrations generally decrease as a reaction proceeds.
+    6. Product concentrations generally increase as a reaction proceeds.
+    7. Average rate describes concentration change over a time interval.
+    8. Instantaneous rate describes the rate at a particular instant.
+    9. Initial rate is the instantaneous rate at \(t=0\).
+    10. Stoichiometric coefficients relate the rates of consumption and formation of different species.
+    """)
 
 
-# =====================================================
-# KEY POINTS
-# =====================================================
-
-st.header("Key Points")
-
-st.markdown("""
-**Reaction rate tells us how quickly a reaction occurs.**
-
-Remember:
-
-1. Reactant particles must collide for a reaction to occur.
-2. An effective collision requires sufficient energy and the correct orientation.
-3. **Activation energy, \(E_a\), is the minimum energy required for a collision to result in a reaction.**
-4. Reaction rate describes how concentration changes with time.
-5. Reactant concentrations generally decrease as a reaction proceeds.
-6. Product concentrations generally increase as a reaction proceeds.
-7. Average rate describes concentration change over a time interval.
-8. Instantaneous rate describes the rate at a particular instant.
-9. Initial rate is the instantaneous rate at \(t=0\).
-10. Stoichiometric coefficients relate the rates of consumption and formation of different species.
-""")
-
-
-# =========================================================
-# FACTORS AFFECTING REACTION RATE
-# =========================================================
+    # =========================================================
+    # FACTORS AFFECTING REACTION RATE
+    # =========================================================
 
 elif topic == "Factors Affecting Reaction Rate":
 
