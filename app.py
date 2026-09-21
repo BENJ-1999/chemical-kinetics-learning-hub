@@ -371,9 +371,6 @@ elif topic == "Collision Theory":
     )
 
     
-::contentReference[oaicite:0]{index=0}
-
-
     st.caption(
         "The orientation of the reacting particles determines whether "
         "the appropriate atoms can interact during the collision."
