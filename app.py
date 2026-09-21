@@ -145,7 +145,7 @@ if topic == "Introduction to Chemical Kinetics":
         """
     )
 
-  elif topic == "Collision Theory":
+elif topic == "Collision Theory":
 
     st.header("Collision Theory")
 
@@ -673,7 +673,7 @@ if topic == "Introduction to Chemical Kinetics":
     st.info(
         "➡️ **Next:** Reaction Rate — how do we actually measure and "
         "express how fast a chemical reaction occurs?"
-    )
+    )    
     # =====================================================
     # SECTION 2 — WHAT IS THE RATE OF A REACTION?
     # =====================================================
