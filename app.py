@@ -22,6 +22,7 @@ topic = st.sidebar.radio(
     "Choose a topic:",
     [
         "Introduction to Chemical Kinetics",
+        "Collision Theory",
         "Reaction Rate",
         "Factors Affecting Reaction Rate",
         "Rate Laws",
@@ -144,15 +145,534 @@ if topic == "Introduction to Chemical Kinetics":
         """
     )
 
-    # -----------------------------------------------------
-    # CONNECTION TO THE LEARNING HUB
-    # -----------------------------------------------------
+  elif topic == "Collision Theory":
+
+    st.header("Collision Theory")
+
+    st.write(
+        "Chemical reactions occur when reactant particles collide in a way "
+        "that allows new bonds to form. Collision theory provides a simple "
+        "particle-level explanation of why some collisions lead to reactions "
+        "while others do not."
+    )
 
     st.info(
+        "💡 **Key idea:** A reaction occurs only when reactant particles "
+        "collide with **sufficient energy** and the **correct orientation**."
+    )
+
+    # ============================================================
+    # 1. What are particles?
+    # ============================================================
+
+    st.subheader("1. What do we mean by particles?")
+
+    st.write(
+        "In collision theory, the word **particle** is used broadly. "
+        "Depending on the reaction, the reacting particles may be "
+        "**molecules, atoms or ions**."
+    )
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.markdown(
+            """
+            ### 🧬 Molecules
+
+            Many reactions involve molecules colliding with one another.
+
+            **Example:**  
+            Hydrogen and oxygen molecules reacting to form water.
+            """
+        )
+
+    with col2:
+        st.markdown(
+            """
+            ### ⚛️ Atoms
+
+            Some reactions involve individual atoms as reacting particles.
+
+            **Example:**  
+            Gas-phase reactions involving reactive atoms.
+            """
+        )
+
+    with col3:
+        st.markdown(
+            """
+            ### ⚡ Ions
+
+            Reactions in solution often involve ions as the reacting
+            particles.
+
+            **Example:**  
+            Reactions between aqueous ions.
+            """
+        )
+
+    st.markdown("---")
+
+    # ============================================================
+    # 2. Why do particles collide?
+    # ============================================================
+
+    st.subheader("2. Why do particles collide?")
+
+    st.write(
+        "Particles in matter are constantly moving. As they move, they "
+        "can collide with other particles."
+    )
+
+    st.write(
+        "However, **a collision does not automatically produce a chemical "
+        "reaction**."
+    )
+
+    st.warning(
+        "⚠️ **Not every collision is successful.** "
+        "Many collisions simply occur without producing new substances."
+    )
+
+    # ============================================================
+    # 3. What makes a collision successful?
+    # ============================================================
+
+    st.subheader("3. What makes a collision successful?")
+
+    st.write(
+        "According to collision theory, a collision must satisfy "
+        "**two requirements** for a reaction to occur:"
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown(
+            """
+            ### 1️⃣ Sufficient energy
+
+            The colliding particles must have enough energy to overcome
+            the energy barrier for the reaction.
+
+            This minimum required energy is called the
+            **activation energy, \(E_a\)**.
+            """
+        )
+
+    with col2:
+        st.markdown(
+            """
+            ### 2️⃣ Correct orientation
+
+            The particles must collide in an orientation that allows the
+            appropriate bonds to break and/or form.
+            """
+        )
+
+    st.success(
+        "✅ **Effective collision = sufficient energy + correct orientation**"
+    )
+
+    # ============================================================
+    # 4. Activation energy
+    # ============================================================
+
+    st.markdown("---")
+
+    st.subheader("4. Activation Energy")
+
+    st.write(
+        "The **activation energy, \(E_a\)**, is the **minimum energy "
+        "required for a collision to result in a reaction**."
+    )
+
+    st.write(
+        "Even if particles collide with the correct orientation, the "
+        "collision will not produce a reaction unless the particles "
+        "have enough energy to reach the transition state."
+    )
+
+    # Display activation energy diagram
+    fig = plot_activation_energy()
+    st.pyplot(fig, use_container_width=True)
+    plt.close(fig)
+
+    st.markdown(
         """
-        **Your goal:** Connect what you observe experimentally
-        with what is happening at the particle level.
+        ### Reading the energy diagram
+
+        - **Reactants** start at a particular energy level.
+        - The reaction pathway rises to a maximum energy.
+        - The maximum corresponds to the **transition state**.
+        - The energy difference between the reactants and the transition
+          state is the **activation energy, \(E_a\)**.
+        - After passing through the transition state, the system proceeds
+          towards the products.
         """
+    )
+
+    st.info(
+        "🔑 **Remember:** \(E_a\) is an energy barrier that must be "
+        "overcome for a collision to result in a reaction."
+    )
+
+    # ============================================================
+    # 5. Energy of collisions
+    # ============================================================
+
+    st.subheader("5. Not all collisions have the same energy")
+
+    st.write(
+        "Particles in a sample do not all have exactly the same kinetic "
+        "energy. Some particles move more slowly, while others move faster."
+    )
+
+    st.write(
+        "Therefore, when particles collide, some collisions may have "
+        "enough energy to overcome \(E_a\), while others may not."
+    )
+
+    st.markdown(
+        """
+        Think of the activation energy as a **minimum energy barrier**:
+
+        **Collision energy < \(E_a\)** → ❌ no reaction
+
+        **Collision energy ≥ \(E_a\)** → ✅ reaction is possible
+        """
+    )
+
+    # ============================================================
+    # 6. Correct orientation
+    # ============================================================
+
+    st.markdown("---")
+
+    st.subheader("6. Correct Orientation")
+
+    st.write(
+        "Having enough energy is not enough. The particles must also "
+        "approach one another in the correct orientation."
+    )
+
+    st.write(
+        "For a reaction to occur, the parts of the particles that need "
+        "to interact must be positioned appropriately during the collision."
+    )
+
+    # Interactive learning visualization
+    st.write("### 🔄 Explore an orientation-dependent collision")
+
+    st.write(
+        "Rotate the CO molecule and explore how its orientation affects "
+        "whether the collision can lead towards a reaction."
+    )
+
+    
+::contentReference[oaicite:0]{index=0}
+
+
+    st.caption(
+        "The orientation of the reacting particles determines whether "
+        "the appropriate atoms can interact during the collision."
+    )
+
+    # Static summary diagram
+    fig = plot_collision_orientation()
+    st.pyplot(fig, use_container_width=True)
+    plt.close(fig)
+
+    # ============================================================
+    # 7. Effective and ineffective collisions
+    # ============================================================
+
+    st.subheader("7. Effective vs ineffective collisions")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown(
+            """
+            ### ❌ Ineffective collision
+
+            A collision is ineffective if:
+
+            - the particles do not have enough energy, **or**
+            - the particles have the wrong orientation.
+
+            The particles collide, but no reaction occurs.
+            """
+        )
+
+    with col2:
+        st.markdown(
+            """
+            ### ✅ Effective collision
+
+            A collision is effective when:
+
+            - the particles have **sufficient energy**, and
+            - the particles have the **correct orientation**.
+
+            The collision can then lead to a chemical reaction.
+            """
+        )
+
+    st.success(
+        "Effective collision = **enough energy AND correct orientation**"
+    )
+
+    # ============================================================
+    # 8. Connection to reaction rate
+    # ============================================================
+
+    st.markdown("---")
+
+    st.subheader("8. How does collision theory explain reaction rate?")
+
+    st.write(
+        "The rate of a reaction depends on how frequently successful "
+        "collisions occur."
+    )
+
+    st.write(
+        "If the number of effective collisions per unit time increases, "
+        "the reaction generally becomes faster."
+    )
+
+    st.markdown(
+        """
+        **More effective collisions per second**  
+        ↓  
+        **Faster reaction**
+
+        **Fewer effective collisions per second**  
+        ↓  
+        **Slower reaction**
+        """
+    )
+
+    st.info(
+        "This idea will help us understand why factors such as "
+        "**concentration, temperature and surface area** can affect "
+        "reaction rate."
+    )
+
+    # ============================================================
+    # 9. Factors and collision theory
+    # ============================================================
+
+    st.subheader("9. Linking collision theory to reaction conditions")
+
+    st.write(
+        "Collision theory gives us a particle-level explanation for "
+        "several factors that affect reaction rate."
+    )
+
+    factor_data = {
+        "Factor": [
+            "Concentration",
+            "Temperature",
+            "Surface area",
+            "Catalyst"
+        ],
+        "Collision-theory connection": [
+            "More particles in a given volume can increase collision frequency.",
+            "Particles have greater average kinetic energy, increasing the number of collisions that can overcome \(E_a\).",
+            "More exposed surface provides more opportunities for collisions.",
+            "Provides an alternative reaction pathway with a lower activation energy."
+        ]
+    }
+
+    st.table(factor_data)
+
+    st.caption(
+        "These factors will be explored in more detail in later sections."
+    )
+
+    # ============================================================
+    # 10. Quick Check 1
+    # ============================================================
+
+    st.markdown("---")
+
+    st.subheader("🧠 Quick Check 1")
+
+    st.write(
+        "Which combination is required for an effective collision?"
+    )
+
+    q1 = st.radio(
+        "Choose one:",
+        [
+            "High energy only",
+            "Correct orientation only",
+            "Sufficient energy and correct orientation",
+            "High temperature and high concentration"
+        ],
+        key="collision_q1"
+    )
+
+    if st.button("Check Answer", key="collision_check1"):
+
+        if q1 == "Sufficient energy and correct orientation":
+            st.success(
+                "✅ Correct! An effective collision requires both "
+                "sufficient energy and the correct orientation."
+            )
+        else:
+            st.error(
+                "❌ Not quite. Both requirements are needed: "
+                "sufficient energy AND correct orientation."
+            )
+
+    # ============================================================
+    # 11. Quick Check 2
+    # ============================================================
+
+    st.subheader("🧠 Quick Check 2")
+
+    st.write(
+        "A collision occurs with the correct orientation, but the "
+        "particles do not have enough energy to overcome \(E_a\). "
+        "What happens?"
+    )
+
+    q2 = st.radio(
+        "Choose one:",
+        [
+            "The reaction must occur.",
+            "The collision is ineffective and no reaction occurs.",
+            "The activation energy becomes zero.",
+            "The particles automatically form products."
+        ],
+        key="collision_q2"
+    )
+
+    if st.button("Check Answer", key="collision_check2"):
+
+        if q2 == "The collision is ineffective and no reaction occurs.":
+            st.success(
+                "✅ Correct! Correct orientation alone is not enough. "
+                "The collision must also have sufficient energy."
+            )
+        else:
+            st.error(
+                "❌ Not quite. The particles must have enough energy "
+                "to overcome the activation-energy barrier."
+            )
+
+    # ============================================================
+    # 12. Quick Check 3
+    # ============================================================
+
+    st.subheader("🧠 Quick Check 3")
+
+    st.write(
+        "Which statement best describes activation energy, \(E_a\)?"
+    )
+
+    q3 = st.radio(
+        "Choose one:",
+        [
+            "The energy released when products are formed.",
+            "The minimum energy required for a collision to result in a reaction.",
+            "The total energy contained in the products.",
+            "The average kinetic energy of all particles."
+        ],
+        key="collision_q3"
+    )
+
+    if st.button("Check Answer", key="collision_check3"):
+
+        if q3 == (
+            "The minimum energy required for a collision to result in a reaction."
+        ):
+            st.success(
+                "✅ Correct! Activation energy is the minimum energy "
+                "required for a collision to result in a reaction."
+            )
+        else:
+            st.error(
+                "❌ Not quite. \(E_a\) is the minimum energy required "
+                "for a collision to result in a reaction."
+            )
+
+    # ============================================================
+    # 13. Final Concept Check
+    # ============================================================
+
+    st.markdown("---")
+
+    st.subheader("🎯 Final Concept Check")
+
+    st.write(
+        "Complete the statement:"
+    )
+
+    st.markdown(
+        """
+        A chemical reaction occurs when reactant particles collide with
+        **__________ energy** and the **__________ orientation**.
+        """
+    )
+
+    final_answer = st.text_input(
+        "Your answer:",
+        key="collision_final_answer"
+    )
+
+    if st.button("Check Final Answer", key="collision_final_check"):
+
+        answer = final_answer.lower().strip()
+
+        if (
+            ("sufficient" in answer or "enough" in answer)
+            and ("correct" in answer)
+        ):
+            st.success(
+                "🎉 Excellent! An effective collision requires "
+                "sufficient energy and the correct orientation."
+            )
+        else:
+            st.info(
+                "Think about the two requirements for an effective "
+                "collision: the particles need enough energy to overcome "
+                "the activation-energy barrier, and they need the correct "
+                "orientation."
+            )
+
+    # ============================================================
+    # 14. Take-home summary
+    # ============================================================
+
+    st.markdown("---")
+
+    st.subheader("📌 Collision Theory: Key Takeaways")
+
+    st.success(
+        """
+        **1.** Reactant particles are constantly moving and can collide.
+
+        **2.** Not every collision produces a reaction.
+
+        **3.** An effective collision requires **sufficient energy**.
+
+        **4.** An effective collision also requires the **correct orientation**.
+
+        **5.** The minimum energy required for a collision to result in a
+        reaction is called the **activation energy, \(E_a\)**.
+
+        **6.** More effective collisions per unit time generally mean a
+        **faster reaction**.
+        """
+    )
+
+    st.info(
+        "➡️ **Next:** Reaction Rate — how do we actually measure and "
+        "express how fast a chemical reaction occurs?"
     )
     # =====================================================
     # SECTION 2 — WHAT IS THE RATE OF A REACTION?
